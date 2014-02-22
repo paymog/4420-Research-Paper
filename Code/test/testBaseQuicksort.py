@@ -7,8 +7,7 @@ from ..src.BaseQuicksort import BaseQuicksort
 
 class testBaseQuicksort(unittest.TestCase):
     def setUp(self):
-        data = [1,2]
-        self.qsort = BaseQuicksort(data)
+        self.qsort = BaseQuicksort(None)
 
     def test_lessThan(self):
         self.assertTrue(self.qsort.lessThan(1,2))
@@ -53,3 +52,18 @@ class testBaseQuicksort(unittest.TestCase):
 
     def test_sort(self):
         self.assertRaises(NotImplementedError, self.qsort.sort)
+
+    def test_insertionSort(self):
+        self.assertInsertionSort([1])
+        self.assertInsertionSort([2,1])
+        self.assertInsertionSort([1,2])
+        self.assertInsertionSort([1,1])
+        self.assertInsertionSort([3,2,1])
+        self.assertInsertionSort([3,2,3,1])
+        self.assertInsertionSort(range(-5,5)[::-1])
+
+    def assertInsertionSort(self, data):
+        self.qsort.data = data
+        sData = self.qsort._insertionSort(0,len(data))
+        self.assertEqual(sData, sorted(data))
+
