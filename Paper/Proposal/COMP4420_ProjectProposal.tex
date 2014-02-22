@@ -1,0 +1,337 @@
+\documentclass[12pt]{report}
+%\documentclass[12pt]{article}
+% Change "article" to "report" to get rid of page number on title page
+
+%************************************************************
+% Package Imports
+%************************************************************
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\usepackage{epsfig}
+\usepackage{graphicx}       
+\usepackage{appendix}       
+\usepackage{makeidx}       
+\usepackage{lastpage}          % references the page before
+\usepackage{extramarks}       
+\usepackage{tikz}              % this is to make fancy images/graphs/trees
+\usepackage{xcolor}            % Text can be colored 
+\usepackage{amsthm}            % Introduces theorems
+\usepackage{amssymb}           % math symbols
+\usepackage{amsmath}           % for align function 
+\usepackage{mathrsfs}          % script math text
+\usepackage[makeroom]{cancel}
+\usepackage[ampersand]{easylist}
+
+
+%************************************************************
+% Linking parts of pdf i.e. with a "link"
+%************************************************************
+\usepackage[colorlinks=true,linkcolor=black,citecolor=cyan,urlcolor=blue,pagebackref=true]{hyperref}
+%\usepackage{sidecap} for side captions
+
+%****************************************************************************
+%****************************************************************************
+%	Global definitions
+%****************************************************************************
+%****************************************************************************
+
+%**********************************************************
+% In case you need to adjust margins:
+%**********************************************************
+\setlength{\textwidth}{6.0in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\headsep}{0.25in}
+
+%**********************************************************
+% Don't know what this is for
+%**********************************************************
+\renewcommand{\baselinestretch}{1} 
+
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\thepage}
+
+\renewcommand{\absnamepos}{flushleft}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries\Large}
+
+%****************************************************************************
+%********************** CHANGE THESE ON EVERY DOCUMENT **********************
+%****************************************************************************
+%          These are things that are class and assignment specific
+%****************************************************************************
+
+\newcommand{\texTitle}{Project Propsal}
+\newcommand{\dueDate}{Febuary 24, 2014}
+\newcommand{\class}{COMP 4420}
+\newcommand{\classTitle}{Advanced Design and Analysis of Algorithms}
+\newcommand{\classInstructor}{Dr. S. Durocher}
+
+
+%****************************************************************************
+% Author "A" information
+%****************************************************************************
+\newcommand{\authorNameA}{Joshua\ Hernandez}
+\newcommand{\studentNumberA}{6852561}
+\newcommand{\emailA}{umhern23@myumanitoba.ca}
+
+%****************************************************************************
+% Author "B" information
+%****************************************************************************
+\newcommand{\authorNameB}{Paymahn\ Moghadasian}
+\newcommand{\studentNumberB}{7XXXXXX}
+\newcommand{\emailB}{umpaymah@myumanitoba.ca}
+
+%****************************************************************************
+% Gives pdf a signature
+%****************************************************************************
+% Fill in for important documents
+%****************************************************************************
+\hypersetup{
+	pdfauthor={\authorNameA, \authorNameB},
+	pdftitle={\texTitle, \class, \classTitle},
+	pdfsubject={},
+	pdfkeywords={}
+}
+\makeindex
+
+
+%****************************************************************************
+%****************************************************************************
+% New definition of square root:
+% it renames \sqrt as \oldsqrt
+%****************************************************************************
+\let\oldsqrt\sqrt
+%****************************************************************************
+% it defines the new \sqrt in terms of the old one
+%****************************************************************************
+\def\sqrt{\mathpalette\DHLhksqrt}
+\def\DHLhksqrt#1#2{%
+	\setbox0=\hbox{$#1\oldsqrt{#2\,}$}\dimen0=\ht0
+	\advance\dimen0-0.2\ht0
+	\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+	{\box0\lower0.4pt\box2}
+}
+%****************************************************************************
+%****************************************************************************
+
+%****************************************************************************
+%Some new commands to ease Dirac Notation
+%****************************************************************************
+\newcommand{\bra}[1]{\left\langle #1\right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\braket}[2]{\left\langle #1\middle|#2\right\rangle}
+
+
+%****************************************************************************
+% This defines a running fraction.
+%****************************************************************************
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+
+%****************************************************************************
+% This defines a rounding functions
+%****************************************************************************
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ciel}[1]{\left\lceil #1\right\rceil}
+
+%****************************************************************************
+% This defines total derivative operation
+%****************************************************************************
+\newcommand{\diff}[2]{ \frac{\text{d}#1}{\text{d}#2} }
+\newcommand{\pdiff}[2]{ \frac{\partial #1}{\partial#2} }
+%****************************************************************************
+%****************************************************************************
+
+
+%****************************************************************************
+% Settings Based off Package Imports And User Defined Functions
+%****************************************************************************
+%\numberwithin{equation}{homeworkProblemCounter} % Equation Labeling
+\everymath{\displaystyle}                       % Forces 'fixed' font in math equations
+\allowdisplaybreaks[3]
+
+
+%****************************************************************************
+% Removes default section numbers
+%****************************************************************************
+\setcounter{secnumdepth}{0}         
+
+%*********************************************
+% Setup the header and footer
+%*********************************************
+\pagestyle{fancy}  
+\lhead{\authorNameA,\ \authorNameB}
+%\chead{\texTitle} 
+\chead{} 
+\rhead{\class}     
+\lfoot{\lastxmark} 
+\cfoot{}           
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}}
+\renewcommand\headrulewidth{0.4pt}            
+\renewcommand\footrulewidth{0.4pt}  
+
+%****************************************************************************
+%****************************************************************************
+% The end of the definitions for the document
+% The start of the actual document
+%****************************************************************************
+%****************************************************************************
+\begin{document}
+	\pagenumbering{roman}
+	%****************************************************************************
+	% Title Stuff
+	%****************************************************************************
+	\begin{titlepage}
+		\begin{center}
+			~~ \\[0.4cm]
+
+			{\LARGE \bfseries \texTitle }\\[0.4cm]
+
+			~~ \\[1.5cm]
+
+			% Author and supervisor
+			\normalsize
+			Authors: \\
+			\authorNameA \ [\emailA] \\[.5cm]
+			\authorNameB \ [\emailB] \\[.5cm]
+			Instructor: \classInstructor \\[1.5cm]
+
+			\class \\[.125cm]
+			\classTitle \\[1.5cm]
+
+			\vfill
+
+			%{\today}
+			{Due : \dueDate}
+		\end{center}
+	\end{titlepage}
+	% Bottom of the page
+	%****************************************************************************
+	% Things Related to the beginning of the document
+	%****************************************************************************
+	%\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+	%****************************************************************************
+	% DUBUGIN TIPS
+	%****************************************************************************
+	% This is used to trace down (pin point) problems
+	% in latexing a document:
+	% \tracingall
+	%****************************************************************************
+	%****************************************************************************
+	% Begin actual document content here
+	%****************************************************************************
+
+	%****************************************************************************
+	% written preliminary project proposal details 
+	%****************************************************************************
+	%• 1–2 pages
+	%• Briefly describe and motivate the topic you have selected.
+	%• Describe the format of your proposed project.
+	%• Provide a partial list references on the selected topic.
+	%• Include a brief list of milestones and dates by which you plan to complete these.
+	%****************************************************************************
+
+	\section{Project Proposal}
+	
+	Sorting is a well studied topic in algorithms, in particular quicksort has been extensivly studied. ***Continue the intro****
+
+	A lot has gone into the creating faster sorting algorithms. 
+
+	During the ICALP 2013 conference there is a paper that explors dual partition quicksort. They study the various parititon algorithms that can be applied and their assosiated asymptotic runtime. They focus on array swaps and element comparisions to determine the asymptotic runtime. They are able to mathemetically generalize the notition of dual parititon quicksort regardless of the partition algorithm used. From this they are able to determin that the optimal dual quicksort will run in $1.8n\log n + o(n\log n)$ time. Next the experement with various quicksort implementations, each using a different partitioning algorithm. 
+
+	We hope to verify what the previous paper has established. We then also wish to expand the scope of the original paper. We will implement quicksort using various partitioning algorithms, again using varying number of partitions. We hope to determine if varying the number of paritions will yeild to a more efficent quicksort algorithm.
+
+	In parallel we also hope to mathematically describe multi-partition algorithms, based off the proof given in the paper. During this process, we hope bring to light all the problems that may arise from this generalization. 
+
+	The goal of this project is to investigate multi-paritioned quicksort and hopefully determine what may the optimal number of parititions could be and bring to light any of the challenges that arise from this analysis. Pariticularly if more than two parititons provide any benifit either in parctice or in theory. 
+
+	% Estimated time table
+	\begin{itemize}
+		\item Week 1
+		\begin{itemize}
+			\item Implement basic quicksort
+			\begin{itemize}
+				\item Pivot Picking
+				\begin{itemize}
+					\item first element as pivot
+					\item median of first, middle, and last
+					\item Find others
+				\end{itemize}
+				
+				\item Partitioning algorithm
+				\begin{itemize}
+					\item The basic one
+				\end{itemize}
+				\item Each version has an insertion sort flag on arrays with small size
+				\item Test functionaliy on small arrays
+			\end{itemize}
+			
+			\item Implement 2 parition quicksort
+			\begin{itemize}
+				\item Piviot picking
+				\begin{itemize}
+					\item first and last elements
+					\item two middle elements of entires from 5 entries
+					\item Test with 4 entries as well
+				\end{itemize}
+				\item Paritioning Algorithm
+				\begin{itemize}
+					\item Basic Paritioning
+					\item make smalls then bigs
+					\item flag paritioning algorithm
+				\end{itemize}
+				\item Each version has an insertion sort flag on arrays with small size
+				\item Test functionality on small arrays
+			\end{itemize}
+		\end{itemize}
+			
+		\item Week 2
+		\begin{itemize}
+			\item Implement 3 and 4 parition quicksorts
+			\begin{itemize}
+				\item Parition algorithm
+				\item Basic Parition 
+				\item Look for parition algorithms
+				\item Each version has an insertion sort flag on arrays with small size
+				\item Test functionallity on small arrays
+			\end{itemize}
+		\end{itemize}
+		
+		\item Week 3
+		\begin{itemize}
+			\item Run several experinments using all the quicksort algoirthms implemented
+			\item Run several arrays sizes
+			\item Array 'types'
+			\begin{itemize}
+				\item sorted arrays
+				\item reverse sorted arrays
+				\item random arrays
+				\item partially random arrays
+			\end{itemize}
+			\item Preliminary analysis of data
+		\end{itemize}
+		\item Week 4
+		\begin{itemize}
+			\item Analyze data
+			\item Write paper
+			\item Make Presentation    
+		\end{itemize}
+	\end{itemize}
+
+	%****************************************************************************
+	% End of the contents of the document
+	% Items related to end of document
+	%****************************************************************************
+	\newpage
+	%\addcontentsline{toc}{section}{References}
+	%\bibliographystyle{ieeetr}
+	%\bibliography{refer}
+	\newpage
+	%\printindex
+	%****************************************************************************
+\end{document}
