@@ -37,3 +37,6 @@ nosetests.xml
 
 # Pycharm files
 */.idea/*
+
+# OSX metadata file
+*/.DS_Store

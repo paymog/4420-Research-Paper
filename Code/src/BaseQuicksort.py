@@ -11,7 +11,7 @@ class BaseQuicksort():
         self.data = data
 
     def sort(self):
-        raise "Not implemented"
+        raise NotImplementedError("Cannot sort on base quicksort")
 
     def lessThan(self, a, b):
         '''
