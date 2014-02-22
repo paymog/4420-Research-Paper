@@ -240,14 +240,17 @@
 	
 	Sorting is a well studied topic in algorithms, in particular quicksort has been extensivly studied. 
 	The quicksort is particularly interesting because it is a comparatively simple algorithm which has an average asymptotic runtime equal to that of the mergesort and heapsort without any additional memory requirements; quicksorts can be done in place without additional time or code complexity. 
-	A major drawback of the quicksort is the it has a worst case complexity of $O(n\log n)$ unlike the mergesort or heapsort\cite{sedgewick1977analysis}.
+	A major drawback of the quicksort is the it has an average worst case complexity of $O(n\log n)$ unlike the mergesort or heapsort\cite{sedgewick1977analysis}.
 
 	Aumuller and Dietzfelbinger published a paper in ICALP 2013 titled "Optimal Partitioning for Dual Pivot Quicksort" where they explored the asymptotic runtime of various quicksort along with their respective partitioning algorithms\cite{Aumuller:2013:OPD:2525857.2525862}. 
-	Aumuller et al. mathematically demonstrated that dual pivot quicksorts are asymptotically lower bound by $1.8n\log n + o(n\log n)$ time where $n$ is the number of elements to be sorted. They generalized the math to describe any dual pivot quicksort algorithm and verified the asymptotic lower bounds of the classic quicksort and Yaroslavskiy's variation\cite{Wild:2012:ACA:2404160.2404231}. 
+	Aumuller et al. mathematically demonstrated that dual pivot quicksorts are asymptotically lower bound by $1.8n\log n + o(n\log n)$ time where $n$ is the number of elements to be sorted. 
+	They generalized the math to describe any dual pivot quicksort algorithm and verified the asymptotic lower bounds of the classic quicksort and Yaroslavskiy's variation\cite{Wild:2012:ACA:2404160.2404231}. 
 
-	We plan to first verify Aumuller's results and secondly to expand the scope of the original paper by mathematically describing all multi-partition variations. We will implement quicksort using various partitioning algorithms, again using varying number of partitions. We hope to determine if varying the number of paritions will yeild to a more efficent quicksort algorithm.
+	We plan to first verify Aumuller's results and secondly to expand the scope of the original paper by mathematically describing all multi-partition variations. 
+	We will implement quicksort using various partitioning algorithms, again using varying number of partitions. We hope to determine if varying the number of paritions will yeild to a more efficent quicksort algorithm.
 
-	The goal of this project is to investigate multi-paritioned quicksort, determine an optimal number of parititions and bring to light any of the challenges that arise from the mathematical analysis of multi-partition quicksorts. We're particularly interested in determining whether having more than two parititons provides any theoretical or experimental benefits.
+	The goal of this project is to investigate multi-paritioned quicksort, determine an optimal number of parititions and bring to light any of the challenges that arise from the mathematical analysis of multi-partition quicksorts. 
+	We're particularly interested in determining whether having more than two parititons provides any theoretical or experimental benefits.
 
 	The following is an estimated list of milestones we wish to accomplish on a weekly basis :
 	% Estimated time table
