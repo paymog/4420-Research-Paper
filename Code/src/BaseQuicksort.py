@@ -6,9 +6,34 @@ class BaseQuicksort():
     Base class for the quicksorts that we will implement
     '''
     def __init__(self, data):
-        self.numSwaps = 0
-        self.numComparisons = 0
-        self.data = data
+        self.__numSwaps = 0
+        self.__numComparisons = 0
+        self.__data = data
+
+    def getNumSwaps(self):
+        return self.__numSwaps
+    def setNumSwaps(self, value):
+        self.__numSwaps = value
+    def delNumSwaps(self):
+        del self.__numSwaps
+    numSwaps = property(getNumSwaps, setNumSwaps, delNumSwaps, "The number of swaps done by the sort algorithm")
+
+    def getNumComparisons(self):
+        return self.__numComparisons
+    def setNumComparisons(self, value):
+        self.__numComparisons = value
+    def delNumComparisons(self):
+        del self.__numComparisons
+    numComparisons = property(getNumComparisons, setNumComparisons,delNumComparisons, "The number of comparisons done by the sorting algorithm")
+
+    def getData(self):
+        return self.__data
+    def setData(self, value):
+        self.__data = value
+    def delData(self):
+        del self.__data
+    data = property(getData, setData,delData, "The data to be sorted")
+
 
     def sort(self):
         raise NotImplementedError("Cannot sort on base quicksort")

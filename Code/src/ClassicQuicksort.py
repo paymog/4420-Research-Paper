@@ -6,15 +6,15 @@ __author__ = 'paymahnmoghadasian'
 class ClassicQuicksort(BaseQuicksort):
     def __init__(self, data, doInsertionSort=False, insertionSortThreshold=10):
         BaseQuicksort.__init__(self, data)
-        self.doInsertionSort = doInsertionSort
-        self.insertionSortThreshold = insertionSortThreshold
+        self.__doInsertionSort = doInsertionSort
+        self.__insertionSortThreshold = insertionSortThreshold
 
     def sort(self):
         self.__sort(0, len(self.data))
         return self.data
 
     def __sort(self, lower, upper):
-        if self.doInsertionSort and upper - lower <= self.insertionSortThreshold:
+        if self.__doInsertionSort and upper - lower <= self.__insertionSortThreshold:
             self._insertionSort(lower, upper)
 
         if upper - lower <= 1:
