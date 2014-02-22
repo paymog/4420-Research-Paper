@@ -238,9 +238,12 @@
 
 	\section{Project Proposal}
 	
-	Sorting is a well studied topic in algorithms, in particular quicksort has been extensivly studied. The quicksort is particularly interesting because it is a comparatively simple algorithm which has an average asymptotic runtime equal to that of the mergesort and heapsort without any additional memory requirements; quicksorts can be done in place without additional time or code complexity. A major drawback of the quicksort is the it has a worst case complexity of $O(n\log n)$ unlike the mergesort or heapsort.
+	Sorting is a well studied topic in algorithms, in particular quicksort has been extensivly studied. 
+	The quicksort is particularly interesting because it is a comparatively simple algorithm which has an average asymptotic runtime equal to that of the mergesort and heapsort without any additional memory requirements; quicksorts can be done in place without additional time or code complexity. 
+	A major drawback of the quicksort is the it has a worst case complexity of $O(n\log n)$ unlike the mergesort or heapsort\cite{sedgewick1977analysis}.
 
-	Aumuller and Dietzfelbinger published a paper in ICALP 2013 titled "Optimal Partitioning for Dual Pivot Quicksort" where they explored the asymptotic runtime of various quicksort along with their respective partitioning algorithms. Aumuller et al. mathematically demonstrated that dual pivot quicksorts are asymptotically lower bound by $1.8n\log n + o(n\log n)$ time where $n$ is the number of elements to be sorted. They generalized the math to describe any dual pivot quicksort algorithm and verified the asymptotic lower bounds of the classic quicksort and Yaroslavskiy's variation. 
+	Aumuller and Dietzfelbinger published a paper in ICALP 2013 titled "Optimal Partitioning for Dual Pivot Quicksort" where they explored the asymptotic runtime of various quicksort along with their respective partitioning algorithms\cite{Aumuller:2013:OPD:2525857.2525862}. 
+	Aumuller et al. mathematically demonstrated that dual pivot quicksorts are asymptotically lower bound by $1.8n\log n + o(n\log n)$ time where $n$ is the number of elements to be sorted. They generalized the math to describe any dual pivot quicksort algorithm and verified the asymptotic lower bounds of the classic quicksort and Yaroslavskiy's variation\cite{Wild:2012:ACA:2404160.2404231}. 
 
 	We plan to first verify Aumuller's results and secondly to expand the scope of the original paper by mathematically describing all multi-partition variations. We will implement quicksort using various partitioning algorithms, again using varying number of partitions. We hope to determine if varying the number of paritions will yeild to a more efficent quicksort algorithm.
 
@@ -248,7 +251,7 @@
 
 	% Estimated time table
 	\begin{itemize}
-		\item Week 1
+		\item Week 1 (Week of March 2 to 8)
 		\begin{itemize}
 			\item Implement basic quicksort
 			\begin{itemize}
@@ -263,7 +266,7 @@
 				\begin{itemize}
 					\item The basic one
 				\end{itemize}
-				\item Each version has an insertion sort flag on arrays with small size
+				%\item Each version has an insertion sort flag on arrays with small size
 				\item Test functionaliy on small arrays
 			\end{itemize}
 			
@@ -281,24 +284,31 @@
 					\item make smalls then bigs
 					\item flag paritioning algorithm
 				\end{itemize}
-				\item Each version has an insertion sort flag on arrays with small size
+				%\item Each version has an insertion sort flag on arrays with small size
 				\item Test functionality on small arrays
 			\end{itemize}
 		\end{itemize}
 			
-		\item Week 2
+		\item Week 2 (Week of March 9 to 15)
 		\begin{itemize}
-			\item Implement 3 and 4 parition quicksorts
+			\item Implement 3 and 4 parition quicksorts (more if time allows)
 			\begin{itemize}
+				\item Piviot picking
+				\begin{itemize}
+					\item Basic Pivot selecion
+					\item Look and implement other piviot selection algorithms
+				\end{itemize}
 				\item Parition algorithm
-				\item Basic Parition 
-				\item Look for parition algorithms
-				\item Each version has an insertion sort flag on arrays with small size
+				\begin{itemize}
+					\item Basic Parition 
+					\item Look for parition algorithms
+				\end{itemize}
+				%\item Each version has an insertion sort flag on arrays with small size
 				\item Test functionallity on small arrays
 			\end{itemize}
 		\end{itemize}
 		
-		\item Week 3
+		\item Week 3 (Week of March 16 to 22)
 		\begin{itemize}
 			\item Run several experinments using all the quicksort algoirthms implemented
 			\item Run several arrays sizes
@@ -311,11 +321,15 @@
 			\end{itemize}
 			\item Preliminary analysis of data
 		\end{itemize}
-		\item Week 4
+		\item Week 4 (Week of March 23 to 29)
 		\begin{itemize}
 			\item Analyze data
-			\item Write paper
 			\item Make Presentation    
+		\end{itemize}
+		\item Week 5 (Week of March 30 to April 5)
+		\begin{itemize}
+			\item Continue Analyze data
+			\item Write paper
 		\end{itemize}
 	\end{itemize}
 
@@ -325,8 +339,8 @@
 	%****************************************************************************
 	\newpage
 	%\addcontentsline{toc}{section}{References}
-	%\bibliographystyle{ieeetr}
-	%\bibliography{refer}
+	\bibliographystyle{ieeetr}
+	\bibliography{refer}
 	\newpage
 	%\printindex
 	%****************************************************************************
