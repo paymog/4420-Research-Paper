@@ -1,0 +1,13 @@
+How to run tests:
+1) Install pip: http://pip.readthedocs.org/en/latest/installing.html
+2) open terminal
+3) run "pip install nose"
+4) cd to the folder containing all of the tests
+5) run "nosetests"
+
+How to write tests:
+1) Use relative imports to import the class under test
+	http://legacy.python.org/dev/peps/pep-0328/#guido-s-decision
+2) Write tests using unittest (http://docs.python.org/2/library/unittest.html)
+	**NOTE: nose doesn't require using unittest but we should decide on a standard and I think this is a safe choice
+
