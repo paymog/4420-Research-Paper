@@ -1,7 +1,7 @@
 __author__ = 'paymahnmoghadasian'
 
 import unittest
-from ..src.ClassicQuicksort import ClassicQuicksort
+from ..src.ClassicQuicksort import ClassicQuicksort, PivotSelectionMechanism
 
 
 class testSortAlgorithms(unittest.TestCase):
@@ -15,6 +15,8 @@ class testSortAlgorithms(unittest.TestCase):
 
     def testAlgs(self):
         self.runTest(ClassicQuicksort(None))
+        self.runTest(ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Last))
+        self.runTest(ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Median))
         self.runTest(ClassicQuicksort(None, True))
         self.runTest(ClassicQuicksort(None, True, 5))
-        self.runTest(ClassicQuicksort(None, True, 3))
+        self.runTest(ClassicQuicksort(None, True, pivotSelection=PivotSelectionMechanism.Median))
