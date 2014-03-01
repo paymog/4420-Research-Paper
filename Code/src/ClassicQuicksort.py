@@ -20,24 +20,27 @@ class ClassicQuicksort(BaseQuicksort):
         return self.data
 
     def __sort(self, lower, upper):
+        #check whether we should do an insertion sort instead of quicksort
         if self.__doInsertionSort and upper - lower <= self.__insertionSortThreshold:
             self._insertionSort(lower, upper)
 
+        #base cases
         if upper - lower <= 1:
             return
         if upper - lower == 2:
-
             if self.lessThan(self.data[upper-1], self.data[lower]):
                 self.swap(lower, upper-1)
             return
 
-        pivot = self.data[lower]
+        # recursive case
+        pivot = self.__selectPivot(lower, upper)
         i = lower+1
-        for j in range(lower, upper):
+        for j in range(lower+1, upper):
             if self.lessThan(self.data[j], pivot):
                 self.swap(i, j)
                 i += 1
 
+        #do the recursive calls
         self.swap(lower, i-1)
         self.__sort(lower, i-1)
         self.__sort(i, upper)
