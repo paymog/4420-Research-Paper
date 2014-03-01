@@ -66,3 +66,4 @@ nosetests.xml
 *.out
 *.synctex.gz
 *.fdb_latexmk
+*.brf
