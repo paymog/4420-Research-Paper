@@ -24,13 +24,20 @@ class DualPivotQuicksort(BaseQuicksort):
 
         lowerSwap = i = lower + 1
         upperSwap = upper - 2
-        while i < upperSwap:
+        while i <= upperSwap:
             if self.lessThan(self.data[i], smallPivot):
                 self.swap(i, lowerSwap)
                 lowerSwap += 1
             elif self.greaterThan(self.data[i], largePivot):
+                #don't want to swap stuff that's bigger than the largePivot
+                while i < upperSwap and self.greaterThan(self.data[upperSwap], largePivot):
+                    upperSwap -= 1
                 self.swap(i, upperSwap)
                 upperSwap -= 1
+
+                if self.lessThan(self.data[i], smallPivot):
+                    self.swap(i, lowerSwap)
+                    lowerSwap += 1
 
             i += 1
 
