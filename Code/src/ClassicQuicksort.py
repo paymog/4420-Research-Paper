@@ -23,6 +23,7 @@ class ClassicQuicksort(BaseQuicksort):
         #check whether we should do an insertion sort instead of quicksort
         if self.__doInsertionSort and upper - lower <= self.__insertionSortThreshold:
             self._insertionSort(lower, upper)
+            return
 
         #base cases
         if upper - lower <= 1:

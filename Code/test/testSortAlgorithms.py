@@ -2,14 +2,14 @@ __author__ = 'paymahnmoghadasian'
 
 import unittest
 from itertools import permutations
-from ..src.ClassicQuicksort import ClassicQuicksort, PivotSelectionMechanism
-from ..src.DualPivotQuicksort import DualPivotQuicksort
+from ..src.ClassicQuicksort import ClassicQuicksort, PivotSelectionMechanism as CPivot
+from ..src.DualPivotQuicksort import DualPivotQuicksort, PivotSelectionMechanism as DPivot
 
 
 class testSortAlgorithms(unittest.TestCase):
 
     def permutationTest(self, sortObject):
-        for i in range(3,7):
+        for i in range(2,7):
             for perm in permutations(range(1,i)):
                 sortObject.data = list(perm)
                 sortObject.sort()
@@ -24,38 +24,22 @@ class testSortAlgorithms(unittest.TestCase):
 
     def testAlgs(self):
         self.rangeTest(ClassicQuicksort(None))
-        self.rangeTest(ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Last))
-        self.rangeTest(ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Median))
+        self.rangeTest(ClassicQuicksort(None, pivotSelection=CPivot.Last))
+        self.rangeTest(ClassicQuicksort(None, pivotSelection=CPivot.Median))
         self.rangeTest(ClassicQuicksort(None, True))
         self.rangeTest(ClassicQuicksort(None, True, 5))
-        self.rangeTest(ClassicQuicksort(None, True, pivotSelection=PivotSelectionMechanism.Median))
+        self.rangeTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
         self.rangeTest(DualPivotQuicksort(None))
 
         self.permutationTest(ClassicQuicksort(None))
-        self.permutationTest(ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Last))
-        self.permutationTest(ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Median))
+        self.permutationTest(ClassicQuicksort(None, pivotSelection=CPivot.Last))
+        self.permutationTest(ClassicQuicksort(None, pivotSelection=CPivot.Median))
         self.permutationTest(ClassicQuicksort(None, True))
         self.permutationTest(ClassicQuicksort(None, True, 5))
-        self.permutationTest(ClassicQuicksort(None, True, pivotSelection=PivotSelectionMechanism.Median))
+        self.permutationTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
         self.permutationTest(DualPivotQuicksort(None))
+        self.permutationTest(DualPivotQuicksort(None, pivotSelection=DPivot.Tertiles))
 
 
-    def testDualPivotQuicksort(self):
-        sort = DualPivotQuicksort(None)
 
-        #other test cases
-        sort.data = [1,2,1,1]
-        sort.sort()
-        self.assertEqual([1,1,1,2], sort.data)
 
-        sort.data = [1,1,2,1]
-        sort.sort()
-        self.assertEqual([1,1,1,2], sort.data)
-
-        sort.data = [2,1,2,2]
-        sort.sort()
-        self.assertEqual([1,2,2,2], sort.data)
-
-        sort.data = [2,2,1,2]
-        sort.sort()
-        self.assertEqual([1,2,2,2], sort.data)
