@@ -4,6 +4,7 @@ import unittest
 from itertools import permutations
 from ..src.ClassicQuicksort import ClassicQuicksort, PivotSelectionMechanism as CPivot
 from ..src.DualPivotQuicksort import DualPivotQuicksort, PivotSelectionMechanism as DPivot
+from ..src.YaroslavskiyQuicksort import YaroslavskiyQuicksort
 
 
 class testSortAlgorithms(unittest.TestCase):
@@ -30,6 +31,7 @@ class testSortAlgorithms(unittest.TestCase):
         self.rangeTest(ClassicQuicksort(None, True, 5))
         self.rangeTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
         self.rangeTest(DualPivotQuicksort(None))
+        self.rangeTest(YaroslavskiyQuicksort(None))
 
         self.permutationTest(ClassicQuicksort(None))
         self.permutationTest(ClassicQuicksort(None, pivotSelection=CPivot.Last))
@@ -39,6 +41,7 @@ class testSortAlgorithms(unittest.TestCase):
         self.permutationTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
         self.permutationTest(DualPivotQuicksort(None))
         self.permutationTest(DualPivotQuicksort(None, pivotSelection=DPivot.Tertiles))
+        self.permutationTest(YaroslavskiyQuicksort(None))
 
 
 
