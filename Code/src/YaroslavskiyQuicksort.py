@@ -20,7 +20,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
         len = lower - upper
 
         if len < YaroslavskiyQuicksort.INSERTION_THRESHOLD:
-            self._insertionSort(lower, upper + 1)
+            self._insertionSort(lower, upper + 1) #plust 1 because insertion sort has an exclusive upper bound
             return
 
         sixth = len / 6
@@ -49,13 +49,13 @@ class YaroslavskiyQuicksort(BaseQuicksort):
         if self.greaterThan(self.data[m4], self.data[m5]):
             self.swap(m4,m5)
 
-        pivot1 = self.data[m2]
-        pivot2 = self.data[m4]
+
+        self.swap(lower, m2)
+        self.swap(upper, m4)
+        pivot1 = self.data[lower]
+        pivot2 = self.data[upper]
 
         diffPivots = pivot1 != pivot2
-
-        self.data[m2] = self.data[lower]
-        self.data[m4] = self.data[upper]
 
         less = lower + 1
         great = upper - 1
@@ -96,11 +96,8 @@ class YaroslavskiyQuicksort(BaseQuicksort):
                         self.swap(k, less)
                         less += 1
 
-        self.data[lower] = self.data[less - 1]
-        self.data[less - 1] = pivot1
-
-        self.data[upper] = self.data[great + 1]
-        self.data[great + 1] = pivot2
+        self.swap(less - 1, lower)
+        self.swap(great + 1, upper)
 
         self.__sort(lower, less - 1)
         self.__sort(great + 2, upper)
