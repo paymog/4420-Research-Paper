@@ -50,31 +50,12 @@ class YaroslavskiyQuicksort(BaseQuicksort):
             self.swap(m4,m5)
 
 
-
-        # middle = lower + (upper - lower) / 2
-        # left = lower + (middle - lower) / 2
-        # right = middle + (upper - middle) / 2
-        #
-        # #sort the potential pivot values and keep track of their index
-        # pivots = [(self.data[lower], lower), (self.data[left], left), (self.data[middle], middle),
-        #           (self.data[right], right), (self.data[upper], upper )]
-        # pivots = sorted(pivots)
-        #
-        # #put the desired pivots at the beginning and end of the range
-        # self.swap(lower, pivots[1][1])
-        # if self.equal(lower, pivots[3][1]):
-        #     self.swap(upper , pivots[1][1])
-        # else:
-        #     self.swap(upper , pivots[3][1])
-
-
-        pivot1 = self.data[m2]
-        pivot2 = self.data[m4]
+        self.swap(m2, left)
+        self.swap(m4, right)
+        pivot1 = self.data[left]
+        pivot2 = self.data[right]
 
         diffPivots = pivot1 != pivot2
-
-        self.data[m2] = self.data[left]
-        self.data[m4] = self.data[right]
 
         less = left + 1
         great = right - 1
@@ -123,11 +104,10 @@ class YaroslavskiyQuicksort(BaseQuicksort):
                         less += 1
 
                 k += 1
+
         # swap
-        self.data[left] = self.data[less - 1]
-        self.data[less - 1] = pivot1
-        self.data[right] = self.data[great + 1]
-        self.data[great + 1] = pivot2
+        self.swap(left, less -1)
+        self.swap(right, great + 1)
 
         #recursive calls
         self.__sort(left, less - 2)
