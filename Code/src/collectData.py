@@ -18,7 +18,7 @@ def mrange(lower, upper, power=2):
     return
 
 def generateData(minLength, maxLength, lowerBound, upperBound):
-    for i in mrange(minLength, maxLength, 9./4.):
+    for i in mrange(minLength, maxLength, 9./5.):
         data = [random.randint(lowerBound, upperBound) for _ in range(i)]
         yield data
 
@@ -37,7 +37,7 @@ headers = ("Name", "Length", "Used Insertion Sort", "Insertion Sort Threshold", 
 file.write("%s,%s,%s,%s,%s,%s,%s\n" % headers)
 
 str = "%s,%d,%s,%d,%f,%d,%d\n"
-for data in generateData(2,1000000, 0, 1e8):
+for data in generateData(2,1e7, 0, 1e8):
 
     dataLength = len(data)
     print dataLength
