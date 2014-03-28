@@ -1,5 +1,5 @@
 Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
-ClassicQuicksort,9999,False,10,0.397024,147996,74810
-ClassicQuicksort,9999,True,10,0.297032,149989,76201
-ClassicQuicksort,9999,True,17,0.408836,155073,83054
-YaroslavskiyQuicksort,9999,True,17,78.837584,24628482,24618493
+ClassicQuicksort,999,False,10,0.046156,10161,5533
+ClassicQuicksort,999,True,10,0.040901,10361,5660
+ClassicQuicksort,999,True,17,0.049198,10857,6353
+YaroslavskiyQuicksort,999,True,17,0.033577,11231,4561

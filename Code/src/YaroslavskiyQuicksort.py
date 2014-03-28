@@ -12,19 +12,19 @@ class YaroslavskiyQuicksort(BaseQuicksort):
     def sort(self):
         self.__sort(0, len(self.data) - 1)
 
-    def __sort(self, lower, upper):
+    def __sort(self, left, right):
         '''
         Note that the upper bound here is INCLUSIVE
         unlike other sort implementations
         '''
-        len = lower - upper
+        len = right - left
 
         if len < YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD:
-            self._insertionSort(lower, upper + 1) #plust 1 because insertion sort has an exclusive upper bound
+            self._insertionSort(left, right + 1) #plust 1 because insertion sort has an exclusive upper bound
             return
 
         sixth = len / 6
-        m1 = lower + sixth
+        m1 = left + sixth
         m2 = m1 + sixth
         m3 = m2 + sixth
         m4 = m3 + sixth
@@ -50,35 +50,60 @@ class YaroslavskiyQuicksort(BaseQuicksort):
             self.swap(m4,m5)
 
 
-        self.swap(lower, m2)
-        self.swap(upper, m4)
-        pivot1 = self.data[lower]
-        pivot2 = self.data[upper]
+
+        # middle = lower + (upper - lower) / 2
+        # left = lower + (middle - lower) / 2
+        # right = middle + (upper - middle) / 2
+        #
+        # #sort the potential pivot values and keep track of their index
+        # pivots = [(self.data[lower], lower), (self.data[left], left), (self.data[middle], middle),
+        #           (self.data[right], right), (self.data[upper], upper )]
+        # pivots = sorted(pivots)
+        #
+        # #put the desired pivots at the beginning and end of the range
+        # self.swap(lower, pivots[1][1])
+        # if self.equal(lower, pivots[3][1]):
+        #     self.swap(upper , pivots[1][1])
+        # else:
+        #     self.swap(upper , pivots[3][1])
+
+
+        pivot1 = self.data[m2]
+        pivot2 = self.data[m4]
 
         diffPivots = pivot1 != pivot2
 
-        less = lower + 1
-        great = upper - 1
+        self.data[m2] = self.data[left]
+        self.data[m4] = self.data[right]
+
+        less = left + 1
+        great = right - 1
 
         if diffPivots:
-            for k in xrange(less, great + 1):
+            k = less
+            while k <= great:
                 x = self.data[k]
 
                 if self.lessThan(x, pivot1):
                     self.swap(k, less)
                     less += 1
                 elif self.greaterThan(x, pivot2):
-                    while self.greaterThan(self.data[great], pivot2) and self.lessThan(k, great):
+                    while self.greaterThan(self.data[great], pivot2) and k < great:
                         great -= 1
                     self.swap(k, great)
                     great -= 1
+                    x = self.data[k]
 
                     if self.lessThan(x, pivot1):
                         self.swap(k, less)
                         less += 1
 
+                k += 1
+
         else:
-            for k in xrange(less, great + 1):
+            k = less
+            while k <= great:
+
                 x = self.data[k]
 
                 if self.equal(x, pivot1):
@@ -87,23 +112,31 @@ class YaroslavskiyQuicksort(BaseQuicksort):
                     self.swap(k, less)
                     less += 1
                 elif self.greaterThan(x, pivot2):
-                    while self.greaterThan(self.data[great], pivot2) and self.lessThan(k, great):
+                    while self.greaterThan(self.data[great], pivot2) and k < great:
                         great -= 1
                     self.swap(k, great)
                     great -= 1
+                    x = self.data[k]
 
                     if self.lessThan(x, pivot1):
                         self.swap(k, less)
                         less += 1
 
-        self.swap(less - 1, lower)
-        self.swap(great + 1, upper)
+                k += 1
+        # swap
+        self.data[left] = self.data[less - 1]
+        self.data[less - 1] = pivot1
+        self.data[right] = self.data[great + 1]
+        self.data[great + 1] = pivot2
 
-        self.__sort(lower, less - 1)
-        self.__sort(great + 2, upper)
+        #recursive calls
+        self.__sort(left, less - 2)
+        self.__sort(great + 2, right)
 
-        if upper - lower > len - YaroslavskiyQuicksort.DIST_SIZE and diffPivots:
-            for k in xrange(less, great + 1):
+        if great - less > len - YaroslavskiyQuicksort.DIST_SIZE and diffPivots:
+            k = less
+            while k <= great:
+
                 x = self.data[k]
 
                 if self.equal(x, pivot1):
@@ -117,5 +150,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
                     if self.equal(x, pivot1):
                         self.swap(k, less)
                         less += 1
+
+                k += 1
         if diffPivots:
             self.__sort(less, great)

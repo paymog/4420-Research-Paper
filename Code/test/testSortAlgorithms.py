@@ -10,18 +10,18 @@ from ..src.YaroslavskiyQuicksort import YaroslavskiyQuicksort
 class testSortAlgorithms(unittest.TestCase):
 
     def permutationTest(self, sortObject):
-        for i in range(2,7):
+        for i in range(2,9):
             for perm in permutations(range(1,i)):
                 sortObject.data = list(perm)
                 sortObject.sort()
                 self.assertEqual(range(1,i), sortObject.data, "Original Data %s" % str(perm))
 
     def rangeTest(self, sortObject):
-        for i in range(1,100):
+        for i in range(2,100):
             data = range(i)
             sortObject.data = data[::-1]
             sortObject.sort()
-            self.assertEqual(data, sortObject.data)
+            self.assertEqual(data, sortObject.data, "Original Data %s" % ",".join([str(a) for a in data[::-1]]))
 
     def testAlgs(self):
         self.rangeTest(ClassicQuicksort(None))
@@ -44,6 +44,11 @@ class testSortAlgorithms(unittest.TestCase):
         self.permutationTest(DualPivotQuicksort(None, pivotSelection=DPivot.Tertiles))
         self.permutationTest(YaroslavskiyQuicksort(None))
         self.permutationTest(DualPivotQuicksort(None, behaveOptimally=True))
+
+        # data = range(18)
+        # s = YaroslavskiyQuicksort(data[::-1])
+        # s.sort()
+        # self.assertEqual(data, s.data, "Original Data %s" % ",".join([str(a) for a in data[::-1]]))
 
 
 
