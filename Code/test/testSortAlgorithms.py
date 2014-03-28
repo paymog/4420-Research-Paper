@@ -32,6 +32,7 @@ class testSortAlgorithms(unittest.TestCase):
         self.rangeTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
         self.rangeTest(DualPivotQuicksort(None))
         self.rangeTest(YaroslavskiyQuicksort(None))
+        self.rangeTest(DualPivotQuicksort(None, behaveOptimally=True))
 
         self.permutationTest(ClassicQuicksort(None))
         self.permutationTest(ClassicQuicksort(None, pivotSelection=CPivot.Last))
@@ -42,7 +43,7 @@ class testSortAlgorithms(unittest.TestCase):
         self.permutationTest(DualPivotQuicksort(None))
         self.permutationTest(DualPivotQuicksort(None, pivotSelection=DPivot.Tertiles))
         self.permutationTest(YaroslavskiyQuicksort(None))
-
+        self.permutationTest(DualPivotQuicksort(None, behaveOptimally=True))
 
 
 

@@ -9,14 +9,91 @@ class PivotSelectionMechanism(Enum):
 
 class DualPivotQuicksort(BaseQuicksort):
 
-    def __init__(self, data, doInsertionSort=False, insertionSortThreshold=10, pivotSelection=PivotSelectionMechanism.Default):
+    def __init__(self, data, doInsertionSort=False, insertionSortThreshold=10, pivotSelection=PivotSelectionMechanism.Default, behaveOptimally=False):
         BaseQuicksort.__init__(self, data)
         self.__doInsertionSort = doInsertionSort
         self.__insertionSortThreshold = insertionSortThreshold
         self.__pivotSelection = pivotSelection
+        self.__behaveOptimally = behaveOptimally
 
     def sort(self):
         self.__sort(0, len(self.data))
+
+    def __partitionOptimally(self, largePivot, lower, smallPivot, upper):
+        lowerSwap = i = lower + 1
+        upperSwap = upper - 2
+        smallCount = largeCount = 0 # number of elements smaller than the small pivot and larger than the large pivot
+
+        while i <= upperSwap:
+            if smallCount >= largeCount:
+                if self.lessThan(self.data[i], smallPivot):
+                    self.swap(i, lowerSwap)
+                    lowerSwap += 1
+                    smallCount += 1
+                elif self.greaterThan(self.data[i], largePivot):
+                    #don't want to swap stuff that's bigger than the largePivot
+                    while i < upperSwap and self.greaterThan(self.data[upperSwap], largePivot):
+                        upperSwap -= 1
+
+                    self.swap(i, upperSwap)
+                    upperSwap -= 1
+                    largeCount += 1
+
+                    if self.lessThan(self.data[i], smallPivot):
+                        self.swap(i, lowerSwap)
+                        lowerSwap += 1
+                        smallCount += 1
+            else:
+                if self.greaterThan(self.data[i], largePivot):
+                    #don't want to swap stuff that's bigger than the largePivot
+                    while i < upperSwap and self.greaterThan(self.data[upperSwap], largePivot):
+                        upperSwap -= 1
+
+                    self.swap(i, upperSwap)
+                    upperSwap -= 1
+                    largeCount += 1
+
+                    if self.lessThan(self.data[i], smallPivot):
+                        self.swap(i, lowerSwap)
+                        lowerSwap += 1
+                        smallCount += 1
+
+                elif self.lessThan(self.data[i], smallPivot):
+                    self.swap(i, lowerSwap)
+                    lowerSwap += 1
+                    smallCount += 1
+
+            i += 1
+
+        return lowerSwap, upperSwap
+
+
+    def __partition(self, largePivot, lower, smallPivot, upper):
+
+        lowerSwap = i = lower + 1
+        upperSwap = upper - 2
+
+        if self.__behaveOptimally:
+            lowerSwap, upperSwap = self.__partitionOptimally(largePivot, lower, smallPivot, upper)
+        else:
+            while i <= upperSwap:
+                if self.lessThan(self.data[i], smallPivot):
+                    self.swap(i, lowerSwap)
+                    lowerSwap += 1
+                elif self.greaterThan(self.data[i], largePivot):
+                    #don't want to swap stuff that's bigger than the largePivot
+                    while i < upperSwap and self.greaterThan(self.data[upperSwap], largePivot):
+                        upperSwap -= 1
+                    self.swap(i, upperSwap)
+                    upperSwap -= 1
+
+                    if self.lessThan(self.data[i], smallPivot):
+                        self.swap(i, lowerSwap)
+                        lowerSwap += 1
+
+                i += 1
+
+        return lowerSwap, upperSwap
 
     def __sort(self, lower, upper):
 
@@ -38,24 +115,7 @@ class DualPivotQuicksort(BaseQuicksort):
         # if self.equal(smallPivot, largePivot):
         #     return
 
-        lowerSwap = i = lower + 1
-        upperSwap = upper - 2
-        while i <= upperSwap:
-            if self.lessThan(self.data[i], smallPivot):
-                self.swap(i, lowerSwap)
-                lowerSwap += 1
-            elif self.greaterThan(self.data[i], largePivot):
-                #don't want to swap stuff that's bigger than the largePivot
-                while i < upperSwap and self.greaterThan(self.data[upperSwap], largePivot):
-                    upperSwap -= 1
-                self.swap(i, upperSwap)
-                upperSwap -= 1
-
-                if self.lessThan(self.data[i], smallPivot):
-                    self.swap(i, lowerSwap)
-                    lowerSwap += 1
-
-            i += 1
+        lowerSwap, upperSwap = self.__partition(largePivot, lower, smallPivot, upper)
 
         self.swap(lower, lowerSwap - 1)
         self.swap(upper - 1, upperSwap + 1)
