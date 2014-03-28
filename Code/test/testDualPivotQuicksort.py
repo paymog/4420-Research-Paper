@@ -1,7 +1,7 @@
 __author__ = 'paymahnmoghadasian'
 
 import unittest
-from ..src.DualPivotQuicksort import DualPivotQuicksort, PivotSelectionMechanism
+from ..src.DualPivotQuicksort import DualPivotQuicksort
 
 class testDualPivotQuicksort(unittest.TestCase):
 
@@ -28,7 +28,7 @@ class testDualPivotQuicksort(unittest.TestCase):
 
 
     def test_TertilesPivot(self):
-        self.sort = DualPivotQuicksort(None, pivotSelection=PivotSelectionMechanism.Tertiles)
+        self.sort = DualPivotQuicksort(None, pivotSelection=2)
         self.sort.data = [4,1,2,3,5]
         self.sort.sort()
         self.assertEqual([1,2,3,4,5], self.sort.data)
@@ -62,7 +62,7 @@ class testDualPivotQuicksort(unittest.TestCase):
 
 
 
-        self.sort = DualPivotQuicksort(None, pivotSelection=PivotSelectionMechanism.Tertiles)
+        self.sort = DualPivotQuicksort(None, pivotSelection=2)
 
         # defaults to the defualt selection mechanism when the range isn't big enough
         self.sort.data = [2,3,4,5]

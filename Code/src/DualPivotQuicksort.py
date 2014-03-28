@@ -3,16 +3,20 @@ __author__ = 'paymahnmoghadasian'
 from BaseQuicksort import BaseQuicksort
 from enum import Enum
 
-class PivotSelectionMechanism(Enum):
-    Default = 1,
-    Tertiles = 2
 
 class DualPivotQuicksort(BaseQuicksort):
 
-    def __init__(self, data, doInsertionSort=False, insertionSortThreshold=10, pivotSelection=PivotSelectionMechanism.Default, behaveOptimally=False):
+    def __init__(self, data, doInsertionSort=False, insertionSortThreshold=10, pivotSelection=1, behaveOptimally=False):
+        '''
+        :param pivotSelection: This determines how pivots are chosen. There are exactly 2 valid values: 1 and 2. 1 is the default where the first and last values in the range are chosen. 2 is where tertiles are chosen.
+        '''
         BaseQuicksort.__init__(self, data)
         self.__doInsertionSort = doInsertionSort
         self.__insertionSortThreshold = insertionSortThreshold
+
+        if pivotSelection != 1 and pivotSelection != 2:
+            raise ValueError("The value of the pivot selection (%d) is invalid. Must be 1 or 2." % pivotSelection)
+
         self.__pivotSelection = pivotSelection
         self.__behaveOptimally = behaveOptimally
 
@@ -131,7 +135,7 @@ class DualPivotQuicksort(BaseQuicksort):
         '''
 
         # to do tertiles pivot selection, the range must be big enough
-        if upper - lower >= 5 and self.__pivotSelection == PivotSelectionMechanism.Tertiles:
+        if upper - lower >= 5 and self.__pivotSelection == 2:
             middle = lower + (upper - lower) / 2
             left = lower + (middle - lower) / 2
             right = middle + (upper - middle) / 2

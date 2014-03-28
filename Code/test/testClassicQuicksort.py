@@ -1,7 +1,7 @@
 __author__ = 'paymahnmoghadasian'
 
 import unittest
-from ..src.ClassicQuicksort import ClassicQuicksort, PivotSelectionMechanism
+from ..src.ClassicQuicksort import ClassicQuicksort
 
 class testClassicQuicksort(unittest.TestCase):
 
@@ -9,7 +9,7 @@ class testClassicQuicksort(unittest.TestCase):
         self.assertEqual(self.qsort._ClassicQuicksort__selectPivot(0, len(self.qsort.data)), expectedResult)
 
     def test_selectPivot_First(self):
-        self.qsort = ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.First)
+        self.qsort = ClassicQuicksort(None, pivotSelection=1)
 
         self.qsort.data = [1,2,3]
         self.assertPivot(1)
@@ -29,7 +29,7 @@ class testClassicQuicksort(unittest.TestCase):
 
 
     def test_selectPivot_Last(self):
-        self.qsort = ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Last)
+        self.qsort = ClassicQuicksort(None, pivotSelection=2)
 
         self.qsort.data = [1,2,3]
         self.assertPivot(3)
@@ -49,7 +49,7 @@ class testClassicQuicksort(unittest.TestCase):
 
 
     def test_selectPivot_Mediam(self):
-        self.qsort = ClassicQuicksort(None, pivotSelection=PivotSelectionMechanism.Median)
+        self.qsort = ClassicQuicksort(None, pivotSelection=3)
 
         self.qsort.data = [1,2,3]
         self.assertPivot(2)

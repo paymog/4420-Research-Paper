@@ -2,8 +2,8 @@ __author__ = 'paymahnmoghadasian'
 
 import unittest
 from itertools import permutations
-from ..src.ClassicQuicksort import ClassicQuicksort, PivotSelectionMechanism as CPivot
-from ..src.DualPivotQuicksort import DualPivotQuicksort, PivotSelectionMechanism as DPivot
+from ..src.ClassicQuicksort import ClassicQuicksort
+from ..src.DualPivotQuicksort import DualPivotQuicksort
 from ..src.YaroslavskiyQuicksort import YaroslavskiyQuicksort
 
 
@@ -29,11 +29,11 @@ class testSortAlgorithms(unittest.TestCase):
 
     def testAlgs(self):
         self.runPermAndRange(ClassicQuicksort(None))
-        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=CPivot.Last))
-        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=CPivot.Median))
+        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=2))
+        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=3))
         self.runPermAndRange(ClassicQuicksort(None, True))
         self.runPermAndRange(ClassicQuicksort(None, True, 5))
-        self.runPermAndRange(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
+        self.runPermAndRange(ClassicQuicksort(None, True, pivotSelection=3))
         self.runPermAndRange(DualPivotQuicksort(None))
         self.runPermAndRange(YaroslavskiyQuicksort(None))
         self.runPermAndRange(DualPivotQuicksort(None, behaveOptimally=True))
