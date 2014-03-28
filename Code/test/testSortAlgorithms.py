@@ -23,32 +23,20 @@ class testSortAlgorithms(unittest.TestCase):
             sortObject.sort()
             self.assertEqual(data, sortObject.data, "Original Data %s" % ",".join([str(a) for a in data[::-1]]))
 
+    def runPermAndRange(self, sorter):
+        self.rangeTest(sorter)
+        self.permutationTest(sorter)
+
     def testAlgs(self):
-        self.rangeTest(ClassicQuicksort(None))
-        self.rangeTest(ClassicQuicksort(None, pivotSelection=CPivot.Last))
-        self.rangeTest(ClassicQuicksort(None, pivotSelection=CPivot.Median))
-        self.rangeTest(ClassicQuicksort(None, True))
-        self.rangeTest(ClassicQuicksort(None, True, 5))
-        self.rangeTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
-        self.rangeTest(DualPivotQuicksort(None))
-        self.rangeTest(YaroslavskiyQuicksort(None))
-        self.rangeTest(DualPivotQuicksort(None, behaveOptimally=True))
-
-        self.permutationTest(ClassicQuicksort(None))
-        self.permutationTest(ClassicQuicksort(None, pivotSelection=CPivot.Last))
-        self.permutationTest(ClassicQuicksort(None, pivotSelection=CPivot.Median))
-        self.permutationTest(ClassicQuicksort(None, True))
-        self.permutationTest(ClassicQuicksort(None, True, 5))
-        self.permutationTest(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
-        self.permutationTest(DualPivotQuicksort(None))
-        self.permutationTest(DualPivotQuicksort(None, pivotSelection=DPivot.Tertiles))
-        self.permutationTest(YaroslavskiyQuicksort(None))
-        self.permutationTest(DualPivotQuicksort(None, behaveOptimally=True))
-
-        # data = range(18)
-        # s = YaroslavskiyQuicksort(data[::-1])
-        # s.sort()
-        # self.assertEqual(data, s.data, "Original Data %s" % ",".join([str(a) for a in data[::-1]]))
+        self.runPermAndRange(ClassicQuicksort(None))
+        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=CPivot.Last))
+        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=CPivot.Median))
+        self.runPermAndRange(ClassicQuicksort(None, True))
+        self.runPermAndRange(ClassicQuicksort(None, True, 5))
+        self.runPermAndRange(ClassicQuicksort(None, True, pivotSelection=CPivot.Median))
+        self.runPermAndRange(DualPivotQuicksort(None))
+        self.runPermAndRange(YaroslavskiyQuicksort(None))
+        self.runPermAndRange(DualPivotQuicksort(None, behaveOptimally=True))
 
 
 
