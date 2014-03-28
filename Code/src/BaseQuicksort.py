@@ -44,7 +44,7 @@ class BaseQuicksort():
         Lower is an inclusive bound
         Upper is an exclusive bound
         '''
-        for i in range(lower + 1, upper):
+        for i in xrange(lower + 1, upper):
             j = i
             while j > lower and self.lessThan(self.data[j], self.data[j-1]):
                 self.swap(j, j-1)

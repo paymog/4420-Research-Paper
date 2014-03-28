@@ -6,7 +6,7 @@ from BaseQuicksort import BaseQuicksort
 
 class YaroslavskiyQuicksort(BaseQuicksort):
 
-    INSERTION_THRESHOLD = 17
+    INSERTION_SORT_THRESHOLD = 17
     DIST_SIZE = 13
 
     def sort(self):
@@ -19,7 +19,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
         '''
         len = lower - upper
 
-        if len < YaroslavskiyQuicksort.INSERTION_THRESHOLD:
+        if len < YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD:
             self._insertionSort(lower, upper + 1) #plust 1 because insertion sort has an exclusive upper bound
             return
 
@@ -61,7 +61,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
         great = upper - 1
 
         if diffPivots:
-            for k in range(less, great + 1):
+            for k in xrange(less, great + 1):
                 x = self.data[k]
 
                 if self.lessThan(x, pivot1):
@@ -78,7 +78,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
                         less += 1
 
         else:
-            for k in range(less, great + 1):
+            for k in xrange(less, great + 1):
                 x = self.data[k]
 
                 if self.equal(x, pivot1):
@@ -103,7 +103,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
         self.__sort(great + 2, upper)
 
         if upper - lower > len - YaroslavskiyQuicksort.DIST_SIZE and diffPivots:
-            for k in range(less, great + 1):
+            for k in xrange(less, great + 1):
                 x = self.data[k]
 
                 if self.equal(x, pivot1):

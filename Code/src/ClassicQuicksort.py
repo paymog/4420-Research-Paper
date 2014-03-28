@@ -15,6 +15,18 @@ class ClassicQuicksort(BaseQuicksort):
         self.__insertionSortThreshold = insertionSortThreshold
         self.__pivotSelection = pivotSelection
 
+    def __getDoInsertionSort(self):
+        return self.__doInsertionSort
+    doInsertionSort = property(__getDoInsertionSort)
+
+    def __getInsertionSortThreshold(self):
+        return self.__insertionSortThreshold
+    insertionSortThreshold = property(__getInsertionSortThreshold)
+
+    def __getPivotSelection(self):
+        return self.__pivotSelection
+    pivotSelection = property(__getPivotSelection)
+
     def sort(self):
         self.__sort(0, len(self.data))
         return self.data
@@ -36,7 +48,7 @@ class ClassicQuicksort(BaseQuicksort):
         # recursive case
         pivot = self.__selectPivot(lower, upper)
         i = lower+1
-        for j in range(lower+1, upper):
+        for j in xrange(lower+1, upper):
             if self.lessThan(self.data[j], pivot):
                 self.swap(i, j)
                 i += 1
