@@ -2,7 +2,7 @@ __author__ = 'paymahn'
 
 import random
 from time import time
-import math
+import os
 
 from ClassicQuicksort import ClassicQuicksort
 from YaroslavskiyQuicksort import YaroslavskiyQuicksort
@@ -29,48 +29,64 @@ def timeSort(sorter):
     sorter.sort()
     return time() - start
 
-fileName = 'data.csv'
-file = open(fileName, 'w')
+def getFileName(fileName):
+    originalFileName = fileName
+    i = 1
+    while fileName in os.listdir(os.curdir):
+        fileName = originalFileName[:-4] + str(i) + originalFileName[-4:]
+        i+= 1
 
-headers = ("Name", "Length", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps")
+    return fileName
 
-file.write("%s,%s,%s,%s,%s,%s,%s\n" % headers)
-
-str = "%s,%d,%s,%d,%f,%d,%d\n"
-for data in generateData(2,1e7, 0, 1e8):
-
-    dataLength = len(data)
-    print dataLength
-
-    sorter = ClassicQuicksort(list(data))
-    sortTime = timeSort(sorter)
-    file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = ClassicQuicksort(list(data), True)
-    sortTime = timeSort(sorter)
-    file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = ClassicQuicksort(list(data), True, 17)
-    sortTime = timeSort(sorter)
-    file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = YaroslavskiyQuicksort(list(data))
-    sortTime = timeSort(sorter)
-    file.write(str % ('YaroslavskiyQuicksort', dataLength, True, YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = DualPivotQuicksort(list(data))
-    sortTime = timeSort(sorter)
-    file.write(str % ('DualPivot', dataLength, False, -1, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
-    sortTime = timeSort(sorter)
-    file.write(str % ('OptimalDualPivot', dataLength, False, -1, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
+def run(fileName, lowerBound=2, upperBound=1e6, lowerRange=0, upperRange=1e8):
 
 
-file.close()
+    file = open(getFileName(fileName), 'w')
+
+    # write the header
+    file.write("%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
+
+
+    str = "%s,%d,%s,%d,%f,%d,%d\n"
+    for data in generateData(lowerBound,upperBound, lowerRange, upperRange):
+
+        dataLength = len(data)
+        print dataLength
+
+        sorter = ClassicQuicksort(list(data))
+        sortTime = timeSort(sorter)
+        file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = ClassicQuicksort(list(data), True)
+        sortTime = timeSort(sorter)
+        file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = ClassicQuicksort(list(data), True, 17)
+        sortTime = timeSort(sorter)
+        file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = YaroslavskiyQuicksort(list(data))
+        sortTime = timeSort(sorter)
+        file.write(str % ('YaroslavskiyQuicksort', dataLength, True, YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = DualPivotQuicksort(list(data))
+        sortTime = timeSort(sorter)
+        file.write(str % ('DualPivot', dataLength, False, -1, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
+        sortTime = timeSort(sorter)
+        file.write(str % ('OptimalDualPivot', dataLength, False, -1, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+
+    file.close()
+
+
+if __name__ == '__main__':
+    # run('data.csv')
+    run('data.csv', upperBound=100)
