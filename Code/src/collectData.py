@@ -3,6 +3,7 @@ __author__ = 'paymahn'
 import random
 from time import time
 import os
+import argparse
 
 from ClassicQuicksort import ClassicQuicksort
 from YaroslavskiyQuicksort import YaroslavskiyQuicksort
@@ -12,7 +13,7 @@ from DualPivotQuicksort import DualPivotQuicksort
 def mrange(lower, upper, power=2):
     i = lower
     yield int(i)
-    while i < upper:
+    while i*power < upper:
         i = i*power
         yield int(i)
     return
@@ -29,7 +30,7 @@ def timeSort(sorter):
     sorter.sort()
     return time() - start
 
-def getFileName(fileName):
+def getUnusedFileName(fileName):
     originalFileName = fileName
     i = 1
     while fileName in os.listdir(os.curdir):
@@ -41,7 +42,7 @@ def getFileName(fileName):
 def run(fileName, lowerBound=2, upperBound=1e6, lowerRange=0, upperRange=1e8):
 
 
-    file = open(getFileName(fileName), 'w')
+    file = open(fileName, 'w')
 
     # write the header
     file.write("%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
@@ -87,6 +88,24 @@ def run(fileName, lowerBound=2, upperBound=1e6, lowerRange=0, upperRange=1e8):
     file.close()
 
 
+def getArgs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("fileName", help="The name of the file to write values to")
+    parser.add_argument("-lb", "--lowerBound", type=int, default=2, help="The smallest list length that should be sorted. Default 2.")
+    parser.add_argument("-ub", "--upperBound", type=int, default=1e8, help="The largest list length that should be sorted. Default 1e8.")
+    parser.add_argument("-lr", "--lowerRange", type=int, default=0, help="The smallest value in the list. Default 0.")
+    parser.add_argument("-ur", "--upperRange", type=int, default=1e9, help="The largest value in the list. Default 1e9.")
+    parser.add_argument("-n", "--noNewFile", action="store_true", help="Don't create new file if the specified file already exists.")
+
+    return parser.parse_args()
+
 if __name__ == '__main__':
     # run('data.csv')
-    run('data.csv', upperBound=100)
+    args = getArgs()
+
+    if not args.noNewFile:
+        fileName = getUnusedFileName(args.fileName)
+    else:
+        fileName = args.fileName
+
+    run(fileName, args.lowerBound, args.upperBound, args.lowerRange, args.upperRange)

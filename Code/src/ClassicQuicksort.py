@@ -1,5 +1,4 @@
-from src.BaseQuicksort import BaseQuicksort
-from enum import Enum
+from BaseQuicksort import BaseQuicksort
 
 __author__ = 'paymahnmoghadasian'
 
