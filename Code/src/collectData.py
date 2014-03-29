@@ -31,6 +31,9 @@ def timeSort(sorter):
     return time() - start
 
 def getUnusedFileName(fileName):
+    '''
+    Assumes that fileName has a 3 character extension such as 'csv'
+    '''
     originalFileName = fileName
     i = 1
     while fileName in os.listdir(os.curdir):
@@ -76,12 +79,22 @@ def run(fileName, lowerBound=2, upperBound=1e6, lowerRange=0, upperRange=1e8):
 
         sorter = DualPivotQuicksort(list(data))
         sortTime = timeSort(sorter)
-        file.write(str % ('DualPivot', dataLength, False, -1, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.write(str % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = DualPivotQuicksort(list(data), doInsertionSort=True)
+        sortTime = timeSort(sorter)
+        file.write(str % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
         file.flush()
 
         sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
         sortTime = timeSort(sorter)
-        file.write(str % ('OptimalDualPivot', dataLength, False, -1, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.write(str % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+        file.flush()
+
+        sorter = DualPivotQuicksort(list(data),doInsertionSort=True, behaveOptimally=True)
+        sortTime = timeSort(sorter)
+        file.write(str % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
         file.flush()
 
 

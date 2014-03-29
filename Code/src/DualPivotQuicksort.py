@@ -1,7 +1,6 @@
 __author__ = 'paymahnmoghadasian'
 
 from BaseQuicksort import BaseQuicksort
-from enum import Enum
 
 
 class DualPivotQuicksort(BaseQuicksort):
@@ -19,6 +18,18 @@ class DualPivotQuicksort(BaseQuicksort):
 
         self.__pivotSelection = pivotSelection
         self.__behaveOptimally = behaveOptimally
+
+    def __getDoInsertionSort(self):
+        return self.__doInsertionSort
+    doInsertionSort = property(__getDoInsertionSort)
+
+    def __getInsertionSortThreshold(self):
+        return self.__insertionSortThreshold
+    insertionSortThreshold = property(__getInsertionSortThreshold)
+
+    def __getPivotSelection(self):
+        return self.__pivotSelection
+    pivotSelection = property(__getPivotSelection)
 
     def sort(self):
         self.__sort(0, len(self.data))

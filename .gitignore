@@ -39,7 +39,7 @@ nosetests.xml
 */.idea/*
 
 # OSX metadata file
-*/.DS_Store
+*.DS_Store
 
 # LaTeX files
 *.aux
