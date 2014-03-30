@@ -29,14 +29,16 @@ class MPivotQuicksort(BaseQuicksort):
 
         pivots = self.__choosePivots(first, last)
 
-        # self._insertionSort(pivots[0]-1, last + 1)
+
         pivots = sorted(pivots)
+        self._insertionSort(pivots[0]-1, last + 1)
 
         nextStart = first
         for i, currPivot in enumerate(pivots):
             nextGreater = nextStart
             nextGreater = self.__partition(nextStart, nextGreater, currPivot)
             self.swap(nextGreater, currPivot)
+            pivots[i] = nextGreater
             self.swap(nextGreater + 1, currPivot + 1)
 
             if nextStart == first and pivots[i] > nextStart + 1:
@@ -71,7 +73,9 @@ class MPivotQuicksort(BaseQuicksort):
             self.swap(pivots[i]+1, last)
             last -= 1
             self.swap(pivots[i], last)
+            pivots[i] = last
             last -= 1
+
 
         return pivots
 
