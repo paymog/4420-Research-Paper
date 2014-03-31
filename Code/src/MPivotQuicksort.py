@@ -9,13 +9,11 @@ class MPivotQuicksort(BaseQuicksort):
     INSERTION_SORT_THRESHOLD = 13
 
     def __init__(self, data, numPivots, minHeapOptimization=False):
-        BaseQuicksort.__init__(self, data, True, MPivotQuicksort.INSERTION_SORT_THRESHOLD, 1)
-        self.__numPivots = numPivots
-        self.__minHeapOptimization = minHeapOptimization
+        if numPivots <= 0 or (data is not None and numPivots > len(data) / 2 and numPivots >= (MPivotQuicksort.INSERTION_SORT_THRESHOLD + 1)/2):
+            raise ValueError("Invalid value for the number of pivots. Must be greater than 0 and less than half the length of the data to be sorted")
 
-    def __getNumPivots(self):
-        return self.__numPivots
-    numPivots = property(__getNumPivots)
+        BaseQuicksort.__init__(self, data, True, MPivotQuicksort.INSERTION_SORT_THRESHOLD, 1, numPivots)
+        self.__minHeapOptimization = minHeapOptimization
 
     def sort(self):
         self.__sort(0, len(self.data) - 1)
@@ -29,7 +27,6 @@ class MPivotQuicksort(BaseQuicksort):
         diff = last - first + 1
         offset = first
         for i in range(diff):
-
             leftChildIndex = 2 * i + 1
             rightChildIndex = 2 * i + 2
 
@@ -87,10 +84,10 @@ class MPivotQuicksort(BaseQuicksort):
 
 
     def __choosePivots(self, first, last):
-        pivots = range(self.__numPivots)
+        pivots = range(self.numPivots)
 
         size = last - first + 1
-        segments = self.__numPivots + 1
+        segments = self.numPivots + 1
         candidate = size / segments - 1
 
         next = 2
@@ -98,11 +95,11 @@ class MPivotQuicksort(BaseQuicksort):
             next = candidate + 1
 
         candidate += first
-        for i in range(self.__numPivots):
+        for i in range(self.numPivots):
             pivots[i] = candidate
             candidate += next
 
-        for i in reversed(range(self.__numPivots)):
+        for i in reversed(range(self.numPivots)):
             self.swap(pivots[i]+1, last)
             last -= 1
             self.swap(pivots[i], last)

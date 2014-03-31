@@ -5,17 +5,22 @@ class BaseQuicksort():
     '''
     Base class for the quicksorts that we will implement
     '''
-    def __init__(self, data, doInsertionSort = False, insertionSortThreshold=13, pivotSelection=1):
+    def __init__(self, data, doInsertionSort = False, insertionSortThreshold=13, pivotSelection=1, numPivots=1):
         self.__numSwaps = 0
         self.__numComparisons = 0
         self.__data = data
         self.__doInsertionSort = doInsertionSort
         self.__insertionSortThreshold = insertionSortThreshold
         self.__pivotSelection = pivotSelection
+        self.__numPivots = numPivots
 
     def __getPivotSelection(self):
         return self.__pivotSelection
     pivotSelection = property(__getPivotSelection)
+
+    def __getNumPivots(self):
+        return self.__numPivots
+    numPivots = property(__getNumPivots)
 
     def __getInsertionSortThreshold(self):
         return self.__insertionSortThreshold

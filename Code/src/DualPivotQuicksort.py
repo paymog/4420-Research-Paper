@@ -13,7 +13,7 @@ class DualPivotQuicksort(BaseQuicksort):
         if pivotSelection != 1 and pivotSelection != 2:
             raise ValueError("The value of the pivot selection (%d) is invalid. Must be 1 or 2." % pivotSelection)
 
-        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, pivotSelection)
+        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, pivotSelection, 2)
 
         self.__behaveOptimally = behaveOptimally
 

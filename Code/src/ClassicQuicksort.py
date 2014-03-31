@@ -11,7 +11,7 @@ class ClassicQuicksort(BaseQuicksort):
             raise ValueError("The value of the pivot selection (%d) is invalid. Must be 1 or 2." % self.pivotSelection)
 
 
-        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, pivotSelection)
+        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, pivotSelection, 1)
 
 
     def sort(self):

@@ -46,7 +46,9 @@ def getUnusedFileName(fileName):
 
 def collectDataForSort(sorter, sorterName, file, dataLength):
     sortTime = timeSort(sorter)
-    file.write("%s,%d,%d,%s,%d,%f,%d,%d\n" % (sorterName, dataLength, sorter.pivotSelection, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.write("%s,%d,%d,%d,%s,%d,%f,%d,%d\n" % (sorterName, dataLength, sorter.pivotSelection, sorter.numPivots,
+                                                 sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime,
+                                                 sorter.numComparisons, sorter.numSwaps))
     file.flush()
 
 def collectDataForClassicQuicksort(data, file, dataLength):
@@ -86,7 +88,7 @@ def collectDataForDualPivotQuicksort(data, file, dataLength):
     collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
 
     sorter = DualPivotQuicksort(list(data),doInsertionSort=True, insertionSortThreshold=17, behaveOptimally=True)
-    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+    collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
 
     ################# TERTILES PIVOT SELECTION ######################
     sorter = DualPivotQuicksort(list(data), pivotSelection=2)
@@ -99,7 +101,7 @@ def collectDataForDualPivotQuicksort(data, file, dataLength):
     collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
 
     sorter = DualPivotQuicksort(list(data),doInsertionSort=True, insertionSortThreshold=17, behaveOptimally=True, pivotSelection=2)
-    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+    collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
 
 def sortData(data):
     fileName = 'data' + str(len(data)) + '.csv'
@@ -107,7 +109,7 @@ def sortData(data):
     file = open(fileName, 'w')
 
     # write the header
-    file.write("%s,%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Median Selection", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
+    file.write("%s,%s,%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Median Selection", "Num Pivots", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
 
     dataLength = len(data)
     print dataLength
