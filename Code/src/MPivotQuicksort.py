@@ -9,7 +9,7 @@ class MPivotQuicksort(BaseQuicksort):
     INSERTION_SORT_THRESHOLD = 13
 
     def __init__(self, data, numPivots, minHeapOptimization=False):
-        if numPivots <= 0 or (data is not None and numPivots > len(data) / 2 and numPivots >= (MPivotQuicksort.INSERTION_SORT_THRESHOLD + 1)/2):
+        if numPivots <= 0 or (data is not None and 2*numPivots > len(data) and 2*numPivots > MPivotQuicksort.INSERTION_SORT_THRESHOLD):
             raise ValueError("Invalid value for the number of pivots. Must be greater than 0 and less than half the length of the data to be sorted")
 
         BaseQuicksort.__init__(self, data, True, MPivotQuicksort.INSERTION_SORT_THRESHOLD, 1, numPivots)
