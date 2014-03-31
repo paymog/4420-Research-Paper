@@ -5,6 +5,8 @@ from time import time
 import os
 import argparse
 
+from multiprocessing.dummy import Pool as ThreadPool
+
 from ClassicQuicksort import ClassicQuicksort
 from YaroslavskiyQuicksort import YaroslavskiyQuicksort
 from DualPivotQuicksort import DualPivotQuicksort
@@ -19,7 +21,7 @@ def mrange(lower, upper, power=2):
     return
 
 def generateData(minLength, maxLength, lowerBound, upperBound):
-    for i in mrange(minLength, maxLength, 9./5.):
+    for i in mrange(minLength, maxLength, 9./7.):
         data = [random.randint(lowerBound, upperBound) for _ in range(i)]
         yield data
 
@@ -42,83 +44,102 @@ def getUnusedFileName(fileName):
 
     return fileName
 
-def run(fileName, lowerBound=2, upperBound=1e6, lowerRange=0, upperRange=1e8):
-
+def sortData(data):
+    fileName = 'data' + str(len(data)) + '.csv'
 
     file = open(fileName, 'w')
 
     # write the header
     file.write("%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
+    asddfsd = "%s,%d,%s,%d,%f,%d,%d\n"
 
+    dataLength = len(data)
+    print dataLength
 
-    str = "%s,%d,%s,%d,%f,%d,%d\n"
-    for data in generateData(lowerBound,upperBound, lowerRange, upperRange):
+    sorter = ClassicQuicksort(list(data))
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        dataLength = len(data)
-        print dataLength
+    sorter = ClassicQuicksort(list(data), True)
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        sorter = ClassicQuicksort(list(data))
-        sortTime = timeSort(sorter)
-        file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
+    sorter = ClassicQuicksort(list(data), True, 17)
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        sorter = ClassicQuicksort(list(data), True)
-        sortTime = timeSort(sorter)
-        file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
+    sorter = YaroslavskiyQuicksort(list(data))
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('YaroslavskiyQuicksort', dataLength, True, YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        sorter = ClassicQuicksort(list(data), True, 17)
-        sortTime = timeSort(sorter)
-        file.write(str % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
+    sorter = DualPivotQuicksort(list(data))
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        sorter = YaroslavskiyQuicksort(list(data))
-        sortTime = timeSort(sorter)
-        file.write(str % ('YaroslavskiyQuicksort', dataLength, True, YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
+    sorter = DualPivotQuicksort(list(data), doInsertionSort=True)
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        sorter = DualPivotQuicksort(list(data))
-        sortTime = timeSort(sorter)
-        file.write(str % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
+    sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
-        sorter = DualPivotQuicksort(list(data), doInsertionSort=True)
-        sortTime = timeSort(sorter)
-        file.write(str % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
-
-        sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
-        sortTime = timeSort(sorter)
-        file.write(str % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
-
-        sorter = DualPivotQuicksort(list(data),doInsertionSort=True, behaveOptimally=True)
-        sortTime = timeSort(sorter)
-        file.write(str % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-        file.flush()
-
+    sorter = DualPivotQuicksort(list(data),doInsertionSort=True, behaveOptimally=True)
+    sortTime = timeSort(sorter)
+    file.write(asddfsd % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
 
     file.close()
+
+def run(minLength, maxLength, lowerRange, upperRange):
+
+    pool = ThreadPool(4)
+
+    data = []
+    for a in generateData(minLength, maxLength, lowerRange, upperRange):
+        # print a
+        data.append(a)
+
+    results = pool.map(sortData, data)
+
+    pool.close()
+    pool.join()
+
+    print results
+
+def processDataFiles():
+
+    dataFiles = [a for a in os.listdir(os.curdir) if 'data' in a and '.csv' in a]
+
+    with open('data.csv', 'w') as outfile:
+        for fname in dataFiles:
+            with open(fname) as infile:
+                for line in infile:
+                    outfile.write(line)
+
+    for fname in dataFiles:
+        os.remove(fname)
 
 
 def getArgs():
     parser = argparse.ArgumentParser()
-    parser.add_argument("fileName", help="The name of the file to write values to")
-    parser.add_argument("-lb", "--lowerBound", type=int, default=2, help="The smallest list length that should be sorted. Default 2.")
-    parser.add_argument("-ub", "--upperBound", type=int, default=1e8, help="The largest list length that should be sorted. Default 1e8.")
+    parser.add_argument("-min", "--minLength", type=int, default=4, help="The smallest list length that should be sorted. Default 2.")
+    parser.add_argument("-max", "--maxLength", type=int, default=1e8, help="The largest list length that should be sorted. Default 1e8.")
     parser.add_argument("-lr", "--lowerRange", type=int, default=0, help="The smallest value in the list. Default 0.")
     parser.add_argument("-ur", "--upperRange", type=int, default=1e9, help="The largest value in the list. Default 1e9.")
-    parser.add_argument("-n", "--noNewFile", action="store_true", help="Don't create new file if the specified file already exists.")
 
     return parser.parse_args()
 
 if __name__ == '__main__':
-    # run('data.csv')
     args = getArgs()
 
-    if not args.noNewFile:
-        fileName = getUnusedFileName(args.fileName)
-    else:
-        fileName = args.fileName
+    run(args.minLength, args.maxLength, args.lowerRange, args.upperRange)
 
-    run(fileName, args.lowerBound, args.upperBound, args.lowerRange, args.upperRange)
+    processDataFiles()

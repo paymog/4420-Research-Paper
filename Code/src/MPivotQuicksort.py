@@ -63,7 +63,7 @@ class MPivotQuicksort(BaseQuicksort):
         pivots = self.__choosePivots(first, last)
 
 
-        pivots = sorted(pivots)
+        pivots = self._insertionSort(pivots, 0, len(pivots))
         self._insertionSort(self.data, pivots[0]-1, last + 1)
 
         nextStart = first
@@ -74,14 +74,14 @@ class MPivotQuicksort(BaseQuicksort):
             pivots[i] = nextGreater
             self.swap(nextGreater + 1, currPivot + 1)
 
-            if nextStart == first and pivots[i] > nextStart + 1:
+            if self.equal(nextStart, first) and self.greaterThan(pivots[i], nextStart + 1):
                 self.__sort(nextStart, pivots[i] - 1)
 
-            if nextStart != first and pivots[i] > pivots[i-1] + 2:
+            if not self.equal(nextStart, first) and self.greaterThan(pivots[i], pivots[i-1] + 2):
                 self.__sort(pivots[i-1]+1, pivots[i]+1)
 
             nextStart = nextGreater + 2
-        if last > pivots[-1] + 1:
+        if self.greaterThan(last, pivots[-1] + 1):
             self.__sort(pivots[-1]+1, last)
 
 

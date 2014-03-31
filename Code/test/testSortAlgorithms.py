@@ -29,22 +29,19 @@ class testSortAlgorithms(unittest.TestCase):
         self.permutationTest(sorter)
 
     def testAlgs(self):
-        # self.runPermAndRange(ClassicQuicksort(None))
-        # self.runPermAndRange(ClassicQuicksort(None, pivotSelection=2))
-        # self.runPermAndRange(ClassicQuicksort(None, pivotSelection=3))
-        # self.runPermAndRange(ClassicQuicksort(None, True))
-        # self.runPermAndRange(ClassicQuicksort(None, True, 5))
-        # self.runPermAndRange(ClassicQuicksort(None, True, pivotSelection=3))
-        # self.runPermAndRange(DualPivotQuicksort(None))
-        # self.runPermAndRange(YaroslavskiyQuicksort(None))
-        # self.runPermAndRange(DualPivotQuicksort(None, behaveOptimally=True))
+        self.runPermAndRange(ClassicQuicksort(None))
+        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=2))
+        self.runPermAndRange(ClassicQuicksort(None, pivotSelection=3))
+        self.runPermAndRange(ClassicQuicksort(None, True))
+        self.runPermAndRange(ClassicQuicksort(None, True, 5))
+        self.runPermAndRange(ClassicQuicksort(None, True, pivotSelection=3))
+        self.runPermAndRange(DualPivotQuicksort(None))
+        self.runPermAndRange(YaroslavskiyQuicksort(None))
+        self.runPermAndRange(DualPivotQuicksort(None, behaveOptimally=True))
 
         for i in range(1,7):
             self.runPermAndRange(MPivotQuicksort(None, i))
+            self.runPermAndRange(MPivotQuicksort(None, i, minHeapOptimization=True))
 
-        # data = [random.randint(0,1000) for _ in range(100)]
-        # s = MPivotQuicksort(list(data), 1)
-        # s.sort();
-        # print s.data
 
 

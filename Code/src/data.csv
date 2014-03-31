@@ -1,0 +1,117 @@
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,10,False,10,0.000197,24,18
+ClassicQuicksort,10,True,10,0.000299,35,28
+ClassicQuicksort,10,True,17,0.000311,35,28
+YaroslavskiyQuicksort,10,True,17,0.000332,35,28
+DualPivot,10,False,10,0.000185,29,14
+DualPivot,10,True,10,0.000386,35,28
+OptimalDualPivot,10,False,10,0.000125,29,14
+OptimalDualPivot,10,True,10,0.000146,35,28
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,14,False,10,0.000766,41,27
+ClassicQuicksort,14,True,10,0.000169,40,27
+ClassicQuicksort,14,True,17,0.000215,53,43
+YaroslavskiyQuicksort,14,True,17,0.000226,53,43
+DualPivot,14,False,10,0.000196,47,21
+DualPivot,14,True,10,0.000117,36,13
+OptimalDualPivot,14,False,10,0.000191,47,21
+OptimalDualPivot,14,True,10,0.000121,36,13
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,18,False,10,0.001259,54,41
+ClassicQuicksort,18,True,10,0.000214,56,41
+ClassicQuicksort,18,True,17,0.000261,71,56
+YaroslavskiyQuicksort,18,True,17,0.000304,66,43
+DualPivot,18,False,10,0.000293,63,37
+DualPivot,18,True,10,0.000233,59,36
+OptimalDualPivot,18,False,10,0.000364,63,37
+OptimalDualPivot,18,True,10,0.000214,59,36
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,23,False,10,0.000351,77,49
+ClassicQuicksort,23,True,10,0.000289,83,49
+ClassicQuicksort,23,True,17,0.000454,116,85
+YaroslavskiyQuicksort,23,True,17,0.000347,89,55
+DualPivot,23,False,10,0.000364,83,51
+DualPivot,23,True,10,0.000292,84,46
+OptimalDualPivot,23,False,10,0.000377,83,51
+OptimalDualPivot,23,True,10,0.000303,84,46
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,29,False,10,0.000463,105,64
+ClassicQuicksort,29,True,10,0.000449,111,75
+ClassicQuicksort,29,True,17,0.000481,122,89
+YaroslavskiyQuicksort,29,True,17,0.000450,123,78
+DualPivot,29,False,10,0.000568,126,71
+DualPivot,29,True,10,0.025737,120,67
+OptimalDualPivot,29,False,10,0.000788,126,71
+OptimalDualPivot,29,True,10,0.000462,120,67
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,38,False,10,0.000651,151,81
+ClassicQuicksort,38,True,10,0.000473,156,83
+ClassicQuicksort,38,True,17,0.000603,186,128
+YaroslavskiyQuicksort,38,True,17,0.003454,247,181
+DualPivot,38,False,10,0.000666,166,101
+DualPivot,38,True,10,0.009964,160,91
+OptimalDualPivot,38,False,10,0.000667,166,101
+OptimalDualPivot,38,True,10,0.000603,161,91
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,4,False,10,0.000061,4,4
+ClassicQuicksort,4,True,10,0.000044,6,4
+ClassicQuicksort,4,True,17,0.000041,6,4
+YaroslavskiyQuicksort,4,True,17,0.000082,6,4
+DualPivot,4,False,10,0.000057,6,6
+DualPivot,4,True,10,0.000060,6,4
+OptimalDualPivot,4,False,10,0.000051,6,6
+OptimalDualPivot,4,True,10,0.000030,6,4
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,49,False,10,0.008140,270,161
+ClassicQuicksort,49,True,10,0.009055,253,153
+ClassicQuicksort,49,True,17,0.002646,328,236
+YaroslavskiyQuicksort,49,True,17,0.001981,258,118
+DualPivot,49,False,10,0.002353,267,118
+DualPivot,49,True,10,0.002015,258,116
+OptimalDualPivot,49,False,10,0.001052,265,118
+OptimalDualPivot,49,True,10,0.000740,257,116
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,5,False,10,0.000071,8,9
+ClassicQuicksort,5,True,10,0.000404,8,5
+ClassicQuicksort,5,True,17,0.000052,8,5
+YaroslavskiyQuicksort,5,True,17,0.000047,8,5
+DualPivot,5,False,10,0.000123,7,7
+DualPivot,5,True,10,0.000044,8,5
+OptimalDualPivot,5,False,10,0.000059,7,7
+OptimalDualPivot,5,True,10,0.022974,8,5
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,6,False,10,0.003686,14,9
+ClassicQuicksort,6,True,10,0.000073,13,8
+ClassicQuicksort,6,True,17,0.000058,13,8
+YaroslavskiyQuicksort,6,True,17,0.000059,13,8
+DualPivot,6,False,10,0.000065,13,8
+DualPivot,6,True,10,0.000046,13,8
+OptimalDualPivot,6,False,10,0.030269,13,8
+OptimalDualPivot,6,True,10,0.000051,13,8
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,63,False,10,0.001339,326,165
+ClassicQuicksort,63,True,10,0.001319,350,195
+ClassicQuicksort,63,True,17,0.001455,373,220
+YaroslavskiyQuicksort,63,True,17,0.001519,396,235
+DualPivot,63,False,10,0.009770,418,165
+DualPivot,63,True,10,0.007163,395,151
+OptimalDualPivot,63,False,10,0.004297,399,165
+OptimalDualPivot,63,True,10,0.005264,376,151
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,8,False,10,0.000087,18,10
+ClassicQuicksort,8,True,10,0.001045,15,8
+ClassicQuicksort,8,True,17,0.000064,15,8
+YaroslavskiyQuicksort,8,True,17,0.000084,15,8
+DualPivot,8,False,10,0.000176,23,11
+DualPivot,8,True,10,0.000061,15,8
+OptimalDualPivot,8,False,10,0.000116,23,11
+OptimalDualPivot,8,True,10,0.000050,15,8
+Name,Length,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps
+ClassicQuicksort,81,False,10,0.006220,471,329
+ClassicQuicksort,81,True,10,0.008058,484,322
+ClassicQuicksort,81,True,17,0.009676,555,401
+YaroslavskiyQuicksort,81,True,17,0.001733,584,285
+DualPivot,81,False,10,0.001526,486,226
+DualPivot,81,True,10,0.001397,486,230
+OptimalDualPivot,81,False,10,0.001401,487,226
+OptimalDualPivot,81,True,10,0.001421,488,230
