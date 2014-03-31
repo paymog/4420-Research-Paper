@@ -8,9 +8,10 @@ class MPivotQuicksort(BaseQuicksort):
 
     INSERTION_SORT_THRESHOLD = 13
 
-    def __init__(self, data, numPivots):
+    def __init__(self, data, numPivots, minHeapOptimization=False):
         BaseQuicksort.__init__(self, data)
         self.__numPivots = numPivots
+        self.__minHeapOptimization = minHeapOptimization
 
     def __getNumPivots(self):
         return self.__numPivots
@@ -19,6 +20,35 @@ class MPivotQuicksort(BaseQuicksort):
     def sort(self):
         self.__sort(0, len(self.data) - 1)
 
+    def __minHeapify(self, first, last):
+        '''
+        make self.data[first] to self.data[last] satisfy the min heap property
+        :param first: inclusive lower bound on what part of the data should be heapified
+        :param last: inclusive upper bound on what part of the data should be heapified
+        '''
+        diff = last - first + 1
+        offset = first
+        for i in range(diff):
+
+            leftChildIndex = 2 * i + 1
+            rightChildIndex = 2 * i + 2
+
+            hasLeftChild = leftChildIndex < diff
+            hasRightChild = rightChildIndex < diff
+
+            if not hasLeftChild:
+                # curernt element has no "children". No further elements will either
+                break
+
+            minChildIndex = leftChildIndex
+            if hasRightChild and self.lessThan(self.data[rightChildIndex + offset], self.data[leftChildIndex + offset]):
+                minChildIndex = rightChildIndex
+
+            if self.greaterThan(self.data[i + offset], self.data[minChildIndex + offset]):
+                self.swap(i + offset, minChildIndex + offset)
+
+
+
     def __sort(self, first, last):
         if first >= last or first < 0:
             return
@@ -26,6 +56,9 @@ class MPivotQuicksort(BaseQuicksort):
         if last - first < MPivotQuicksort.INSERTION_SORT_THRESHOLD:
             self._insertionSort(first, last + 1)
             return
+
+        if self.__minHeapOptimization:
+            self.__minHeapify(first, last)
 
         pivots = self.__choosePivots(first, last)
 
