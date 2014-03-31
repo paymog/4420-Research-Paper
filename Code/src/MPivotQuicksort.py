@@ -9,7 +9,7 @@ class MPivotQuicksort(BaseQuicksort):
     INSERTION_SORT_THRESHOLD = 13
 
     def __init__(self, data, numPivots, minHeapOptimization=False):
-        BaseQuicksort.__init__(self, data)
+        BaseQuicksort.__init__(self, data, True, MPivotQuicksort.INSERTION_SORT_THRESHOLD, 1)
         self.__numPivots = numPivots
         self.__minHeapOptimization = minHeapOptimization
 

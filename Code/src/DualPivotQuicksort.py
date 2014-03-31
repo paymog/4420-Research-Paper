@@ -9,27 +9,13 @@ class DualPivotQuicksort(BaseQuicksort):
         '''
         :param pivotSelection: This determines how pivots are chosen. There are exactly 2 valid values: 1 and 2. 1 is the default where the first and last values in the range are chosen. 2 is where tertiles are chosen.
         '''
-        BaseQuicksort.__init__(self, data)
-        self.__doInsertionSort = doInsertionSort
-        self.__insertionSortThreshold = insertionSortThreshold
 
         if pivotSelection != 1 and pivotSelection != 2:
             raise ValueError("The value of the pivot selection (%d) is invalid. Must be 1 or 2." % pivotSelection)
 
-        self.__pivotSelection = pivotSelection
+        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, pivotSelection)
+
         self.__behaveOptimally = behaveOptimally
-
-    def __getDoInsertionSort(self):
-        return self.__doInsertionSort
-    doInsertionSort = property(__getDoInsertionSort)
-
-    def __getInsertionSortThreshold(self):
-        return self.__insertionSortThreshold
-    insertionSortThreshold = property(__getInsertionSortThreshold)
-
-    def __getPivotSelection(self):
-        return self.__pivotSelection
-    pivotSelection = property(__getPivotSelection)
 
     def sort(self):
         self.__sort(0, len(self.data))
@@ -113,7 +99,7 @@ class DualPivotQuicksort(BaseQuicksort):
     def __sort(self, lower, upper):
 
         #check whether we should do an insertion sort instead of quicksort
-        if self.__doInsertionSort and upper - lower <= self.__insertionSortThreshold:
+        if self.doInsertionSort and upper - lower <= self.insertionSortThreshold:
             self._insertionSort(self.data, lower, upper)
             return
 
@@ -146,7 +132,7 @@ class DualPivotQuicksort(BaseQuicksort):
         '''
 
         # to do tertiles pivot selection, the range must be big enough
-        if upper - lower >= 5 and self.__pivotSelection == 2:
+        if upper - lower >= 5 and self.pivotSelection == 2:
             middle = lower + (upper - lower) / 2
             left = lower + (middle - lower) / 2
             right = middle + (upper - middle) / 2

@@ -7,26 +7,12 @@ class ClassicQuicksort(BaseQuicksort):
         '''
         :param pivotSelection: Determines how the pivot should be chosen. 1 = 1st in range. 2 = last in range. 3 = median of first, middle and last in range.
         '''
-        BaseQuicksort.__init__(self, data)
-        self.__doInsertionSort = doInsertionSort
-        self.__insertionSortThreshold = insertionSortThreshold
-
         if pivotSelection != 1 and pivotSelection != 2 and pivotSelection != 3:
             raise ValueError("The value of the pivot selection (%d) is invalid. Must be 1 or 2." % self.pivotSelection)
 
-        self.__pivotSelection = pivotSelection
 
-    def __getDoInsertionSort(self):
-        return self.__doInsertionSort
-    doInsertionSort = property(__getDoInsertionSort)
+        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, pivotSelection)
 
-    def __getInsertionSortThreshold(self):
-        return self.__insertionSortThreshold
-    insertionSortThreshold = property(__getInsertionSortThreshold)
-
-    def __getPivotSelection(self):
-        return self.__pivotSelection
-    pivotSelection = property(__getPivotSelection)
 
     def sort(self):
         self.__sort(0, len(self.data))
@@ -34,7 +20,7 @@ class ClassicQuicksort(BaseQuicksort):
 
     def __sort(self, lower, upper):
         #check whether we should do an insertion sort instead of quicksort
-        if self.__doInsertionSort and upper - lower <= self.__insertionSortThreshold:
+        if self.doInsertionSort and upper - lower <= self.insertionSortThreshold:
             self._insertionSort(self.data, lower, upper)
             return
 
@@ -60,9 +46,9 @@ class ClassicQuicksort(BaseQuicksort):
         self.__sort(i, upper)
 
     def __selectPivot(self, lower, upper):
-        if self.__pivotSelection == 2:
+        if self.pivotSelection == 2:
             self.swap(lower, upper-1)
-        elif self.__pivotSelection == 3:
+        elif self.pivotSelection == 3:
             middle = lower + (upper - lower) / 2
             pivots = sorted([(self.data[lower], lower), (self.data[middle], middle), (self.data[upper-1], upper-1)])
             self.swap(lower, pivots[1][1])

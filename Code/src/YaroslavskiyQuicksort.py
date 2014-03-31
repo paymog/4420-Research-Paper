@@ -9,6 +9,9 @@ class YaroslavskiyQuicksort(BaseQuicksort):
     INSERTION_SORT_THRESHOLD = 17
     DIST_SIZE = 13
 
+    def __init__(self, data):
+        BaseQuicksort.__init__(self, data, True, YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD, 1)
+
     def sort(self):
         self.__sort(0, len(self.data) - 1)
 

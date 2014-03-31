@@ -44,57 +44,82 @@ def getUnusedFileName(fileName):
 
     return fileName
 
+def collectDataForSort(sorter, sorterName, file, dataLength):
+    sortTime = timeSort(sorter)
+    file.write("%s,%d,%d,%s,%d,%f,%d,%d\n" % (sorterName, dataLength, sorter.pivotSelection, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
+    file.flush()
+
+def collectDataForClassicQuicksort(data, file, dataLength):
+
+    ############## FIRST PIVOT SELECTION ################
+    sorter = ClassicQuicksort(list(data))
+    collectDataForSort(sorter, 'ClassicQuicksort', file, dataLength)
+
+    sorter = ClassicQuicksort(list(data), doInsertionSort=True, insertionSortThreshold=17, pivotSelection=1)
+    collectDataForSort(sorter, 'ClassicQuicksort', file, dataLength)
+
+    ############## LAST PIVOT SELECTION ################
+    sorter = ClassicQuicksort(list(data), pivotSelection=2)
+    collectDataForSort(sorter, 'ClassicQuicksort', file, dataLength)
+
+    sorter = ClassicQuicksort(list(data), doInsertionSort=True, insertionSortThreshold=17, pivotSelection=2)
+    collectDataForSort(sorter, 'ClassicQuicksort', file, dataLength)
+
+    ############## MEDIAN PIVOT SELECTION ################
+    sorter = ClassicQuicksort(list(data), pivotSelection=3)
+    collectDataForSort(sorter, 'ClassicQuicksort', file, dataLength)
+
+    sorter = ClassicQuicksort(list(data), doInsertionSort=True, insertionSortThreshold=17, pivotSelection=3)
+    collectDataForSort(sorter, 'ClassicQuicksort', file, dataLength)
+
+
+def collectDataForDualPivotQuicksort(data, file, dataLength):
+
+    ################# FIRST, LAST PIVOT SELECTION ######################
+    sorter = DualPivotQuicksort(list(data))
+    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+
+    sorter = DualPivotQuicksort(list(data), doInsertionSort=True, insertionSortThreshold=17)
+    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+
+    sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
+    collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
+
+    sorter = DualPivotQuicksort(list(data),doInsertionSort=True, insertionSortThreshold=17, behaveOptimally=True)
+    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+
+    ################# TERTILES PIVOT SELECTION ######################
+    sorter = DualPivotQuicksort(list(data), pivotSelection=2)
+    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+
+    sorter = DualPivotQuicksort(list(data), doInsertionSort=True, insertionSortThreshold=17, pivotSelection=2)
+    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+
+    sorter = DualPivotQuicksort(list(data), behaveOptimally=True, pivotSelection=2)
+    collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
+
+    sorter = DualPivotQuicksort(list(data),doInsertionSort=True, insertionSortThreshold=17, behaveOptimally=True, pivotSelection=2)
+    collectDataForSort(sorter, 'DualPivotQuicksort', file, dataLength)
+
 def sortData(data):
     fileName = 'data' + str(len(data)) + '.csv'
 
     file = open(fileName, 'w')
 
     # write the header
-    file.write("%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
-    asddfsd = "%s,%d,%s,%d,%f,%d,%d\n"
+    file.write("%s,%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Median Selection", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
 
     dataLength = len(data)
     print dataLength
 
-    sorter = ClassicQuicksort(list(data))
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
+    collectDataForClassicQuicksort(data, file, dataLength)
+    collectDataForDualPivotQuicksort(data, file, dataLength)
 
-    sorter = ClassicQuicksort(list(data), True)
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = ClassicQuicksort(list(data), True, 17)
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('ClassicQuicksort', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
 
     sorter = YaroslavskiyQuicksort(list(data))
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('YaroslavskiyQuicksort', dataLength, True, YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
+    collectDataForSort(sorter, 'YaroslavskiyQuicksort', file, dataLength)
 
-    sorter = DualPivotQuicksort(list(data))
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
 
-    sorter = DualPivotQuicksort(list(data), doInsertionSort=True)
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('DualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = DualPivotQuicksort(list(data), behaveOptimally=True)
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
-
-    sorter = DualPivotQuicksort(list(data),doInsertionSort=True, behaveOptimally=True)
-    sortTime = timeSort(sorter)
-    file.write(asddfsd % ('OptimalDualPivot', dataLength, sorter.doInsertionSort, sorter.insertionSortThreshold, sortTime, sorter.numComparisons, sorter.numSwaps))
-    file.flush()
 
     file.close()
 
