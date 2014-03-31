@@ -6,6 +6,7 @@ from ..src.ClassicQuicksort import ClassicQuicksort
 from ..src.DualPivotQuicksort import DualPivotQuicksort
 from ..src.YaroslavskiyQuicksort import YaroslavskiyQuicksort
 from ..src.MPivotQuicksort import MPivotQuicksort
+from ..src.ThreePivotQuicksort import ThreePivotQuicksort
 import random
 
 class testSortAlgorithms(unittest.TestCase):
@@ -18,7 +19,7 @@ class testSortAlgorithms(unittest.TestCase):
                 self.assertEqual(range(1,i), sortObject.data, "Original Data %s" % str(perm))
 
     def rangeTest(self, sortObject):
-        for i in range(2,100):
+        for i in range(14,100):
             data = range(i)
             sortObject.data = data[::-1]
             sortObject.sort()
@@ -30,6 +31,7 @@ class testSortAlgorithms(unittest.TestCase):
 
     def testAlgs(self):
         self.runPermAndRange(ClassicQuicksort(None))
+        self.runPermAndRange(ThreePivotQuicksort(None, True))
         self.runPermAndRange(ClassicQuicksort(None, pivotSelection=2))
         self.runPermAndRange(ClassicQuicksort(None, pivotSelection=3))
         self.runPermAndRange(ClassicQuicksort(None, True))

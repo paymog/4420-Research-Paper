@@ -67,7 +67,8 @@ class BaseQuicksort():
         for i in xrange(lower + 1, upper):
             j = i
             while j > lower and self.lessThan(data[j],  data[j-1]):
-                self.swap(j, j-1)
+                data[j], data[j-1] = data[j-1], data[j]
+                self.numSwaps += 1
                 j -= 1
 
         return data
