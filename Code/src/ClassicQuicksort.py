@@ -35,7 +35,7 @@ class ClassicQuicksort(BaseQuicksort):
     def __sort(self, lower, upper):
         #check whether we should do an insertion sort instead of quicksort
         if self.__doInsertionSort and upper - lower <= self.__insertionSortThreshold:
-            self._insertionSort(lower, upper)
+            self._insertionSort(self.data, lower, upper)
             return
 
         #base cases

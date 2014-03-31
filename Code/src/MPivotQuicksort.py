@@ -54,7 +54,7 @@ class MPivotQuicksort(BaseQuicksort):
             return
 
         if last - first < MPivotQuicksort.INSERTION_SORT_THRESHOLD:
-            self._insertionSort(first, last + 1)
+            self._insertionSort(self.data, first, last + 1)
             return
 
         if self.__minHeapOptimization:
@@ -64,7 +64,7 @@ class MPivotQuicksort(BaseQuicksort):
 
 
         pivots = sorted(pivots)
-        self._insertionSort(pivots[0]-1, last + 1)
+        self._insertionSort(self.data, pivots[0]-1, last + 1)
 
         nextStart = first
         for i, currPivot in enumerate(pivots):

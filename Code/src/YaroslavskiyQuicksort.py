@@ -20,7 +20,7 @@ class YaroslavskiyQuicksort(BaseQuicksort):
         len = right - left
 
         if len < YaroslavskiyQuicksort.INSERTION_SORT_THRESHOLD:
-            self._insertionSort(left, right + 1) #plust 1 because insertion sort has an exclusive upper bound
+            self._insertionSort(self.data, left, right + 1) #plust 1 because insertion sort has an exclusive upper bound
             return
 
         sixth = len / 6

@@ -64,6 +64,6 @@ class testBaseQuicksort(unittest.TestCase):
 
     def assertInsertionSort(self, data):
         self.qsort.data = data
-        sData = self.qsort._insertionSort(0,len(data))
+        sData = self.qsort._insertionSort(self.qsort.data, 0,len(data))
         self.assertEqual(sData, sorted(data))
 

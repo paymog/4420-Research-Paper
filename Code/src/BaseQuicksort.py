@@ -38,7 +38,7 @@ class BaseQuicksort():
     def sort(self):
         raise NotImplementedError("Cannot sort on base quicksort")
 
-    def _insertionSort(self, lower, upper):
+    def _insertionSort(self, data, lower, upper):
         '''
         Sorts self.data from [lower,upper) using insertion sort
         Lower is an inclusive bound
@@ -46,11 +46,11 @@ class BaseQuicksort():
         '''
         for i in xrange(lower + 1, upper):
             j = i
-            while j > lower and self.lessThan(self.data[j], self.data[j-1]):
+            while j > lower and self.lessThan(data[j],  data[j-1]):
                 self.swap(j, j-1)
                 j -= 1
 
-        return self.data
+        return data
 
     def lessThan(self, a, b):
         '''
