@@ -5,8 +5,8 @@ from BaseQuicksort import BaseQuicksort
 
 class ThreePivotQuicksort(BaseQuicksort):
 
-    def __init__(self, data, doInsertionSort=False, insertionSortThreshold=13, ):
-        BaseQuicksort.__init__(self, data, doInsertionSort, insertionSortThreshold, 1, 3)
+    def __init__(self, data, insertionSortThreshold=13):
+        BaseQuicksort.__init__(self, data, True, insertionSortThreshold, 1, 3)
 
     def sort(self):
         self.__sort(0, len(self.data)-1)

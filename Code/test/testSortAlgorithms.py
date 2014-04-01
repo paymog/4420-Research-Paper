@@ -19,7 +19,7 @@ class testSortAlgorithms(unittest.TestCase):
                 self.assertEqual(range(1,i), sortObject.data, "Original Data %s" % str(perm))
 
     def rangeTest(self, sortObject):
-        for i in range(14,100):
+        for i in range(2,100):
             data = range(i)
             sortObject.data = data[::-1]
             sortObject.sort()
@@ -31,7 +31,6 @@ class testSortAlgorithms(unittest.TestCase):
 
     def testAlgs(self):
         self.runPermAndRange(ClassicQuicksort(None))
-        self.runPermAndRange(ThreePivotQuicksort(None, True))
         self.runPermAndRange(ClassicQuicksort(None, pivotSelection=2))
         self.runPermAndRange(ClassicQuicksort(None, pivotSelection=3))
         self.runPermAndRange(ClassicQuicksort(None, True))
@@ -44,6 +43,8 @@ class testSortAlgorithms(unittest.TestCase):
         for i in range(1,7):
             self.runPermAndRange(MPivotQuicksort(None, i))
             self.runPermAndRange(MPivotQuicksort(None, i, minHeapOptimization=True))
+
+        self.runPermAndRange(ThreePivotQuicksort(None))
 
 
 

@@ -4,12 +4,15 @@ import random
 from time import time
 import os
 import argparse
+import re
 
 from multiprocessing.dummy import Pool as ThreadPool
 
 from ClassicQuicksort import ClassicQuicksort
 from YaroslavskiyQuicksort import YaroslavskiyQuicksort
 from DualPivotQuicksort import DualPivotQuicksort
+from ThreePivotQuicksort import ThreePivotQuicksort
+from MPivotQuicksort import MPivotQuicksort
 
 
 def mrange(lower, upper, power=2):
@@ -121,7 +124,15 @@ def sortData(data):
     sorter = YaroslavskiyQuicksort(list(data))
     collectDataForSort(sorter, 'YaroslavskiyQuicksort', file, dataLength)
 
+    sorter = ThreePivotQuicksort(list(data))
+    collectDataForSort(sorter, 'ThreePivotQuicksort', file, dataLength)
 
+    for i in range(3,7):
+        sorter = MPivotQuicksort(list(data), i)
+        collectDataForSort(sorter, 'MPivotQuicksort', file, dataLength)
+
+        sorter = MPivotQuicksort(list(data), i, minHeapOptimization=True)
+        collectDataForSort(sorter, 'HeapOptimizedMPivotQuicksort', file, dataLength)
 
     file.close()
 
@@ -143,7 +154,7 @@ def run(minLength, maxLength, lowerRange, upperRange):
 
 def processDataFiles():
 
-    dataFiles = [a for a in os.listdir(os.curdir) if 'data' in a and '.csv' in a]
+    dataFiles = [a for a in os.listdir(os.curdir) if re.match("data\d+\.csv", a)]
 
     with open('data.csv', 'w') as outfile:
         for fname in dataFiles:
