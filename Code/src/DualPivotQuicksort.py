@@ -137,6 +137,11 @@ class DualPivotQuicksort(BaseQuicksort):
             left = lower + (middle - lower) / 2
             right = middle + (upper - middle) / 2
 
+
+            ##################################################################
+            # Change this so that it uses BaseQuicksort insertionSort method
+            # that way we count the number of swaps and comparisions
+            ##################################################################
             #sort the potential pivot values and keep track of their index
             pivots = [(self.data[lower], lower), (self.data[left], left), (self.data[middle], middle),
                       (self.data[right], right), (self.data[upper - 1], upper - 1)]
