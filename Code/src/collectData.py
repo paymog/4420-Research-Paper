@@ -140,12 +140,12 @@ def run(minLength, maxLength, lowerRange, upperRange):
 
     pool = ThreadPool(4)
 
-    data = []
-    for a in generateData(minLength, maxLength, lowerRange, upperRange):
-        # print a
-        data.append(a)
+    # data = []
+    # for a in generateData(minLength, maxLength, lowerRange, upperRange):
+    #     # print a
+    #     data.append(a)
 
-    results = pool.map(sortData, data)
+    results = pool.map(sortData, generateData(minLength, maxLength, lowerRange, upperRange))
 
     pool.close()
     pool.join()
