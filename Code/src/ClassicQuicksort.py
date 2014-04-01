@@ -46,16 +46,11 @@ class ClassicQuicksort(BaseQuicksort):
         self.__sort(i, upper)
 
     def __selectPivot(self, lower, upper):
-        ##################################################################
-        # Change this so that it uses BaseQuicksort insertionSort method
-        # that way we count the number of swaps and comparisions
-        ##################################################################
-
         if self.pivotSelection == 2:
             self.swap(lower, upper-1)
         elif self.pivotSelection == 3:
             middle = lower + (upper - lower) / 2
-            pivots = sorted([(self.data[lower], lower), (self.data[middle], middle), (self.data[upper-1], upper-1)])
+            pivots = self._insertionSort([(self.data[lower], lower), (self.data[middle], middle), (self.data[upper-1], upper-1)], 0, 3)
             self.swap(lower, pivots[1][1])
 
         return self.data[lower]
