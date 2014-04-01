@@ -106,13 +106,16 @@ def collectDataForDualPivotQuicksort(data, file, dataLength):
     sorter = DualPivotQuicksort(list(data),doInsertionSort=True, insertionSortThreshold=17, behaveOptimally=True, pivotSelection=2)
     collectDataForSort(sorter, 'OptimalDualPivotQuicksort', file, dataLength)
 
+def writeHeader(file):
+    file.write("%s,%s,%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Median Selection", "Num Pivots", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
+
 def sortData(data):
     fileName = 'data' + str(len(data)) + '.csv'
 
     file = open(fileName, 'w')
 
     # write the header
-    file.write("%s,%s,%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Median Selection", "Num Pivots", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
+    writeHeader(file)
 
     dataLength = len(data)
     print dataLength
@@ -140,27 +143,20 @@ def run(minLength, maxLength, lowerRange, upperRange):
 
     pool = ThreadPool(4)
 
-    # data = []
-    # for a in generateData(minLength, maxLength, lowerRange, upperRange):
-    #     # print a
-    #     data.append(a)
-
-    results = pool.map(sortData, generateData(minLength, maxLength, lowerRange, upperRange))
+    pool.map(sortData, generateData(minLength, maxLength, lowerRange, upperRange))
 
     pool.close()
     pool.join()
-
-    print results
 
 def processDataFiles():
 
     dataFiles = [a for a in os.listdir(os.curdir) if re.match("data\d+\.csv", a)]
 
     with open('data.csv', 'w') as outfile:
+        writeHeader(outfile)
         for fname in dataFiles:
             with open(fname) as infile:
-                for line in infile:
-                    outfile.write(line)
+                outfile.writelines(infile.readlines()[1:])
 
     for fname in dataFiles:
         os.remove(fname)
