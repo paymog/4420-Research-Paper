@@ -15,6 +15,11 @@ from ThreePivotQuicksort import ThreePivotQuicksort
 from MPivotQuicksort import MPivotQuicksort
 
 
+#global shit
+filePrefix = "data"
+fileSuffix = ".csv"
+
+
 def mrange(lower, upper, power=2):
     i = lower
     yield int(i)
@@ -110,7 +115,7 @@ def writeHeader(file):
     file.write("%s,%s,%s,%s,%s,%s,%s,%s,%s\n" % ("Name", "Length", "Median Selection", "Num Pivots", "Used Insertion Sort", "Insertion Sort Threshold", "Time", "Comparisons", "Swaps"))
 
 def sortData(data):
-    fileName = 'data' + str(len(data)) + '.csv'
+    fileName = filePrefix + str(len(data)) + fileSuffix
 
     file = open(fileName, 'w')
 
@@ -150,9 +155,9 @@ def run(minLength, maxLength, lowerRange, upperRange):
 
 def processDataFiles():
 
-    dataFiles = [a for a in os.listdir(os.curdir) if re.match("data\d+\.csv", a)]
+    dataFiles = [a for a in os.listdir(os.curdir) if re.match(filePrefix +"\d+\\" +fileSuffix, a)]
 
-    with open('data.csv', 'w') as outfile:
+    with open(filePrefix + fileSuffix, 'w') as outfile:
         writeHeader(outfile)
         for fname in dataFiles:
             with open(fname) as infile:
@@ -164,15 +169,18 @@ def processDataFiles():
 
 def getArgs():
     parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--filePrefix", default="data", help="The filename. Will be suffixed with .csv")
     parser.add_argument("-min", "--minLength", type=int, default=4, help="The smallest list length that should be sorted. Default 2.")
     parser.add_argument("-max", "--maxLength", type=int, default=1e8, help="The largest list length that should be sorted. Default 1e8.")
     parser.add_argument("-lr", "--lowerRange", type=int, default=0, help="The smallest value in the list. Default 0.")
-    parser.add_argument("-ur", "--upperRange", type=int, default=1e9, help="The largest value in the list. Default 1e9.")
+    parser.add_argument("-ur", "--upperRange", type=int, default=1e12, help="The largest value in the list. Default 1e9.")
 
     return parser.parse_args()
 
 if __name__ == '__main__':
     args = getArgs()
+
+    filePrefix = args.filePrefix
 
     run(args.minLength, args.maxLength, args.lowerRange, args.upperRange)
 
