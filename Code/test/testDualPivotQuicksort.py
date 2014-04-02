@@ -1,7 +1,7 @@
 __author__ = 'paymahnmoghadasian'
 
 import unittest
-from ..src.DualPivotQuicksort import DualPivotQuicksort
+from ..quicksorts.DualPivotQuicksort import DualPivotQuicksort
 
 class testDualPivotQuicksort(unittest.TestCase):
 

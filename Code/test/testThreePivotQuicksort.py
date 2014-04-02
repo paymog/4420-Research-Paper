@@ -1,7 +1,7 @@
 __author__ = 'paymahn'
 
 import unittest
-from ..src.ThreePivotQuicksort import ThreePivotQuicksort
+from ..quicksorts.ThreePivotQuicksort import ThreePivotQuicksort
 
 class testThreePivotQuicksort(unittest.TestCase):
 

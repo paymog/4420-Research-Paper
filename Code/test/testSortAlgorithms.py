@@ -2,11 +2,11 @@ __author__ = 'paymahnmoghadasian'
 
 import unittest
 from itertools import permutations
-from ..src.ClassicQuicksort import ClassicQuicksort
-from ..src.DualPivotQuicksort import DualPivotQuicksort
-from ..src.YaroslavskiyQuicksort import YaroslavskiyQuicksort
-from ..src.MPivotQuicksort import MPivotQuicksort
-from ..src.ThreePivotQuicksort import ThreePivotQuicksort
+from ..quicksorts.ClassicQuicksort import ClassicQuicksort
+from ..quicksorts.DualPivotQuicksort import DualPivotQuicksort
+from ..quicksorts.YaroslavskiyQuicksort import YaroslavskiyQuicksort
+from ..quicksorts.MPivotQuicksort import MPivotQuicksort
+from ..quicksorts.ThreePivotQuicksort import ThreePivotQuicksort
 import random
 
 class testSortAlgorithms(unittest.TestCase):

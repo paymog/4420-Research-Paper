@@ -3,7 +3,7 @@ from nose.tools import assert_true
 __author__ = 'paymahnmoghadasian'
 
 import unittest
-from ..src.BaseQuicksort import BaseQuicksort
+from ..quicksorts.BaseQuicksort import BaseQuicksort
 
 class testBaseQuicksort(unittest.TestCase):
     def setUp(self):

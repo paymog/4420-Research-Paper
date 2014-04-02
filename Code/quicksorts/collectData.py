@@ -16,7 +16,7 @@ from MPivotQuicksort import MPivotQuicksort
 
 
 #global shit
-filePrefix = "data"
+filePrefix = None
 fileSuffix = ".csv"
 
 
@@ -123,7 +123,7 @@ def sortData(data):
     writeHeader(file)
 
     dataLength = len(data)
-    print dataLength
+    print "Starting %d " % dataLength
 
     collectDataForClassicQuicksort(data, file, dataLength)
     collectDataForDualPivotQuicksort(data, file, dataLength)
@@ -143,6 +143,7 @@ def sortData(data):
         collectDataForSort(sorter, 'HeapOptimizedMPivotQuicksort', file, dataLength)
 
     file.close()
+    print "Finishing %d " % dataLength
 
 def run(minLength, maxLength, lowerRange, upperRange):
 
@@ -173,7 +174,7 @@ def getArgs():
     parser.add_argument("-min", "--minLength", type=int, default=4, help="The smallest list length that should be sorted. Default 2.")
     parser.add_argument("-max", "--maxLength", type=int, default=1e8, help="The largest list length that should be sorted. Default 1e8.")
     parser.add_argument("-lr", "--lowerRange", type=int, default=0, help="The smallest value in the list. Default 0.")
-    parser.add_argument("-ur", "--upperRange", type=int, default=1e12, help="The largest value in the list. Default 1e9.")
+    parser.add_argument("-ur", "--upperRange", type=int, default=1e12, help="The largest value in the list. Default 1e12.")
 
     return parser.parse_args()
 

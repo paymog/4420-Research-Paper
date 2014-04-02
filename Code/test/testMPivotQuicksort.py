@@ -1,6 +1,6 @@
 __author__ = 'paymahn'
 
-from ..src.MPivotQuicksort import MPivotQuicksort
+from ..quicksorts.MPivotQuicksort import MPivotQuicksort
 import unittest
 
 class testMPivotQuicksort(unittest.TestCase):

@@ -1,7 +1,7 @@
 __author__ = 'paymahnmoghadasian'
 
 import unittest
-from ..src.ClassicQuicksort import ClassicQuicksort
+from ..quicksorts.ClassicQuicksort import ClassicQuicksort
 
 class testClassicQuicksort(unittest.TestCase):
 
