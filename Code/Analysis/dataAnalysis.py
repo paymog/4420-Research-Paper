@@ -1,13 +1,9 @@
 from matplotlib import pyplot as plt
-import numpy as np 
-import os
+import numpy as np
 
-topDir = os.path.realpath('..')
+fileName = 'data.csv'
 
-dataRelPath = '/Code/src/data.csv'
-
-dataAbsPath = topDir + dataRelPath
-
+dataAbsPath = '../quicksorts/' + fileName
 
 def getData(filePath):
 
