@@ -182,7 +182,9 @@ if __name__ == '__main__':
     args = getArgs()
 
     filePrefix = args.filePrefix
+    import string
+    for a in string.ascii_lowercase:
+        filePrefix = a
+        run(args.minLength, args.maxLength, args.lowerRange, args.upperRange)
 
-    run(args.minLength, args.maxLength, args.lowerRange, args.upperRange)
-
-    processDataFiles()
+        processDataFiles()
