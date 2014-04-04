@@ -5,7 +5,7 @@ import re
 
 filesToIgnore = set(['data.csv'])
 
-with open('alldata.csv', 'w') as outfile:
+with open('temp.csv', 'w') as outfile:
     # write the header
     outfile.writelines("Name,Length,Median Selection,Num Pivots,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps\n")
     for fileName in os.listdir(os.curdir):
@@ -17,3 +17,9 @@ with open('alldata.csv', 'w') as outfile:
                 outfile.writelines(currFile.readlines()[1:])
 
             os.remove(fileName)
+
+
+# after writing everything to the temp file, copy the data to a "real" file and  remove the temp file
+import shutil
+shutil.copy(outfile.name, 'alldata.csv')
+os.remove(outfile.name)
