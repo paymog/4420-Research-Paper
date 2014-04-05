@@ -153,7 +153,7 @@ def averageData(data):
 
     return data
 
-def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False) :
+def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False, makeLegend = True) :
     '''
     Plot data will take the data dictionary and create plots according to the key word argunments.
 
@@ -165,6 +165,7 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
     :param plotSwap: boolean to control if the size vs swaps plots will actually be rendered
     :param goodFunction: a function that will take in the label tuple and determine if it will plot that label
     :param badFunction:  a function that will take in the label tuple and determine if it will not plot that label
+    :param makeLegend: boolean to control if the legend should be rendered
     '''
 
     marker = '-x'
@@ -203,27 +204,36 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
         plt.figure(timeFigure.number)
         plt.xlabel('Size')
         plt.ylabel('Time')
-        plt.legend(loc = "upper left")
+        
+        if makeLegend :
+            plt.legend(loc = "upper left")
 
     if plotComp :
         returnList.append(compFigure)
         plt.figure(compFigure.number)
         plt.xlabel('Size')
         plt.ylabel('Comparisons')
-        plt.legend(loc = "upper left")
+
+        if makeLegend :
+            plt.legend(loc = "upper left")
 
     if plotSwap:
         returnList.append(swapFigure)
         plt.figure(swapFigure.number)
         plt.xlabel('Size')
         plt.ylabel('Swaps')
-        plt.legend(loc = "upper left")
+
+        if makeLegend :
+            plt.legend(loc = "upper left")
 
     plt.show()
 
     return tuple(returnList)
 
 def main():
+    # Note that labels are defined as follows 
+    # (name,medianSelection,numPivots,usedInsertionSort)
+    #
     # List of all labels as of April 4
     #
     # ('ClassicQuicksort', 1, 1, True)
@@ -252,9 +262,16 @@ def main():
     threePivotQuicksortOnly          = lambda x: x[0] == 'ThreePivotQuicksort'
     yaroslavskiyQuicksortOnly        = lambda x: x[0] == 'YaroslavskiyQuicksort'
 
+    onePivot = lambda x: x[2] == 1
+    twoPivot = lambda x: x[2] == 2
+    threePivot = lambda x: x[2] == 3
+
+    usedInsertionSort = lambda x: x[3]
+
     data = getData(dataAbsPath)
 
-    plotData(data)
+    plotData(data,makeLegend=False)
+
     plotData(data, goodFunction = classicQuickSortOnly)
     plotData(data, goodFunction = dualPivotQuicksortOnly)
     plotData(data, goodFunction = heapOptimizedMPivotQuicksortOnly)
@@ -262,6 +279,12 @@ def main():
     plotData(data, goodFunction = optimalDualPivotQuicksortOnly)
     plotData(data, goodFunction = threePivotQuicksortOnly)
     plotData(data, goodFunction = yaroslavskiyQuicksortOnly)
+
+    plotData(data, goodFunction = onePivot)
+    plotData(data, goodFunction = twoPivot)
+    plotData(data, goodFunction = threePivot)
+
+    #plotData(data, goodFunction = usedInsertionSort)
 
 if __name__ == '__main__':
     main()
