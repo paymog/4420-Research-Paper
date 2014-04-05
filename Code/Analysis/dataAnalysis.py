@@ -153,7 +153,7 @@ def averageData(data):
 
     return data
 
-def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False, makeLegend = True) :
+def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False, makeLegend = True,plotTitle = None) :
     '''
     Plot data will take the data dictionary and create plots according to the key word argunments.
 
@@ -208,6 +208,9 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
         if makeLegend :
             plt.legend(loc = "upper left")
 
+        if plotTitle:
+            plt.title(plotTitle + '[Size vs Time]')
+
     if plotComp :
         returnList.append(compFigure)
         plt.figure(compFigure.number)
@@ -217,6 +220,9 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
         if makeLegend :
             plt.legend(loc = "upper left")
 
+        if plotTitle:
+            plt.title(plotTitle + '[Size vs Comparisons]')
+
     if plotSwap:
         returnList.append(swapFigure)
         plt.figure(swapFigure.number)
@@ -225,6 +231,9 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
 
         if makeLegend :
             plt.legend(loc = "upper left")
+
+        if plotTitle:
+            plt.title(plotTitle + '[Size vs Swaps]')
 
     plt.show()
 
