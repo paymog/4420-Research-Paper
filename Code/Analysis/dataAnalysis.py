@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-fileName = 'data.csv'
+fileName = 'alldata.csv'
 
 dataAbsPath = '../quicksorts/' + fileName
 
