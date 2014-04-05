@@ -272,19 +272,26 @@ def main():
 
     plotData(data,makeLegend=False)
 
-    plotData(data, goodFunction = classicQuickSortOnly)
-    plotData(data, goodFunction = dualPivotQuicksortOnly)
-    plotData(data, goodFunction = heapOptimizedMPivotQuicksortOnly)
-    plotData(data, goodFunction = mPivotQuicksortOnly)
-    plotData(data, goodFunction = optimalDualPivotQuicksortOnly)
-    plotData(data, goodFunction = threePivotQuicksortOnly)
-    plotData(data, goodFunction = yaroslavskiyQuicksortOnly)
+    #plotData(data, goodFunction = classicQuickSortOnly)
+    #plotData(data, goodFunction = dualPivotQuicksortOnly)
+    #plotData(data, goodFunction = heapOptimizedMPivotQuicksortOnly)
+    #plotData(data, goodFunction = mPivotQuicksortOnly)
+    #plotData(data, goodFunction = optimalDualPivotQuicksortOnly)
+    #plotData(data, goodFunction = threePivotQuicksortOnly)
+    #plotData(data, goodFunction = yaroslavskiyQuicksortOnly)
 
-    plotData(data, goodFunction = onePivot)
-    plotData(data, goodFunction = twoPivot)
-    plotData(data, goodFunction = threePivot)
+    #plotData(data, goodFunction = onePivot)
+    #plotData(data, goodFunction = twoPivot)
+    #plotData(data, goodFunction = threePivot)
 
     #plotData(data, goodFunction = usedInsertionSort)
+
+
+    mPivotQuicksortOnly3 = lambda x : mPivotQuicksortOnly(x) and threePivot(x)
+
+    customPlot = lambda x: classicQuickSortOnly(x) or dualPivotQuicksortOnly(x) or threePivotQuicksortOnly(x) or mPivotQuicksortOnly3(x)
+
+    plotData(data, goodFunction = customPlot)
 
 if __name__ == '__main__':
     main()
