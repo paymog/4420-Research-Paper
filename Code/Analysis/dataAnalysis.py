@@ -103,45 +103,154 @@ def getData(filePath):
         compList = [ item[2] for item in tempList]
         swapList = [ item[3] for item in tempList]
 
+        data[label] = sizeList,timeList,compList,swapList
+
+    return data#averageData(data)
+
+def averageData(data):
+    '''
+    This function will take in the data dictionary and average all the data
+    points with the same size value
+    '''
+
+    for label in data.keys() :
+        sizeList,timeList,compList,swapList = data[label]
+
+        sizeList = np.array(sizeList)
+        timeList = np.array(timeList)
+        compList = np.array(compList)
+        swapList = np.array(swapList)
+
+
+        sizeListTemp = []
+        timeListTemp = []
+        compListTemp = []
+        swapListTemp = []
+
+        for size in np.nditer(sizeList):
+
+            if size not in sizeListTemp:
+                sizeListTemp.append(size)
+
+                indexArray = size == sizeList
+                numValues = len(indexArray) * 1.0
+
+                # The averages
+                timeTemp = np.sum(timeList[ indexArray ])/numValues
+                compTemp = np.sum(compList[ indexArray ])/numValues
+                swapTemp = np.sum(swapList[ indexArray ])/numValues
+
+                timeListTemp.append(timeTemp)
+                compListTemp.append(compTemp)
+                swapListTemp.append(swapTemp)
+
+
+        sizeList = np.array(sizeListTemp)
+        timeList = np.array(timeListTemp)
+        compList = np.array(compListTemp)
+        swapList = np.array(swapListTemp)
+
+        data[label] = sizeList,timeList,compList,swapList
+
     return data
 
-def main():
-
-    data = getData(dataAbsPath)
-
-    timeFigureIndex = 1
-    compFigureIndex = 2
-    swapFigureIndex = 3
+def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False) :
 
     marker = '-x'
 
-    for label in data.keys() :
+    keyList = list(data.keys())
+    keyList.sort()
 
-        sizeList,timeList,compList,swapList = data[label]
+    #print keyList
 
-        plt.figure(timeFigureIndex)
-        plt.plot(sizeList,timeList,marker,label=str(label))
+    if plotTime :
+        timeFigure = plt.figure()
+    if plotComp :
+        compFigure = plt.figure()
+    if plotSwap :
+        swapFigure = plt.figure()
 
-        plt.figure(compFigureIndex)
-        plt.plot(sizeList,compList,marker,label=str(label))
+    for label in keyList :
 
-        plt.figure(swapFigureIndex)
-        plt.plot(sizeList,swapList,marker,label=str(label))
+        if goodFunction(label) and not badFunction(label) :
+            sizeList,timeList,compList,swapList = data[label]
 
+            if plotTime :
+                plt.figure(timeFigure.number)
+                plt.plot(sizeList,timeList,marker,label=str(label))
+            if plotComp :
+                plt.figure(compFigure.number)
+                plt.plot(sizeList,compList,marker,label=str(label))
+            if plotSwap :
+                plt.figure(swapFigure.number)
+                plt.plot(sizeList,swapList,marker,label=str(label))
 
-    plt.figure(timeFigureIndex)
-    plt.xlabel('Size')
-    plt.ylabel('Time')
+    returnList = []
 
-    plt.figure(compFigureIndex)
-    plt.xlabel('Comparisons')
-    plt.ylabel('Time')
+    if plotTime :
+        returnList.append(timeFigure)
+        plt.figure(timeFigure.number)
+        plt.xlabel('Size')
+        plt.ylabel('Time')
+        plt.legend(loc = "upper left")
 
-    plt.figure(swapFigureIndex)
-    plt.xlabel('Swaps')
-    plt.ylabel('Time')
+    if plotComp :
+        returnList.append(compFigure)
+        plt.figure(compFigure.number)
+        plt.xlabel('Size')
+        plt.ylabel('Comparisons')
+        plt.legend(loc = "upper left")
+
+    if plotSwap:
+        returnList.append(swapFigure)
+        plt.figure(swapFigure.number)
+        plt.xlabel('Size')
+        plt.ylabel('Swaps')
+        plt.legend(loc = "upper left")
 
     plt.show()
+
+    return tuple(returnList)
+
+def main():
+    # List of all labels as of April 4
+    #
+    # ('ClassicQuicksort', 1, 1, True)
+    # ('ClassicQuicksort', 2, 1, True)
+    # ('ClassicQuicksort', 3, 1, True)
+    # ('DualPivotQuicksort', 1, 2, True)
+    # ('DualPivotQuicksort', 2, 2, True)
+    # ('HeapOptimizedMPivotQuicksort', 1, 3, True)
+    # ('HeapOptimizedMPivotQuicksort', 1, 4, True)
+    # ('HeapOptimizedMPivotQuicksort', 1, 5, True)
+    # ('HeapOptimizedMPivotQuicksort', 1, 6, True)
+    # ('MPivotQuicksort', 1, 3, True)
+    # ('MPivotQuicksort', 1, 4, True)
+    # ('MPivotQuicksort', 1, 5, True)
+    # ('MPivotQuicksort', 1, 6, True)
+    # ('OptimalDualPivotQuicksort', 1, 2, True)
+    # ('OptimalDualPivotQuicksort', 2, 2, True)
+    # ('ThreePivotQuicksort', 1, 3, True)
+    # ('YaroslavskiyQuicksort', 1, 2, True)
+
+    classicQuickSortOnly             = lambda x: x[0] == 'ClassicQuicksort'
+    dualPivotQuicksortOnly           = lambda x: x[0] == 'DualPivotQuicksort'
+    heapOptimizedMPivotQuicksortOnly = lambda x: x[0] == 'HeapOptimizedMPivotQuicksort'
+    mPivotQuicksortOnly              = lambda x: x[0] == 'MPivotQuicksort'
+    optimalDualPivotQuicksortOnly    = lambda x: x[0] == 'OptimalDualPivotQuicksort'
+    threePivotQuicksortOnly          = lambda x: x[0] == 'ThreePivotQuicksort'
+    yaroslavskiyQuicksortOnly        = lambda x: x[0] == 'YaroslavskiyQuicksort'
+
+    data = getData(dataAbsPath)
+
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = classicQuickSortOnly)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = dualPivotQuicksortOnly)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = heapOptimizedMPivotQuicksortOnly)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = mPivotQuicksortOnly)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = optimalDualPivotQuicksortOnly)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = threePivotQuicksortOnly)
+    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = yaroslavskiyQuicksortOnly)
 
 if __name__ == '__main__':
     main()
