@@ -11,7 +11,6 @@ def getData(filePath):
 
     data = {}
 
-    # OptimalDualPivotQuicksort,1007,1,2,False,10,0.712151,10927,4759
     header = "Name,Length,Median Selection,Num Pivots,Used Insertion Sort,Insertion Sort Threshold,Time,Comparisons,Swaps\n"
 
     isFirst = True
@@ -105,7 +104,7 @@ def getData(filePath):
 
         data[label] = sizeList,timeList,compList,swapList
 
-    return data#averageData(data)
+    return averageData(data)
 
 def averageData(data):
     '''
@@ -155,6 +154,18 @@ def averageData(data):
     return data
 
 def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False) :
+    '''
+    Plot data will take the data dictionary and create plots according to the key word argunments.
+
+    Note that labels are defined as follows (name,medianSelection,numPivots,usedInsertionSort)
+
+    :param data: the dictionary that contains data to be plotted
+    :param plotTime: boolean to control if the size vs time plots will actually be rendered
+    :param plotComp: boolean to control if the size vs comparisons plots will actually be rendered
+    :param plotSwap: boolean to control if the size vs swaps plots will actually be rendered
+    :param goodFunction: a function that will take in the label tuple and determine if it will plot that label
+    :param badFunction:  a function that will take in the label tuple and determine if it will not plot that label
+    '''
 
     marker = '-x'
 
@@ -243,14 +254,14 @@ def main():
 
     data = getData(dataAbsPath)
 
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = classicQuickSortOnly)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = dualPivotQuicksortOnly)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = heapOptimizedMPivotQuicksortOnly)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = mPivotQuicksortOnly)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = optimalDualPivotQuicksortOnly)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = threePivotQuicksortOnly)
-    plotData(data, plotTime = False, plotComp = True, plotSwap = True, goodFunction = yaroslavskiyQuicksortOnly)
+    plotData(data)
+    plotData(data, goodFunction = classicQuickSortOnly)
+    plotData(data, goodFunction = dualPivotQuicksortOnly)
+    plotData(data, goodFunction = heapOptimizedMPivotQuicksortOnly)
+    plotData(data, goodFunction = mPivotQuicksortOnly)
+    plotData(data, goodFunction = optimalDualPivotQuicksortOnly)
+    plotData(data, goodFunction = threePivotQuicksortOnly)
+    plotData(data, goodFunction = yaroslavskiyQuicksortOnly)
 
 if __name__ == '__main__':
     main()
