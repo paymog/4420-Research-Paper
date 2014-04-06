@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy.optimize import curve_fit
 
 fileName = 'alldata.csv'
 
@@ -106,7 +107,7 @@ def getData(filePath):
 
 
         sizeList = np.array(sizeList, dtype = np.int64)
-        timeList = np.array(timeList, dtype = np.float128)
+        timeList = np.array(timeList, dtype = np.float64)
         compList = np.array(compList, dtype = np.int64)
         swapList = np.array(swapList, dtype = np.int64)
 
@@ -352,15 +353,13 @@ def plotPolynomialFit(data,fitParameters,figureList,
             xVals = np.linspace(xMin,xMax,numPoints)
 
             if plotComp :
-                compFitFunc = lambda xx:(compCoef[0]*xx*np.log2(xx) + compCoef[1])
-                #compFitFunc = lambda xx:(compCoef[0]*xx*np.log2(xx) + compCoef[1]*xx)
+                compFitFunc = lambda xx:fitFunction(xx,*tuple(compCoef))
 
                 plt.figure(compFigure.number)
                 plotter(xVals,compFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
 
             if plotSwap :
-                swapFitFunc = lambda xx:(swapCoef[0]*xx*np.log2(xx) + swapCoef[1])
-                #swapFitFunc = lambda xx:(swapCoef[0]*xx*np.log2(xx) + swapCoef[1]*xx)
+                swapFitFunc = lambda xx:fitFunction(xx,*tuple(swapCoef))
 
                 plt.figure(swapFigure.number)
                 plotter(xVals,swapFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
@@ -448,37 +447,6 @@ def extractYLim(data,goodFunction,badFunction,xlim):
 
     return [yMinTime,yMaxTime],[yMinComp,yMaxComp],[yMinSwap,yMaxSwap]
 
-def leastSquaresPolyFit(xx,yy,kk):
-    '''
-    Applies Least Squares regression on the data do create
-    the coefficient of a polynomial of degree kk
-    '''
-    nn = len(xx)
-    MM = np.ones([nn,kk+1])
-
-    xx = np.matrix(xx)
-    xx = xx.transpose()
-    xx = np.array(xx)
-
-    MM[:,kk-1] = xx[:,0]
-
-    for jj in range(kk-1,-1,-1):
-        # loop backwards from k-1 to 0 
-        MM[:,jj] = xx[:,0]*MM[:,jj+1]
-
-    MM = np.matrix(MM)
-
-    yy = np.matrix(yy)
-    yy = yy.transpose()
-
-    tempM = MM.transpose() * MM
-
-    params = tempM**(-1) *  MM.transpose() * yy 
-
-    params = params.transpose()
-    params = np.array(params)
-
-    return params[0] # an odd fix to cast to 1-D array
 
 def calcLeastSquaresOnData(data):
     '''
@@ -506,25 +474,13 @@ def calcLeastSquaresOnData(data):
     for label in keyList :
         sizeList,timeList,compList,swapList = data[label]
 
-        sizeList = np.array(sizeList, dtype = np.float128)
-        timeList = np.array(timeList, dtype = np.float128)
-        compList = np.array(compList, dtype = np.float128)
-        swapList = np.array(swapList, dtype = np.float128)
+        sizeList = np.array(sizeList, dtype = np.float64)
+        timeList = np.array(timeList, dtype = np.float64)
+        compList = np.array(compList, dtype = np.float64)
+        swapList = np.array(swapList, dtype = np.float64)
 
-        # First Transformation
-        xx = sizeList * np.log2(sizeList)
-        
-        compY = compList
-        swapY = swapList
-
-        # Second Transformation
-        #xx = np.log2(sizeList)
-        #
-        #compY = compList/sizeList
-        #swapY = swapList/sizeList
-
-        compCoef = leastSquaresPolyFit(xx, compY, 1)
-        swapCoef = leastSquaresPolyFit(xx, swapY, 1)
+        compCoef,compCov = curve_fit(fitFunction, sizeList, compList)
+        swapCoef,swapCov = curve_fit(fitFunction, sizeList, swapList)
 
         fitParameters[label] = compCoef,swapCoef
 
@@ -532,15 +488,18 @@ def calcLeastSquaresOnData(data):
     print "COMPARISON COEFFICIENTS"
     for label in keyList :
         compCoef,swapCoef = fitParameters[label]
-        print "%45s | %9.4f | %9.4f "%(convertLabelToStr(label),compCoef[0],compCoef[1])
+        print "%40s | %9.5f | %9.4f | %9.4f "%(convertLabelToStr(label),compCoef[0],compCoef[1],compCoef[2])
 
     print ""
     print "SWAP COEFFICIENTS"
     for label in keyList :
         compCoef,swapCoef = fitParameters[label]
-        print "%45s | %9.4f | %9.4f "%(convertLabelToStr(label),swapCoef[0],swapCoef[1])
+        print "%40s | %9.5f | %9.4f | %9.4f "%(convertLabelToStr(label),swapCoef[0],swapCoef[1],compCoef[2])
 
     return fitParameters
+
+def fitFunction(xx,AA,BB,CC):
+    return AA*xx*np.log2(xx)+BB*xx+CC*np.log2(xx)
 
 def saveFigure(figure,fileName,fileExtention = '.png',dpi = 600):
     fullFileName = fileName + fileExtention
@@ -571,7 +530,8 @@ def plotDataAndFit(data,fitParameters,
                     connectDataPoints = False,
                     linewidth = 1.5,
                     numPoints = 10**3,
-                    savePlot = False) :
+                    savePlot = False,
+                    dpi = 600) :
 
     figureList = plotData(data,
                     plotComp = plotComp, 
@@ -602,8 +562,8 @@ def plotDataAndFit(data,fitParameters,
     if savePlot :
         fileName = "".join(plotTitle.split() )
         compFigure,swapFigure = figureList
-        saveFigure(compFigure,fileName+"_comp",fileExtention = '.png',dpi = 600)
-        saveFigure(swapFigure,fileName+"_swap",fileExtention = '.png',dpi = 600)
+        saveFigure(compFigure,fileName+"_comp",fileExtention = '.png',dpi = dpi)
+        saveFigure(swapFigure,fileName+"_swap",fileExtention = '.png',dpi = dpi)
 
     return figureList
 
@@ -656,9 +616,6 @@ def main():
 
     fitParameters = calcLeastSquaresOnData(data)
 
-    #plotData(data,makeLegend=False)
-    #plotData(data,makeLegend=False,plotter = plt.semilogx)
-
     maskFunctionList = [ classicQuickSortOnly,dualPivotQuicksortOnly,heapOptimizedMPivotQuicksortOnly,
                         mPivotQuicksortOnly, optimalDualPivotQuicksortOnly,threePivotQuicksortOnly,
                         yaroslavskiyQuicksortOnly, onePivot,twoPivot,threePivot,allMPivotQuicksortKinds]
@@ -669,22 +626,19 @@ def main():
 
     smallScaleLimits = [100,1000]
 
-    #plotDataAndFit(data,fitParameters, plotTitle = 'Legend Plot', connectDataPoints = True,legendSize=15,savePlot=True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'Legend Plot', connectDataPoints = True,legendSize=15,savePlot=True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'Semilogx All Plots Large Scale ', connectDataPoints = True,makeLegend=False,savePlot = True,plotter = plt.semilogx)
     
-    #plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
-    #plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
-    #plotDataAndFit(data,fitParameters, plotTitle = 'Semilogx All Plots Large Scale ', connectDataPoints = True,makeLegend=False,savePlot = True,plotter = plt.semilogx)
-
-    #for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
-    #    plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
+    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
     
-    #for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
-    #    plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
-
-
+    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
+    
     plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Large Scale",savePlot = True,legendSize=7)
     plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Small Scale",xlim = smallScaleLimits,connectDataPoints = True,savePlot = True,legendSize=7)
-
 
 
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
