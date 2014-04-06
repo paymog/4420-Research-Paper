@@ -102,6 +102,12 @@ def getData(filePath):
         compList = [ item[2] for item in tempList]
         swapList = [ item[3] for item in tempList]
 
+
+        sizeList = np.array(sizeList, dtype = np.int64)
+        timeList = np.array(timeList, dtype = np.float128)
+        compList = np.array(compList, dtype = np.int64)
+        swapList = np.array(swapList, dtype = np.int64)
+
         data[label] = sizeList,timeList,compList,swapList
 
     return averageData(data)
@@ -114,11 +120,6 @@ def averageData(data):
 
     for label in data.keys() :
         sizeList,timeList,compList,swapList = data[label]
-
-        sizeList = np.array(sizeList)
-        timeList = np.array(timeList)
-        compList = np.array(compList)
-        swapList = np.array(swapList)
 
 
         sizeListTemp = []
@@ -144,16 +145,40 @@ def averageData(data):
                 swapListTemp.append(swapTemp)
 
 
-        sizeList = np.array(sizeListTemp)
-        timeList = np.array(timeListTemp)
-        compList = np.array(compListTemp)
-        swapList = np.array(swapListTemp)
+        sizeList = np.array(sizeListTemp,dtype = np.int64)
+        timeList = np.array(timeListTemp,dtype = np.float128)
+        compList = np.array(compListTemp,dtype = np.int64)
+        swapList = np.array(swapListTemp,dtype = np.int64)
 
         data[label] = sizeList,timeList,compList,swapList
 
     return data
 
-def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFunction = lambda x:True , badFunction = lambda x:False, makeLegend = True,plotTitle = None) :
+def markerGenerator(index):
+    '''
+    This function was created so that we can generate lines
+    with varying symbols and colors without creating them by
+    hand.
+    '''
+
+    colors = 'rbgmcky'
+    numColors = len(colors)
+    markers = 'ox^spdv><'
+    numMarkers = len(markers)
+
+    return markers[index%numMarkers]+colors[index%numColors]
+
+def convertLabelToStr(label):
+    return "%s - %s - %s - %s" %label
+
+def plotData(data,  plotTime = False, 
+                    plotComp = True, 
+                    plotSwap = True,
+                    goodFunction = lambda x:True , 
+                    badFunction = lambda x:False, 
+                    makeLegend = True, 
+                    plotTitle = None,
+                    plotter = plt.plot) :
     '''
     Plot data will take the data dictionary and create plots according to the key word argunments.
 
@@ -166,9 +191,8 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
     :param goodFunction: a function that will take in the label tuple and determine if it will plot that label
     :param badFunction:  a function that will take in the label tuple and determine if it will not plot that label
     :param makeLegend: boolean to control if the legend should be rendered
+    :param plotTitle: string of title of the plot. Will be placed on the top of the figure.
     '''
-
-    marker = '-x'
 
     keyList = list(data.keys())
     keyList.sort()
@@ -182,20 +206,22 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
     if plotSwap :
         swapFigure = plt.figure()
 
-    for label in keyList :
+    for count,label in enumerate(keyList):
+
+        marker = '-' + markerGenerator(count)
 
         if goodFunction(label) and not badFunction(label) :
             sizeList,timeList,compList,swapList = data[label]
 
             if plotTime :
                 plt.figure(timeFigure.number)
-                plt.plot(sizeList,timeList,marker,label=str(label))
+                plotter(sizeList,timeList,marker,label=convertLabelToStr(label))
             if plotComp :
                 plt.figure(compFigure.number)
-                plt.plot(sizeList,compList,marker,label=str(label))
+                plotter(sizeList,compList,marker,label=convertLabelToStr(label))
             if plotSwap :
                 plt.figure(swapFigure.number)
-                plt.plot(sizeList,swapList,marker,label=str(label))
+                plotter(sizeList,swapList,marker,label=convertLabelToStr(label))
 
     returnList = []
 
@@ -209,7 +235,7 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
             plt.legend(loc = "upper left")
 
         if plotTitle:
-            plt.title(plotTitle + '[Size vs Time]')
+            plt.title(plotTitle + '(Time)')
 
     if plotComp :
         returnList.append(compFigure)
@@ -221,7 +247,7 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
             plt.legend(loc = "upper left")
 
         if plotTitle:
-            plt.title(plotTitle + '[Size vs Comparisons]')
+            plt.title(plotTitle + '(Comparisons)')
 
     if plotSwap:
         returnList.append(swapFigure)
@@ -233,11 +259,81 @@ def plotData(data, plotTime = False, plotComp = True, plotSwap = True,goodFuncti
             plt.legend(loc = "upper left")
 
         if plotTitle:
-            plt.title(plotTitle + '[Size vs Swaps]')
+            plt.title(plotTitle + '(Swaps)')
 
     plt.show()
 
     return tuple(returnList)
+
+def leastSquaresPolyFit(xx,yy,kk):
+    '''
+    Applies Least Squares regression on the data do create
+    the coefficient of a polynomial of degree k
+    '''
+    nn = len(xx)
+    MM = np.ones([nn,kk+1])
+
+    xx = np.matrix(xx)
+    xx = xx.transpose()
+    xx = np.array(xx)
+
+    MM[:,kk-1] = xx[:,0]
+
+    for jj in range(kk-1,-1,-1):
+        # loop backwards from k-1 to 0 
+        MM[:,jj] = xx[:,0]*MM[:,jj+1]
+
+    MM = np.matrix(MM)
+
+    yy = np.matrix(yy)
+    yy = yy.transpose()
+
+    tempM = MM.transpose() * MM
+
+    params = tempM**(-1) *  MM.transpose() * yy 
+
+    params = params.transpose()
+    params = np.array(params)
+
+    return params[0] # an odd fix to cast to 1-D array
+
+def calcLeastSquaresOnData(data):
+    '''
+    We want to fit the data to :
+        y = A x log(x) + B
+
+    So we make a transformation so that :
+        X = x log(x) = x ln(x)/ln(2)
+        Y = y
+    '''
+    keyList = list(data.keys())
+    keyList.sort()
+
+    fitParameters = {}
+
+    for label in keyList :
+        sizeList,timeList,compList,swapList = data[label]
+
+        xx = sizeList * np.log(sizeList)/np.log(2)
+
+        compCoef = leastSquaresPolyFit(xx, compList, 1)
+        swapCoef = leastSquaresPolyFit(xx, swapList, 1)
+
+        fitParameters[label] = compCoef,swapCoef
+
+    print ""
+    print "COMPARISON COEFFICIENTS"
+    for label in keyList :
+        compCoef,swapCoef = fitParameters[label]
+        print "%45s | %9.4f | %9.4f "%(label,compCoef[0],compCoef[1])
+
+    print ""
+    print "SWAP COEFFICIENTS"
+    for label in keyList :
+        compCoef,swapCoef = fitParameters[label]
+        print "%45s | %9.4f | %9.4f "%(label,swapCoef[0],swapCoef[1])
+
+    return fitParameters
 
 def main():
     # Note that labels are defined as follows 
@@ -279,7 +375,11 @@ def main():
 
     data = getData(dataAbsPath)
 
-    plotData(data,makeLegend=False)
+    fitParameters = calcLeastSquaresOnData(data)
+
+    #plotData(data,makeLegend=False)
+
+    plotData(data,makeLegend=False,plotter = plt.semilogx)
 
     #plotData(data, goodFunction = classicQuickSortOnly)
     #plotData(data, goodFunction = dualPivotQuicksortOnly)
@@ -300,7 +400,8 @@ def main():
 
     customPlot = lambda x: classicQuickSortOnly(x) or dualPivotQuicksortOnly(x) or threePivotQuicksortOnly(x) or mPivotQuicksortOnly3(x)
 
-    plotData(data, goodFunction = customPlot)
+    #plotData(data, goodFunction = customPlot)
+
 
 if __name__ == '__main__':
     main()
