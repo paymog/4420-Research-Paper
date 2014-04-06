@@ -33,7 +33,7 @@
 			\begin{frame}
 				\frametitle{Classic Quicksort}
 				\begin{itemize}
-					\item<+-> $2.13n \log n - 2.57n + O(\log(n))$ Comparisons
+					\item<+-> $2n \log n - 1.51n  + O(\log(n))$ Comparisons
 					\item<+-> $0.33n \log n - 0.58n + O(\log(n))$ Swaps
 					\item<+-> One Pivot
 					\begin{itemize}
@@ -51,7 +51,7 @@
 			\begin{frame}
 				\frametitle{Dual Pivot Quicksort}
 				\begin{itemize}
-					\item<+-> $2n \log n - 1.51n + O(\log(n))$ Comparisons
+					\item<+-> $2.13n \log n - 2.57n + O(\log(n))$ Comparisons
 					\item<+-> $0.8n \log n -0.3n + O(\log(n))$ Swaps
 					\item<+-> Two Pivots
 					\begin{itemize}
@@ -61,11 +61,27 @@
 					\item<+-> Partitions Smalls then Bigs (Middle is automatic)
 					\item<+-> Three Recursive Calls
 				\end{itemize}
-				\phantom{ }\cite{Aumuller:2013:OPD:2525857.2525862}
+				\phantom{ }\cite{Wild:2012:ACA:2404160.2404231}
 				\note{
 					Tertile Elements = Middle 2 of 5 elements (Evenly Spaced Out)
 				}
 			\end{frame}
+
+			\begin{frame}
+				\frametitle{Dual Pivot Quicksort with Optimal Partitioning}
+				\begin{itemize}
+					\item<+-> $1.8n \log n + O(n)$ Comparisons
+					\item<+-> $0.33n \log n + O(n)$ Swaps
+					\item<+-> Two Pivots
+					\begin{itemize}
+						\item<+-> Keeps Tracks of smalls and bigs
+						\item<+-> Uses the information to see who to compare to first
+					\end{itemize}
+					\item<+-> Otherwise very similar to standard Dual Pivot Quicksort
+				\end{itemize}
+				\phantom{ }\cite{Aumuller:2013:OPD:2525857.2525862}
+			\end{frame}
+
 
 		\subsection{Yaroslavskiy's Quicksort}
 			\begin{frame}
@@ -78,12 +94,18 @@
 						\item<+-> Middle 2 of 5 elements (Evenly Spaced Out)
 						\item<+-> Uses 5-element sorting network
 					\end{itemize}
-					\item<+-> Simple Simultaneous Partition algorithm
+					\item<+-> Simultaneous Partition algorithm
 					\item<+-> Two Recursive Calls 
 				\end{itemize}
 				\phantom{ }\cite{Wild:2012:ACA:2404160.2404231}
+				\note{
+					It turns out that Yaroslavskiy’s partitioning method is able to 
+					take advantage of certain asymmetries in the outcomes of key comparisons.
+					While the Regular Dual Pivot quicksort fails to utilize them, even though
+					being based on the same abstract algorithmic idea.
+				}
 			\end{frame}
-		
+
 		\subsection{Three Pivot Quicksort}
 			\begin{frame}
 				\frametitle{Kushagra-Ortiz-Qiao-Munro Tri-Pivot Quicksort}
@@ -118,24 +140,21 @@
 					\item<+-> $M+1$ Recursive Calls
 				\end{itemize}
 				\phantom{ }\cite{kushagra2013multi}
+				\note{
+					The run times discussed thus far have been for specific pivots.
+					The analysis for each pivot and how one partition changes the analysis,
+					which depends on studying the decision tree generated.
+				}
 			\end{frame}
 		
 			\begin{frame}
 				\frametitle{Example M-Pivot Selection and Partitioning}
 				\begin{center}   
 					\includegraphics<1>[width=70mm]{MPivotSelectCanadates.png}
-					\label{fig:MPivotSelectCanadates}
-				\end{center}
-
-				\begin{center}   
 					\includegraphics<2>[width=72mm]{MPivotSelection.png}
-					\label{fig:MPivotSelection}
+					\includegraphics<3>[width=72mm]{MPivotPartiton.png}
 				\end{center}
 
-				\begin{center}   
-					\includegraphics<3>[width=72mm]{MPivotPartiton.png}
-					\label{fig:MPivotPartiton}
-				\end{center}
 				\phantom{ }\cite{kushagra2013multi}
 			\end{frame}
 
@@ -155,7 +174,6 @@
 				\frametitle{Example M-Pivot Heap Optimized Pivot Selection}
 				\begin{center}   
 					\includegraphics[width=100mm]{MPivotHeap.png}
-					\label{fig:MPivotSelectCanadates}
 				\end{center}
 				\phantom{ }\cite{kushagra2013multi}
 			\end{frame}
@@ -168,11 +186,11 @@
 						\begin{tabular}{|r|l|}
 							\hline
 							Sort Method        &   Comparisons                          \\ \hline \hline
-							Classic            &   $2n \log n - 1.51n  + O(\log(n))$   \\ \hline%\cite{Wild:2012:ACA:2404160.2404231}     \\ \hline
-							Dual Pivot         &   $2.13n \log n - 2.57n + O(\log(n))$ \\ \hline%\cite{Wild:2012:ACA:2404160.2404231}     \\ \hline
-							Optimal Dual Pivot &   $1.8n \log n + O(n)$               \\ \hline%\cite{Aumuller:2013:OPD:2525857.2525862} \\ \hline
-							Three Pivot        &   $1.846n \log n + O(n)$             \\ \hline%\cite{kushagra2013multi}                 \\ \hline
-							Yaroslavskiy       &   $1.9n \log n - 2.46n + O(\log(n)$  \\ \hline%\cite{Wild:2012:ACA:2404160.2404231}     \\ \hline
+							Classic            &   $2n \log n - 1.51n  + O(\log(n))$   \\ \hline
+							Dual Pivot         &   $2.13n \log n - 2.57n + O(\log(n))$ \\ \hline
+							Optimal Dual Pivot &   $1.8n \log n + O(n)$               \\ \hline
+							Three Pivot        &   $1.846n \log n + O(n)$             \\ \hline
+							Yaroslavskiy       &   $1.9n \log n - 2.46n + O(\log(n)$  \\ \hline
 							M Pivot            &   $O(n \log n)$                        \\ 
 							\hline
 						\end{tabular}
@@ -183,11 +201,11 @@
 						\begin{tabular}{|r|l|}
 							\hline
 							Sort Method         &     Swaps \\ \hline \hline
-							Classic             &  $0.33n \log n - 0.58n + O(\log(n))$\\ \hline%\cite{Wild:2012:ACA:2404160.2404231}    \\ \hline
-							Dual Pivot          &  $0.8n \log n -0.3n + O(\log(n))$   \\ \hline%\cite{Wild:2012:ACA:2404160.2404231}    \\ \hline
-							Optimal Dual Pivot  &  $0.33n \log n + O(n)$              \\ \hline%\cite{Aumuller:2013:OPD:2525857.2525862}\\ \hline
-							Three Pivot         &  $0.615n \log n + O(n)$             \\ \hline%\cite{kushagra2013multi}                \\ \hline
-							Yaroslavskiy        &  $0.6n \log n + 0.08n + O(\log(n))$  \\ \hline%\cite{Wild:2012:ACA:2404160.2404231}    \\ \hline
+							Classic             &  $0.33n \log n - 0.58n + O(\log(n))$\\ \hline
+							Dual Pivot          &  $0.8n \log n -0.3n + O(\log(n))$   \\ \hline
+							Optimal Dual Pivot  &  $0.33n \log n + O(n)$              \\ \hline
+							Three Pivot         &  $0.615n \log n + O(n)$             \\ \hline
+							Yaroslavskiy        &  $0.6n \log n + 0.08n + O(\log(n))$  \\ \hline
 							M Pivot             &  $O(n \log n)$ \\ 
 							\hline
 						\end{tabular}
@@ -211,6 +229,12 @@
 				\includegraphics[width=72mm]{PlotLegend.png}
 				\label{fig:PlotLegend}
 			\end{center}
+		\note{
+			You can see the color and shape combination for each version of
+			quick sort. These color and shape choices will be consistent throughout
+			the following plots.
+			There are 17 distinct derivatives of quicksort that have been run.
+		}
 		\end{frame}
 
 	\section{Results}
@@ -218,23 +242,38 @@
 			\begin{frame}
 				\frametitle{Mass Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{AllthePlotsSmallScale_comp.png}
+					\includegraphics<1>[width=80mm]{AllthePlotsSmallScale_comp.png}
 				\end{center}
 				
+				\note{
+					Comparisons :
+
+					The Heap 6-pivot sort is the worst. 
+					Close with all the other heap m-pivot sorts. 
+					5-Pivot sort, 4-pivot sort, 3-pivot sort and Three-pivot quicksort
+					all seem to be mediocre.
+					The classic quicksorts, yaro, dual pivot, and optimal dual pivot 
+					all seem to be close and doing well
+				}
+
 				\begin{center}   
-					\includegraphics<2>[width=75mm]{AllthePlotsSmallScale_swap.png}
+					\includegraphics<2>[width=80mm]{AllthePlotsSmallScale_swap.png}
 				\end{center}
+				\note{
+					Swaps :
+
+					Similar trend as comparisons.
+					Although the classic quicksorts are much higher than expected.
+					They are close to the heap m-pivot sorts.
+				}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{Mass Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{AllthePlotsLargeScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{AllthePlotsLargeScale_swap.png}
+					\includegraphics<1>[width=80mm]{AllthePlotsLargeScale_comp.png}
+					\includegraphics<2>[width=80mm]{AllthePlotsLargeScale_swap.png}
 				\end{center}
 
 			\end{frame}
@@ -243,11 +282,8 @@
 				\frametitle{Mass Comparison Semi Log x}
 
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{SemilogxAllPlotsLargeScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{SemilogxAllPlotsLargeScale_swap.png}
+					\includegraphics<1>[width=80mm]{SemilogxAllPlotsLargeScale_comp.png}
+					\includegraphics<2>[width=80mm]{SemilogxAllPlotsLargeScale_swap.png}
 				\end{center}
 
 			\end{frame}
@@ -258,23 +294,18 @@
 				\frametitle{One Pivot Comparison Small Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{OnePivotsSmallScale_comp.png}
+					\includegraphics<1>[width=80mm]{OnePivotsSmallScale_comp.png}
+					\includegraphics<2>[width=80mm]{OnePivotsSmallScale_swap.png}
 				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{OnePivotsSmallScale_swap.png}
-				\end{center}
+
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{One Pivot Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{OnePivotsLargeScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{OnePivotsLargeScale_swap.png}
+					\includegraphics<1>[width=80mm]{OnePivotsLargeScale_comp.png}
+					\includegraphics<2>[width=80mm]{OnePivotsLargeScale_swap.png}
 				\end{center}
 
 			\end{frame}
@@ -285,24 +316,17 @@
 				\frametitle{Two Pivot Comparison Small Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{TwoPivotsSmallScale_comp.png}
+					\includegraphics<1>[width=80mm]{TwoPivotsSmallScale_comp.png}
+					\includegraphics<2>[width=80mm]{TwoPivotsSmallScale_swap.png}
 				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{TwoPivotsSmallScale_swap.png}
-				\end{center}
-
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{Two Pivot Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{TwoPivotsLargeScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{TwoPivotsLargeScale_swap.png}
+					\includegraphics<1>[width=80mm]{TwoPivotsLargeScale_comp.png}
+					\includegraphics<2>[width=80mm]{TwoPivotsLargeScale_swap.png}
 				\end{center}
 			\end{frame}
 
@@ -310,47 +334,79 @@
 			\begin{frame}
 				\frametitle{Three Pivot Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{ThreePivotsSmallScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{ThreePivotsSmallScale_swap.png}
+					\includegraphics<1>[width=80mm]{ThreePivotsSmallScale_comp.png}
+					\includegraphics<2>[width=80mm]{ThreePivotsSmallScale_swap.png}
 				\end{center}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{Three Pivot Comparison Large Scale}
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{ThreePivotsLargeScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{ThreePivotsLargeScale_swap.png}	
+					\includegraphics<1>[width=80mm]{ThreePivotsLargeScale_comp.png}
+					\includegraphics<2>[width=80mm]{ThreePivotsLargeScale_swap.png}	
 				\end{center}
 			\end{frame}
-			
+
 		\subsection{M Pivots}
 			\begin{frame}
 				\frametitle{M Pivot Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{M-PivotQuicksortsSmallScale_comp.png}
-				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{M-PivotQuicksortsSmallScale_swap.png}
+					\includegraphics<1>[width=80mm]{M-PivotQuicksortsSmallScale_comp.png}
+					\includegraphics<2>[width=80mm]{M-PivotQuicksortsSmallScale_swap.png}
 				\end{center}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{M Pivot Comparison Large Scale}
 				\begin{center}   
-					\includegraphics<1>[width=75mm]{M-PivotQuicksortsLargeScale_comp.png}
+					\includegraphics<1>[width=80mm]{M-PivotQuicksortsLargeScale_comp.png}
+					\includegraphics<2>[width=80mm]{M-PivotQuicksortsLargeScale_swap.png}
 				\end{center}
-				
-				\begin{center}   
-					\includegraphics<2>[width=75mm]{M-PivotQuicksortsLargeScale_swap.png}
-				\end{center}
+
 			\end{frame}
+
+
+		\subsection{Polynomial Fit}
+			\begin{frame}
+				\frametitle{Fit Coefficients of $A n \log(n) + B n + C \log(n)$ }
+				\only<1>{
+					\begin{center}
+						\begin{tabular}{|r|c|c|}
+							\hline
+							               Sort Method & Comparisons         &   Swaps             \\ \hline \hline
+						               Classic - 1 - 1 &   0.02219           &   0.01060           \\ \hline
+						               Classic - 2 - 1 &   0.02126           & {\bfseries 0.01110} \\ \hline
+						               Classic - 3 - 1 &   0.01799           &   0.00828           \\ \hline
+						            Dual Pivot - 1 - 2 &   0.02109           &   0.00636           \\ \hline
+						            Dual Pivot - 2 - 2 &   0.01787           &   0.00603           \\ \hline
+						    Optimal Dual Pivot - 1 - 2 &   0.02044           &   0.00636           \\ \hline
+						    Optimal Dual Pivot - 2 - 2 & {\bfseries 0.01754} &   0.00603           \\ \hline
+						           Three Pivot - 1 - 3 &   0.02595           &   0.00616           \\ \hline
+						          Yaroslavskiy - 1 - 2 &   0.01811           &   0.00584           \\ \hline
+						\end{tabular}
+					\end{center}
+				}
+				\only<2>{
+					\begin{center}
+						\begin{tabular}{|r|c|c|}
+							\hline
+							               Sort Method & Comparisons         &   Swaps             \\ \hline \hline
+						          Heap M Pivot - 1 - 3 &   0.02755           &   0.00999           \\ \hline
+						          Heap M Pivot - 1 - 4 &   0.02782           &   0.00885           \\ \hline
+						          Heap M Pivot - 1 - 5 & {\bfseries 0.02903} &   0.00809           \\ \hline
+						          Heap M Pivot - 1 - 6 &   0.02801           &   0.00769           \\ \hline
+						               M Pivot - 1 - 3 &   0.01955           &   0.00640           \\ \hline
+						               M Pivot - 1 - 4 &   0.02039           &   0.00594           \\ \hline
+						               M Pivot - 1 - 5 &   0.02136           &   0.00532           \\ \hline
+						               M Pivot - 1 - 6 &   0.02369           & {\bfseries 0.00524} \\ \hline
+						\end{tabular}
+					\end{center}			
+				}
+				\note{
+					Name of sort - Pivot Selection Method - Number of Pivots
+				}
+			\end{frame}
+
 
 	\section{The End}
 
