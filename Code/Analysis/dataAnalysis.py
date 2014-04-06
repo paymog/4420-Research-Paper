@@ -171,7 +171,8 @@ def markerGenerator(index,withSymbol= True, withColor = True):
     return withSymbol*markers[index%numMarkers]+withColor*colors[index%numColors]
 
 def convertLabelToStr(label):
-    return "%s - %s - %s - %s" %label
+    name,medianSelection,numPivots,usedInsertionSort = label
+    return "%s - %s - %s" %(name,medianSelection,numPivots)
 
 def plotData(data,  plotTime = False, 
                     plotComp = True, 
@@ -649,6 +650,7 @@ def main():
 
     customPlot = lambda x: classicQuickSortOnly(x) or dualPivotQuicksortOnly(x) or threePivotQuicksortOnly(x) or mPivotQuicksortOnly3(x)
 
+    allMPivotQuicksortKinds = lambda x: x[0] in 'MPivotQuicksort'
 
     data = getData(dataAbsPath)
 
@@ -659,11 +661,11 @@ def main():
 
     maskFunctionList = [ classicQuickSortOnly,dualPivotQuicksortOnly,heapOptimizedMPivotQuicksortOnly,
                         mPivotQuicksortOnly, optimalDualPivotQuicksortOnly,threePivotQuicksortOnly,
-                        yaroslavskiyQuicksortOnly, onePivot,twoPivot,threePivot]
+                        yaroslavskiyQuicksortOnly, onePivot,twoPivot,threePivot,allMPivotQuicksortKinds]
 
-    maskFunctionTitleList = ['Classic QuickSorts','Dual Pivot Quicksorts','HeapOptimized M-Pivot Quicksorts',
-                            'M-Pivot Quicksorts','Optimal Dual Pivot Quicksorts','Three Pivot Quicksorts',
-                            'Yaroslavskiy Quicksorts','One Pivots','Two Pivots','Three Pivots']
+    maskFunctionTitleList = ['Classic QuickSorts','Dual Pivot Quicksorts','Heap Optimized M-Pivot Quicksorts',
+                            'Non Optimized M-Pivot Quicksorts','Optimal Dual Pivot Quicksorts','Three Pivot Quicksorts',
+                            'Yaroslavskiy Quicksorts','One Pivots','Two Pivots','Three Pivots','M-Pivot Quicksorts']
 
     smallScaleLimits = [100,1000]
 
