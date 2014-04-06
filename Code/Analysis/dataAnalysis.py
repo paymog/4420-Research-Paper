@@ -451,20 +451,32 @@ def extractYLim(data,goodFunction,badFunction,xlim):
 def calcLeastSquaresOnData(data):
     '''
     We want to fit the data to :
-        y = A x log(x) + B
+        y = A x log(x) + B x + C log(x)
 
-    So we make a transformation so that :
-        X = x log(x) = x ln(x)/ln(2)
-        Y = y
+    We use a non-linear curve fitter.
 
     Other considerations:
 
-    Another fit we can try
+    Method 2 :
+        y = A x log(x) + B
+
+        So we make a transformation so that :
+            X = x log(x) = x ln(x)/ln(2)
+            Y = y
+
+    Method 3:
         y = A x log(x) + Bx = x ( A log(x) + B )
 
-    So we make a transformation so that :
-        X = log(x) = ln(x)/ln(2)
-        Y = y/x
+        So we make a transformation so that :
+            X = log(x) = ln(x)/ln(2)
+            Y = y/x
+
+    Method 3:
+        y = A x log(x) + Blog(x) = log(x) ( A x + B )
+
+        So we make a transformation so that :
+            X = x
+            Y = y/log(x)
     '''
     keyList = list(data.keys())
     keyList.sort()
