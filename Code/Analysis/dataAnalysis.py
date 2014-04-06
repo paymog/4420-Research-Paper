@@ -154,7 +154,7 @@ def averageData(data):
 
     return data
 
-def markerGenerator(index):
+def markerGenerator(index,withSymbol= True, withColor = True):
     '''
     This function was created so that we can generate lines
     with varying symbols and colors without creating them by
@@ -166,7 +166,7 @@ def markerGenerator(index):
     markers = 'ox^spdv><'
     numMarkers = len(markers)
 
-    return markers[index%numMarkers]+colors[index%numColors]
+    return withSymbol*markers[index%numMarkers]+colors[index%numColors]
 
 def convertLabelToStr(label):
     return "%s - %s - %s - %s" %label
@@ -192,6 +192,7 @@ def plotData(data,  plotTime = False,
     :param badFunction:  a function that will take in the label tuple and determine if it will not plot that label
     :param makeLegend: boolean to control if the legend should be rendered
     :param plotTitle: string of title of the plot. Will be placed on the top of the figure.
+    :param plotter: function that will plot the data ( plt.plot, plt.semilogx, plt.semilogy, plt.loglog )
     '''
 
     keyList = list(data.keys())
@@ -208,7 +209,7 @@ def plotData(data,  plotTime = False,
 
     for count,label in enumerate(keyList):
 
-        marker = '-' + markerGenerator(count)
+        marker = '' + markerGenerator(count)
 
         if goodFunction(label) and not badFunction(label) :
             sizeList,timeList,compList,swapList = data[label]
@@ -261,14 +262,72 @@ def plotData(data,  plotTime = False,
         if plotTitle:
             plt.title(plotTitle + '(Swaps)')
 
-    plt.show()
-
     return tuple(returnList)
+
+def plotPolynomialFit(data,fitParameters,figureList,
+                    plotComp = True, 
+                    plotSwap = True,
+                    goodFunction = lambda x:True , 
+                    badFunction = lambda x:False, 
+                    makeLegend = True, 
+                    plotter = plt.plot,
+                    numPoints = 10**3) :
+
+    keyList = list(data.keys())
+    keyList.sort()
+
+    #print keyList
+    count = 0
+    if plotComp :
+        compFigure = figureList[count]
+        count+=1
+    if plotSwap :
+        swapFigure = figureList[count]
+        count+=1
+
+    for count,label in enumerate(keyList):
+
+        if count < 7 :
+            marker = '--' + markerGenerator(count,withSymbol=False)
+        else:
+            marker = '-' + markerGenerator(count,withSymbol=False)
+
+        if goodFunction(label) and not badFunction(label) :
+            sizeList,timeList,compList,swapList = data[label]
+            compCoef,swapCoef = fitParameters[label]
+
+            xVals = np.linspace(min(sizeList), max(sizeList),numPoints)
+
+            if plotComp :
+                compFitFunc = lambda xx:(compCoef[0]*xx*np.log2(xx) + compCoef[1])
+                #compFitFunc = lambda xx:(compCoef[0]*xx*np.log2(xx) + compCoef[1]*xx)
+
+                plt.figure(compFigure.number)
+                plotter(xVals,compFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit")
+            if plotSwap :
+                swapFitFunc = lambda xx:(swapCoef[0]*xx*np.log2(xx) + swapCoef[1])
+                #swapFitFunc = lambda xx:(swapCoef[0]*xx*np.log2(xx) + swapCoef[1]*xx)
+
+                plt.figure(swapFigure.number)
+                plotter(xVals,swapFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit")
+
+
+    if plotComp :
+        plt.figure(compFigure.number)
+
+        if makeLegend :
+            plt.legend(loc = "upper left")
+
+    if plotSwap:
+        plt.figure(swapFigure.number)
+
+        if makeLegend :
+            plt.legend(loc = "upper left")
 
 def leastSquaresPolyFit(xx,yy,kk):
     '''
     Applies Least Squares regression on the data do create
-    the coefficient of a polynomial of degree k
+    the coefficient of a polynomial of degree kk
     '''
     nn = len(xx)
     MM = np.ones([nn,kk+1])
@@ -305,6 +364,15 @@ def calcLeastSquaresOnData(data):
     So we make a transformation so that :
         X = x log(x) = x ln(x)/ln(2)
         Y = y
+
+    Other considerations:
+
+    Another fit we can try
+        y = A x log(x) + Bx = x ( A log(x) + B )
+
+    So we make a transformation so that :
+        X = log(x) = ln(x)/ln(2)
+        Y = y/x
     '''
     keyList = list(data.keys())
     keyList.sort()
@@ -314,10 +382,25 @@ def calcLeastSquaresOnData(data):
     for label in keyList :
         sizeList,timeList,compList,swapList = data[label]
 
-        xx = sizeList * np.log(sizeList)/np.log(2)
+        sizeList = np.array(sizeList, dtype = np.float128)
+        timeList = np.array(timeList, dtype = np.float128)
+        compList = np.array(compList, dtype = np.float128)
+        swapList = np.array(swapList, dtype = np.float128)
 
-        compCoef = leastSquaresPolyFit(xx, compList, 1)
-        swapCoef = leastSquaresPolyFit(xx, swapList, 1)
+        # First Transformation
+        xx = sizeList * np.log2(sizeList)
+        
+        compY = compList
+        swapY = swapList
+
+        # Second Transformation
+        #xx = np.log2(sizeList)
+        #
+        #compY = compList/sizeList
+        #swapY = swapList/sizeList
+
+        compCoef = leastSquaresPolyFit(xx, compY, 1)
+        swapCoef = leastSquaresPolyFit(xx, swapY, 1)
 
         fitParameters[label] = compCoef,swapCoef
 
@@ -325,15 +408,46 @@ def calcLeastSquaresOnData(data):
     print "COMPARISON COEFFICIENTS"
     for label in keyList :
         compCoef,swapCoef = fitParameters[label]
-        print "%45s | %9.4f | %9.4f "%(label,compCoef[0],compCoef[1])
+        print "%45s | %9.4f | %9.4f "%(convertLabelToStr(label),compCoef[0],compCoef[1])
 
     print ""
     print "SWAP COEFFICIENTS"
     for label in keyList :
         compCoef,swapCoef = fitParameters[label]
-        print "%45s | %9.4f | %9.4f "%(label,swapCoef[0],swapCoef[1])
+        print "%45s | %9.4f | %9.4f "%(convertLabelToStr(label),swapCoef[0],swapCoef[1])
 
     return fitParameters
+
+
+def plotDataAndFit(data,fitParameters,
+                    plotComp = True, 
+                    plotSwap = True,
+                    goodFunction = lambda x:True , 
+                    badFunction = lambda x:False, 
+                    makeLegend = True,
+                    plotTitle = None, 
+                    plotter = plt.plot,
+                    numPoints = 10**3) :
+
+    figureList = plotData(data,
+            plotComp = plotComp, 
+            plotSwap = plotSwap,
+            goodFunction = goodFunction , 
+            badFunction = badFunction, 
+            makeLegend = makeLegend, 
+            plotTitle = plotTitle,
+            plotter = plotter)
+
+    plotPolynomialFit(data,fitParameters,figureList,
+                    plotComp = plotComp, 
+                    plotSwap = plotSwap,
+                    goodFunction = goodFunction , 
+                    badFunction = badFunction, 
+                    makeLegend = makeLegend, 
+                    plotter = plotter,
+                    numPoints = 10**3)
+
+    return figureList
 
 def main():
     # Note that labels are defined as follows 
@@ -373,35 +487,38 @@ def main():
 
     usedInsertionSort = lambda x: x[3]
 
+
+    mPivotQuicksortOnly3 = lambda x : mPivotQuicksortOnly(x) and threePivot(x)
+
+    customPlot = lambda x: classicQuickSortOnly(x) or dualPivotQuicksortOnly(x) or threePivotQuicksortOnly(x) or mPivotQuicksortOnly3(x)
+
+
     data = getData(dataAbsPath)
 
     fitParameters = calcLeastSquaresOnData(data)
 
     #plotData(data,makeLegend=False)
 
-    plotData(data,makeLegend=False,plotter = plt.semilogx)
+    #plotData(data,makeLegend=False,plotter = plt.semilogx)
 
-    #plotData(data, goodFunction = classicQuickSortOnly)
-    #plotData(data, goodFunction = dualPivotQuicksortOnly)
-    #plotData(data, goodFunction = heapOptimizedMPivotQuicksortOnly)
-    #plotData(data, goodFunction = mPivotQuicksortOnly)
-    #plotData(data, goodFunction = optimalDualPivotQuicksortOnly)
-    #plotData(data, goodFunction = threePivotQuicksortOnly)
-    #plotData(data, goodFunction = yaroslavskiyQuicksortOnly)
-
-    #plotData(data, goodFunction = onePivot)
-    #plotData(data, goodFunction = twoPivot)
-    #plotData(data, goodFunction = threePivot)
-
-    #plotData(data, goodFunction = usedInsertionSort)
+    plotDataAndFit(data,fitParameters, goodFunction = classicQuickSortOnly ,            plotTitle = 'classicQuickSortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = dualPivotQuicksortOnly,           plotTitle = 'dualPivotQuicksortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = heapOptimizedMPivotQuicksortOnly, plotTitle = 'heapOptimizedMPivotQuicksortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = mPivotQuicksortOnly,              plotTitle = 'mPivotQuicksortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = optimalDualPivotQuicksortOnly,    plotTitle = 'optimalDualPivotQuicksortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = threePivotQuicksortOnly,          plotTitle = 'threePivotQuicksortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = yaroslavskiyQuicksortOnly,        plotTitle = 'yaroslavskiyQuicksortOnly')
+    plotDataAndFit(data,fitParameters, goodFunction = onePivot,                         plotTitle = 'onePivot')
+    plotDataAndFit(data,fitParameters, goodFunction = twoPivot,                         plotTitle = 'twoPivot')
+    plotDataAndFit(data,fitParameters, goodFunction = threePivot,                       plotTitle = 'threePivot')
+    plotDataAndFit(data,fitParameters, goodFunction = customPlot,                       plotTitle = 'customPlot')
 
 
-    mPivotQuicksortOnly3 = lambda x : mPivotQuicksortOnly(x) and threePivot(x)
+    #compFigure,swapFigure = plotData(data, goodFunction = customPlot)
+    #plotPolynomialFit(data, fitParameters, [compFigure,swapFigure],goodFunction = customPlot)
 
-    customPlot = lambda x: classicQuickSortOnly(x) or dualPivotQuicksortOnly(x) or threePivotQuicksortOnly(x) or mPivotQuicksortOnly3(x)
 
-    #plotData(data, goodFunction = customPlot)
-
+    plt.show()
 
 if __name__ == '__main__':
     main()
