@@ -1,0 +1,97 @@
+************************************************************************
+    We want to fit the data to :
+        y = A x log(x) + B
+
+    So we make a transformation so that :
+        X = x log(x) = x ln(x)/ln(2)
+        Y = y
+
+Note that this fit Function is better from observation
+************************************************************************
+
+COMPARISON COEFFICIENTS
+              ClassicQuicksort - 1 - 1 - True |    0.0195 | -5230.0582 
+              ClassicQuicksort - 2 - 1 - True |    0.0195 | -4584.6543 
+              ClassicQuicksort - 3 - 1 - True |    0.0172 | -2094.8376 
+            DualPivotQuicksort - 1 - 2 - True |    0.0187 | -4722.3162 
+            DualPivotQuicksort - 2 - 2 - True |    0.0173 | -1824.3243 
+  HeapOptimizedMPivotQuicksort - 1 - 3 - True |    0.0258 | -4516.4015 
+  HeapOptimizedMPivotQuicksort - 1 - 4 - True |    0.0258 | -4293.8296 
+  HeapOptimizedMPivotQuicksort - 1 - 5 - True |    0.0266 | -5285.6288 
+  HeapOptimizedMPivotQuicksort - 1 - 6 - True |    0.0271 | -3380.5254 
+               MPivotQuicksort - 1 - 3 - True |    0.0189 | -1367.9001 
+               MPivotQuicksort - 1 - 4 - True |    0.0201 | -868.3643 
+               MPivotQuicksort - 1 - 5 - True |    0.0213 | -591.2987 
+               MPivotQuicksort - 1 - 6 - True |    0.0226 | -2149.3874 
+     OptimalDualPivotQuicksort - 1 - 2 - True |    0.0182 | -4485.8760 
+     OptimalDualPivotQuicksort - 2 - 2 - True |    0.0169 | -1768.8256 
+           ThreePivotQuicksort - 1 - 3 - True |    0.0242 | -5047.6329 
+         YaroslavskiyQuicksort - 1 - 2 - True |    0.0173 | -2081.4587 
+
+SWAP COEFFICIENTS
+              ClassicQuicksort - 1 - 1 - True |    0.0102 | -939.9217 
+              ClassicQuicksort - 2 - 1 - True |    0.0104 | -969.2112 
+              ClassicQuicksort - 3 - 1 - True |    0.0092 | 1379.8819 
+            DualPivotQuicksort - 1 - 2 - True |    0.0066 |  413.3631 
+            DualPivotQuicksort - 2 - 2 - True |    0.0065 | 1629.6221 
+  HeapOptimizedMPivotQuicksort - 1 - 3 - True |    0.0103 |  275.6293 
+  HeapOptimizedMPivotQuicksort - 1 - 4 - True |    0.0094 | 1417.4968 
+  HeapOptimizedMPivotQuicksort - 1 - 5 - True |    0.0088 | 1976.7660 
+  HeapOptimizedMPivotQuicksort - 1 - 6 - True |    0.0085 | 2282.1904 
+               MPivotQuicksort - 1 - 3 - True |    0.0072 | 2066.2643 
+               MPivotQuicksort - 1 - 4 - True |    0.0068 | 2506.0931 
+               MPivotQuicksort - 1 - 5 - True |    0.0066 | 3455.4785 
+               MPivotQuicksort - 1 - 6 - True |    0.0066 | 3899.3316 
+     OptimalDualPivotQuicksort - 1 - 2 - True |    0.0066 |  413.3631 
+     OptimalDualPivotQuicksort - 2 - 2 - True |    0.0065 | 1629.6221 
+           ThreePivotQuicksort - 1 - 3 - True |    0.0068 | 1584.5255 
+         YaroslavskiyQuicksort - 1 - 2 - True |    0.0065 | 1874.8476 
+
+
+
+
+************************************************************************
+        y = A x log(x) + Bx = x ( A log(x) + B )
+
+    So we make a transformation so that :
+        X = log(x) = ln(x)/ln(2)
+        Y = y/x
+************************************************************************
+
+COMPARISON COEFFICIENTS
+              ClassicQuicksort - 1 - 1 - True |    0.0216 |   -0.0478 
+              ClassicQuicksort - 2 - 1 - True |    0.0216 |   -0.0498 
+              ClassicQuicksort - 3 - 1 - True |    0.0188 |   -0.0348 
+            DualPivotQuicksort - 1 - 2 - True |    0.0206 |   -0.0440 
+            DualPivotQuicksort - 2 - 2 - True |    0.0188 |   -0.0315 
+  HeapOptimizedMPivotQuicksort - 1 - 3 - True |    0.0283 |   -0.0565 
+  HeapOptimizedMPivotQuicksort - 1 - 4 - True |    0.0282 |   -0.0537 
+  HeapOptimizedMPivotQuicksort - 1 - 5 - True |    0.0290 |   -0.0535 
+  HeapOptimizedMPivotQuicksort - 1 - 6 - True |    0.0297 |   -0.0561 
+               MPivotQuicksort - 1 - 3 - True |    0.0206 |   -0.0351 
+               MPivotQuicksort - 1 - 4 - True |    0.0219 |   -0.0381 
+               MPivotQuicksort - 1 - 5 - True |    0.0230 |   -0.0356 
+               MPivotQuicksort - 1 - 6 - True |    0.0244 |   -0.0368 
+     OptimalDualPivotQuicksort - 1 - 2 - True |    0.0200 |   -0.0424 
+     OptimalDualPivotQuicksort - 2 - 2 - True |    0.0183 |   -0.0296 
+           ThreePivotQuicksort - 1 - 3 - True |    0.0267 |   -0.0591 
+         YaroslavskiyQuicksort - 1 - 2 - True |    0.0188 |   -0.0312 
+
+SWAP COEFFICIENTS
+              ClassicQuicksort - 1 - 1 - True |    0.0114 |   -0.0243 
+              ClassicQuicksort - 2 - 1 - True |    0.0114 |   -0.0200 
+              ClassicQuicksort - 3 - 1 - True |    0.0100 |   -0.0122 
+            DualPivotQuicksort - 1 - 2 - True |    0.0072 |   -0.0087 
+            DualPivotQuicksort - 2 - 2 - True |    0.0069 |   -0.0038 
+  HeapOptimizedMPivotQuicksort - 1 - 3 - True |    0.0112 |   -0.0154 
+  HeapOptimizedMPivotQuicksort - 1 - 4 - True |    0.0101 |   -0.0111 
+  HeapOptimizedMPivotQuicksort - 1 - 5 - True |    0.0095 |   -0.0088 
+  HeapOptimizedMPivotQuicksort - 1 - 6 - True |    0.0089 |   -0.0020 
+               MPivotQuicksort - 1 - 3 - True |    0.0077 |   -0.0052 
+               MPivotQuicksort - 1 - 4 - True |    0.0071 |   -0.0001 
+               MPivotQuicksort - 1 - 5 - True |    0.0069 |    0.0027 
+               MPivotQuicksort - 1 - 6 - True |    0.0062 |    0.0155 
+     OptimalDualPivotQuicksort - 1 - 2 - True |    0.0072 |   -0.0087 
+     OptimalDualPivotQuicksort - 2 - 2 - True |    0.0069 |   -0.0038 
+           ThreePivotQuicksort - 1 - 3 - True |    0.0073 |   -0.0060 
+         YaroslavskiyQuicksort - 1 - 2 - True |    0.0069 |   -0.0038 

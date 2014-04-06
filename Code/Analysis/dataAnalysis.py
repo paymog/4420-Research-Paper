@@ -5,6 +5,8 @@ fileName = 'alldata.csv'
 
 dataAbsPath = '../quicksorts/' + fileName
 
+DEBUG = False
+
 def getData(filePath):
 
     flink = open(filePath,'r')
@@ -166,7 +168,7 @@ def markerGenerator(index,withSymbol= True, withColor = True):
     markers = 'ox^spdv><'
     numMarkers = len(markers)
 
-    return withSymbol*markers[index%numMarkers]+colors[index%numColors]
+    return withSymbol*markers[index%numMarkers]+withColor*colors[index%numColors]
 
 def convertLabelToStr(label):
     return "%s - %s - %s - %s" %label
@@ -176,9 +178,13 @@ def plotData(data,  plotTime = False,
                     plotSwap = True,
                     goodFunction = lambda x:True , 
                     badFunction = lambda x:False, 
-                    makeLegend = True, 
+                    makeLegend = True,
+                    legendSize = 10, 
                     plotTitle = None,
-                    plotter = plt.plot) :
+                    fontsize = 12,
+                    plotter = plt.plot,
+                    connectDataPoints = False,
+                    xlim = None) :
     '''
     Plot data will take the data dictionary and create plots according to the key word argunments.
 
@@ -191,8 +197,11 @@ def plotData(data,  plotTime = False,
     :param goodFunction: a function that will take in the label tuple and determine if it will plot that label
     :param badFunction:  a function that will take in the label tuple and determine if it will not plot that label
     :param makeLegend: boolean to control if the legend should be rendered
+    :param legendSize: size of the legend
     :param plotTitle: string of title of the plot. Will be placed on the top of the figure.
+    :param fontsize: The font size of the title of the figure
     :param plotter: function that will plot the data ( plt.plot, plt.semilogx, plt.semilogy, plt.loglog )
+    :param connectDataPoints: boolean to control if the data points will be connected with a solid line
     '''
 
     keyList = list(data.keys())
@@ -207,9 +216,13 @@ def plotData(data,  plotTime = False,
     if plotSwap :
         swapFigure = plt.figure()
 
+    if xlim and xlim[0] > xlim[1]:
+
+        xlim[1],xlim[0] = xlim[0],xlim[1]
+
     for count,label in enumerate(keyList):
 
-        marker = '' + markerGenerator(count)
+        marker = connectDataPoints*'-' + markerGenerator(count)
 
         if goodFunction(label) and not badFunction(label) :
             sizeList,timeList,compList,swapList = data[label]
@@ -224,7 +237,20 @@ def plotData(data,  plotTime = False,
                 plt.figure(swapFigure.number)
                 plotter(sizeList,swapList,marker,label=convertLabelToStr(label))
 
+            if DEBUG:
+                index = ( xlim[0] <= sizeList) * (sizeList <= xlim[1] )
+                print ""
+                print convertLabelToStr(label)
+                print sizeList[index]
+                print compList[index]
+                print swapList[index]
+
     returnList = []
+
+    legendProp = {'size':legendSize}
+
+    if xlim:
+        timeYLim,compYLim,swapYLim = extractYLim(data, goodFunction, badFunction, xlim)
 
     if plotTime :
         returnList.append(timeFigure)
@@ -233,10 +259,14 @@ def plotData(data,  plotTime = False,
         plt.ylabel('Time')
         
         if makeLegend :
-            plt.legend(loc = "upper left")
+            plt.legend(loc = "upper left",prop = legendProp)
 
         if plotTitle:
-            plt.title(plotTitle + '(Time)')
+            plt.title(plotTitle + ' (Time)',fontsize = fontsize)
+
+        if xlim:
+            plt.xlim(xlim[0],xlim[1])
+            plt.ylim(timeYLim[0],timeYLim[1])
 
     if plotComp :
         returnList.append(compFigure)
@@ -245,10 +275,14 @@ def plotData(data,  plotTime = False,
         plt.ylabel('Comparisons')
 
         if makeLegend :
-            plt.legend(loc = "upper left")
+            plt.legend(loc = "upper left",prop = legendProp)
 
         if plotTitle:
-            plt.title(plotTitle + '(Comparisons)')
+            plt.title(plotTitle + ' (Comparisons)',fontsize = fontsize)
+
+        if xlim:
+            plt.xlim(xlim[0],xlim[1])
+            plt.ylim(compYLim[0],compYLim[1])
 
     if plotSwap:
         returnList.append(swapFigure)
@@ -257,10 +291,14 @@ def plotData(data,  plotTime = False,
         plt.ylabel('Swaps')
 
         if makeLegend :
-            plt.legend(loc = "upper left")
+            plt.legend(loc = "upper left",prop = legendProp)
 
         if plotTitle:
-            plt.title(plotTitle + '(Swaps)')
+            plt.title(plotTitle + ' (Swaps)',fontsize = fontsize)
+
+        if xlim:
+            plt.xlim(xlim[0],xlim[1])
+            plt.ylim(swapYLim[0],swapYLim[1])
 
     return tuple(returnList)
 
@@ -270,7 +308,10 @@ def plotPolynomialFit(data,fitParameters,figureList,
                     goodFunction = lambda x:True , 
                     badFunction = lambda x:False, 
                     makeLegend = True, 
+                    legendSize = 10, 
                     plotter = plt.plot,
+                    xlim = None,
+                    linewidth = 1.5,
                     numPoints = 10**3) :
 
     keyList = list(data.keys())
@@ -285,6 +326,10 @@ def plotPolynomialFit(data,fitParameters,figureList,
         swapFigure = figureList[count]
         count+=1
 
+    if xlim and xlim[0] > xlim[1]:
+
+        xlim[1],xlim[0] = xlim[0],xlim[1]
+
     for count,label in enumerate(keyList):
 
         if count < 7 :
@@ -296,33 +341,111 @@ def plotPolynomialFit(data,fitParameters,figureList,
             sizeList,timeList,compList,swapList = data[label]
             compCoef,swapCoef = fitParameters[label]
 
-            xVals = np.linspace(min(sizeList), max(sizeList),numPoints)
+            if xlim :
+                xMin = min( min(sizeList),xlim[0])
+                xMax = max( max(sizeList),xlim[1])
+            else :
+                xMin = min(sizeList)
+                xMax = max(sizeList)
+
+            xVals = np.linspace(xMin,xMax,numPoints)
 
             if plotComp :
                 compFitFunc = lambda xx:(compCoef[0]*xx*np.log2(xx) + compCoef[1])
                 #compFitFunc = lambda xx:(compCoef[0]*xx*np.log2(xx) + compCoef[1]*xx)
 
                 plt.figure(compFigure.number)
-                plotter(xVals,compFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit")
+                plotter(xVals,compFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
+
             if plotSwap :
                 swapFitFunc = lambda xx:(swapCoef[0]*xx*np.log2(xx) + swapCoef[1])
                 #swapFitFunc = lambda xx:(swapCoef[0]*xx*np.log2(xx) + swapCoef[1]*xx)
 
                 plt.figure(swapFigure.number)
-                plotter(xVals,swapFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit")
+                plotter(xVals,swapFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
 
+    legendProp = {'size':legendSize}
 
-    if plotComp :
+    if xlim:
+        timeYLim,compYLim,swapYLim = extractYLim(data, goodFunction, badFunction, xlim)
+
+    if plotComp and makeLegend:
         plt.figure(compFigure.number)
+        plt.legend(loc = "upper left",prop = legendProp)
 
-        if makeLegend :
-            plt.legend(loc = "upper left")
+    if plotSwap and xlim:
+        plt.xlim(xlim[0],xlim[1])
+        plt.ylim(compYLim[0],compYLim[1])
 
-    if plotSwap:
+    if plotSwap and makeLegend:
         plt.figure(swapFigure.number)
+        plt.legend(loc = "upper left",prop = legendProp)
 
-        if makeLegend :
-            plt.legend(loc = "upper left")
+    if plotSwap and xlim:
+        plt.xlim(xlim[0],xlim[1])
+        plt.ylim(swapYLim[0],swapYLim[1])
+
+def extractYLim(data,goodFunction,badFunction,xlim):
+    keyList = list(data.keys())
+    keyList.sort()
+
+    if xlim[0] > xlim[1]:
+
+        xlim[1],xlim[0] = xlim[0],xlim[1]
+
+    yMinTime = None
+    yMaxTime = -1
+
+    yMinComp = None
+    yMaxComp = -1
+
+    yMinSwap = None
+    yMaxSwap = -1
+
+    for label in keyList:
+        if goodFunction(label) and not badFunction(label) :
+            sizeList,timeList,compList,swapList = data[label]
+
+            sizeIndex = (xlim[0] <= sizeList) * ( sizeList <= xlim[1]  )
+
+            yMinTimeTemp = np.min(timeList[sizeIndex])
+            yMaxTimeTemp = np.max(timeList[sizeIndex])
+
+            yMinCompTemp = np.min(compList[sizeIndex])
+            yMaxCompTemp = np.max(compList[sizeIndex])
+            
+            yMinSwapTemp = np.min(swapList[sizeIndex])
+            yMaxSwapTemp = np.max(swapList[sizeIndex])
+
+            if not bool(yMinTime) or yMinTime > yMinTimeTemp:
+                yMinTime = yMinTimeTemp
+
+            if yMaxTime < yMaxTimeTemp:
+                yMaxTime = yMaxTimeTemp
+
+            if not bool(yMinComp) or yMinComp > yMinCompTemp:
+                yMinComp = yMinCompTemp
+
+            if yMaxComp < yMaxCompTemp:
+                yMaxComp = yMaxCompTemp
+
+            if not bool(yMinSwap) or yMinSwap > yMinSwapTemp:
+                yMinSwap = yMinSwapTemp
+
+            if yMaxSwap < yMaxSwapTemp:
+                yMaxSwap = yMaxSwapTemp
+
+
+    if not bool(yMinTime):
+        yMinTime = 0
+
+    if not bool(yMinComp):
+        yMinComp = 0
+
+    if not bool(yMinSwap):
+        yMinSwap = 0
+
+    return [yMinTime,yMaxTime],[yMinComp,yMaxComp],[yMinSwap,yMaxSwap]
 
 def leastSquaresPolyFit(xx,yy,kk):
     '''
@@ -418,6 +541,20 @@ def calcLeastSquaresOnData(data):
 
     return fitParameters
 
+def saveFigure(figure,fileName,fileExtention = '.png',dpi = 600):
+    fullFileName = fileName + fileExtention
+    plt.figure(figure.number)
+    plt.savefig(fullFileName, 
+                    dpi         = dpi, 
+                    facecolor   = 'w', 
+                    edgecolor   = 'w',
+                    orientation = 'portrait', 
+                    papertype   = None, 
+                    format      = None,
+                    transparent = True, 
+                    bbox_inches = None, 
+                    pad_inches  = 0.15,
+                    frameon     = None)
 
 def plotDataAndFit(data,fitParameters,
                     plotComp = True, 
@@ -425,27 +562,47 @@ def plotDataAndFit(data,fitParameters,
                     goodFunction = lambda x:True , 
                     badFunction = lambda x:False, 
                     makeLegend = True,
-                    plotTitle = None, 
+                    legendSize = 10, 
+                    plotTitle = None,
+                    fontsize = 12, 
                     plotter = plt.plot,
-                    numPoints = 10**3) :
+                    xlim = None,
+                    connectDataPoints = False,
+                    linewidth = 1.5,
+                    numPoints = 10**3,
+                    savePlot = False) :
 
     figureList = plotData(data,
-            plotComp = plotComp, 
-            plotSwap = plotSwap,
-            goodFunction = goodFunction , 
-            badFunction = badFunction, 
-            makeLegend = makeLegend, 
-            plotTitle = plotTitle,
-            plotter = plotter)
-
-    plotPolynomialFit(data,fitParameters,figureList,
                     plotComp = plotComp, 
                     plotSwap = plotSwap,
                     goodFunction = goodFunction , 
                     badFunction = badFunction, 
-                    makeLegend = makeLegend, 
+                    makeLegend = makeLegend,
+                    legendSize = legendSize, 
+                    plotTitle = plotTitle,
+                    xlim = xlim,
+                    fontsize = fontsize,
                     plotter = plotter,
-                    numPoints = 10**3)
+                    connectDataPoints = connectDataPoints)
+
+    if not connectDataPoints :
+        plotPolynomialFit(data,fitParameters,figureList,
+                        plotComp = plotComp, 
+                        plotSwap = plotSwap,
+                        goodFunction = goodFunction , 
+                        badFunction = badFunction, 
+                        makeLegend = makeLegend, 
+                        legendSize = legendSize,
+                        plotter = plotter,
+                        xlim = xlim,
+                        linewidth = linewidth,
+                        numPoints = numPoints)
+
+    if savePlot :
+        fileName = "".join(plotTitle.split() )
+        compFigure,swapFigure = figureList
+        saveFigure(compFigure,fileName+"_comp",fileExtention = '.png',dpi = 600)
+        saveFigure(swapFigure,fileName+"_swap",fileExtention = '.png',dpi = 600)
 
     return figureList
 
@@ -498,27 +655,34 @@ def main():
     fitParameters = calcLeastSquaresOnData(data)
 
     #plotData(data,makeLegend=False)
-
     #plotData(data,makeLegend=False,plotter = plt.semilogx)
 
-    plotDataAndFit(data,fitParameters, goodFunction = classicQuickSortOnly ,            plotTitle = 'classicQuickSortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = dualPivotQuicksortOnly,           plotTitle = 'dualPivotQuicksortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = heapOptimizedMPivotQuicksortOnly, plotTitle = 'heapOptimizedMPivotQuicksortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = mPivotQuicksortOnly,              plotTitle = 'mPivotQuicksortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = optimalDualPivotQuicksortOnly,    plotTitle = 'optimalDualPivotQuicksortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = threePivotQuicksortOnly,          plotTitle = 'threePivotQuicksortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = yaroslavskiyQuicksortOnly,        plotTitle = 'yaroslavskiyQuicksortOnly')
-    plotDataAndFit(data,fitParameters, goodFunction = onePivot,                         plotTitle = 'onePivot')
-    plotDataAndFit(data,fitParameters, goodFunction = twoPivot,                         plotTitle = 'twoPivot')
-    plotDataAndFit(data,fitParameters, goodFunction = threePivot,                       plotTitle = 'threePivot')
-    plotDataAndFit(data,fitParameters, goodFunction = customPlot,                       plotTitle = 'customPlot')
+    maskFunctionList = [ classicQuickSortOnly,dualPivotQuicksortOnly,heapOptimizedMPivotQuicksortOnly,
+                        mPivotQuicksortOnly, optimalDualPivotQuicksortOnly,threePivotQuicksortOnly,
+                        yaroslavskiyQuicksortOnly, onePivot,twoPivot,threePivot]
 
+    maskFunctionTitleList = ['Classic QuickSorts','Dual Pivot Quicksorts','HeapOptimized M-Pivot Quicksorts',
+                            'M-Pivot Quicksorts','Optimal Dual Pivot Quicksorts','Three Pivot Quicksorts',
+                            'Yaroslavskiy Quicksorts','One Pivots','Two Pivots','Three Pivots']
 
-    #compFigure,swapFigure = plotData(data, goodFunction = customPlot)
-    #plotPolynomialFit(data, fitParameters, [compFigure,swapFigure],goodFunction = customPlot)
+    smallScaleLimits = [100,1000]
 
+    #plotDataAndFit(data,fitParameters, plotTitle = 'Legend Plot', connectDataPoints = True,legendSize=15,savePlot=True)
+    
+    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'Semilogx All Plots Large Scale ', connectDataPoints = True,makeLegend=False,savePlot = True,plotter = plt.semilogx)
 
-    plt.show()
+    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
+    
+    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
+
+    #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
+    #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = 'customPlot',xlim = smallScaleLimits,connectDataPoints = True,savePlot = True)
+
+    #plt.show()
 
 if __name__ == '__main__':
     main()
