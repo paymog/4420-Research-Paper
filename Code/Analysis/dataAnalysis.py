@@ -650,7 +650,7 @@ def main():
 
     customPlot = lambda x: classicQuickSortOnly(x) or dualPivotQuicksortOnly(x) or threePivotQuicksortOnly(x) or mPivotQuicksortOnly3(x)
 
-    allMPivotQuicksortKinds = lambda x: x[0] in 'MPivotQuicksort'
+    allMPivotQuicksortKinds = lambda x: mPivotQuicksortOnly(x) or heapOptimizedMPivotQuicksortOnly(x)
 
     data = getData(dataAbsPath)
 
@@ -671,15 +671,21 @@ def main():
 
     #plotDataAndFit(data,fitParameters, plotTitle = 'Legend Plot', connectDataPoints = True,legendSize=15,savePlot=True)
     
-    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
-    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
-    plotDataAndFit(data,fitParameters, plotTitle = 'Semilogx All Plots Large Scale ', connectDataPoints = True,makeLegend=False,savePlot = True,plotter = plt.semilogx)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'Semilogx All Plots Large Scale ', connectDataPoints = True,makeLegend=False,savePlot = True,plotter = plt.semilogx)
 
-    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
-        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
+    #for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+    #    plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
     
-    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
-        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
+    #for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+    #    plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
+
+
+    plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Large Scale",savePlot = True,legendSize=7)
+    plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Small Scale",xlim = smallScaleLimits,connectDataPoints = True,savePlot = True,legendSize=7)
+
+
 
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = 'customPlot',xlim = smallScaleLimits,connectDataPoints = True,savePlot = True)
