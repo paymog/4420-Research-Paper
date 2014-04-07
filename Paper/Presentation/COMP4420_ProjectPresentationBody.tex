@@ -234,6 +234,19 @@
 			quick sort. These color and shape choices will be consistent throughout
 			the following plots.
 			There are 17 distinct derivatives of quicksort that have been run.
+
+			Note that for the large scale plot. We overlay the function :
+				$A\cdot n\log(n) + B\cdot n + C \log(n)$
+			With the function parameters $A,B$ and $C$ where found using a
+			curve fitter on the data.
+			As you will see in the following plots. The function are 'good ' fits.
+			We have not done analysis to see if we have over fit our data.
+			Although from the analysis done in many of the papers, the functions
+			have that form.
+
+			Also for the small scale plots. The curve fitted function may not be
+			seen, as a result, we just connect the data points and only show the
+			fitted curve in the large scale plots.
 		}
 		\end{frame}
 
@@ -242,7 +255,8 @@
 			\begin{frame}
 				\frametitle{Mass Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{AllthePlotsSmallScale_comp.png}
+					\includegraphics<1>[width=95mm]{AllthePlotsSmallScale_comp.png}
+					\includegraphics<2>[width=95mm]{AllthePlotsSmallScale_swap.png}
 				\end{center}
 				
 				\note{
@@ -254,12 +268,7 @@
 					all seem to be mediocre.
 					The classic quicksorts, yaro, dual pivot, and optimal dual pivot 
 					all seem to be close and doing well
-				}
 
-				\begin{center}   
-					\includegraphics<2>[width=80mm]{AllthePlotsSmallScale_swap.png}
-				\end{center}
-				\note{
 					Swaps :
 
 					Similar trend as comparisons.
@@ -272,20 +281,36 @@
 				\frametitle{Mass Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{AllthePlotsLargeScale_comp.png}
-					\includegraphics<2>[width=80mm]{AllthePlotsLargeScale_swap.png}
+					\includegraphics<1>[width=95mm]{AllthePlotsLargeScale_comp.png}
+					\includegraphics<2>[width=95mm]{AllthePlotsLargeScale_swap.png}
 				\end{center}
-
+				\note{
+					Comparisons :
+						Optimized dual pivot quicksort, yaro, M-pivot sorts do well
+						Heap Optimized m-pivot sorts do badly
+					Swaps :
+						Heap Optimized Sorts still do badly relative to the rest.
+						Classic quicksorts also doing badly.
+				}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{Mass Comparison Semi Log x}
 
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{SemilogxAllPlotsLargeScale_comp.png}
-					\includegraphics<2>[width=80mm]{SemilogxAllPlotsLargeScale_swap.png}
+					\includegraphics<1>[width=95mm]{SemilogxAllPlotsLargeScale_comp.png}
+					\includegraphics<2>[width=95mm]{SemilogxAllPlotsLargeScale_swap.png}
 				\end{center}
+				\note{
+					The point of these two plots is to emphasize the trend we see.
+					In the last figure, all the plots look linear-like and doing
+					it's own thing. In this plot there is a clear fact that all the
+					plots have a trend.
 
+					Comparisons :
+
+					Swaps :
+				}
 			\end{frame}
 
 
@@ -294,20 +319,30 @@
 				\frametitle{One Pivot Comparison Small Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{OnePivotsSmallScale_comp.png}
-					\includegraphics<2>[width=80mm]{OnePivotsSmallScale_swap.png}
+					\includegraphics<1>[width=95mm]{OnePivotsSmallScale_comp.png}
+					\includegraphics<2>[width=95mm]{OnePivotsSmallScale_swap.png}
 				\end{center}
+				\note{
+					Comparisons :
 
+					Swaps :
+
+				}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{One Pivot Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{OnePivotsLargeScale_comp.png}
-					\includegraphics<2>[width=80mm]{OnePivotsLargeScale_swap.png}
+					\includegraphics<1>[width=95mm]{OnePivotsLargeScale_comp.png}
+					\includegraphics<2>[width=95mm]{OnePivotsLargeScale_swap.png}
 				\end{center}
+				\note{
+					Comparisons :
 
+					Swaps :
+
+				}
 			\end{frame}
 
 
@@ -316,53 +351,100 @@
 				\frametitle{Two Pivot Comparison Small Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{TwoPivotsSmallScale_comp.png}
-					\includegraphics<2>[width=80mm]{TwoPivotsSmallScale_swap.png}
+					\includegraphics<1>[width=95mm]{TwoPivotsSmallScale_comp.png}
+					\includegraphics<2>[width=95mm]{TwoPivotsSmallScale_swap.png}
 				\end{center}
+				\note{
+					Comparisons :
+						They are all doing very similarly.
+					Swaps :
+						Optimal Dual Pivot quicksort and dual pivot quicksort are doing really well.
+						Yaro isn't.
+				}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{Two Pivot Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{TwoPivotsLargeScale_comp.png}
-					\includegraphics<2>[width=80mm]{TwoPivotsLargeScale_swap.png}
+					\includegraphics<1>[width=95mm]{TwoPivotsLargeScale_comp.png}
+					\includegraphics<2>[width=95mm]{TwoPivotsLargeScale_swap.png}
 				\end{center}
+				\note{
+					Comparisons :
+						We can start to see them split.
+						Optimal Dual Pivot Quicksort [second option] still rocks.
+						Dual Picot [1] and Optimal Dual Pivot [1] don't do well.
+					Swaps :
+						They all do very similarly.
+						Optimal Dual [1] and Dual Pivot [1] start to split away.
+				}
 			\end{frame}
 
 		\subsection{Three Pivots}
 			\begin{frame}
 				\frametitle{Three Pivot Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{ThreePivotsSmallScale_comp.png}
-					\includegraphics<2>[width=80mm]{ThreePivotsSmallScale_swap.png}
+					\includegraphics<1>[width=95mm]{ThreePivotsSmallScale_comp.png}
+					\includegraphics<2>[width=95mm]{ThreePivotsSmallScale_swap.png}
 				\end{center}
+				\note{
+					Comparisons :
+						Interpertations Clear From plot.
+						3-Pivot Sort is great then the Three-pivot-Quicksort
+					Swaps :
+						Three-pivot-Quicksort is great then the 3-Pivot Sort
+
+					In both cases heap 3-pivot sort is the worst.
+				}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{Three Pivot Comparison Large Scale}
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{ThreePivotsLargeScale_comp.png}
-					\includegraphics<2>[width=80mm]{ThreePivotsLargeScale_swap.png}	
+					\includegraphics<1>[width=95mm]{ThreePivotsLargeScale_comp.png}
+					\includegraphics<2>[width=95mm]{ThreePivotsLargeScale_swap.png}	
 				\end{center}
+				\note{
+					Comparisons :
+						Same as the small scale
+					Swaps :
+						Same as the small scale
+				}
 			\end{frame}
 
 		\subsection{M Pivots}
 			\begin{frame}
 				\frametitle{M Pivot Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{M-PivotQuicksortsSmallScale_comp.png}
-					\includegraphics<2>[width=80mm]{M-PivotQuicksortsSmallScale_swap.png}
+					\includegraphics<1>[width=95mm]{M-PivotQuicksortsSmallScale_comp.png}
+					\includegraphics<2>[width=95mm]{M-PivotQuicksortsSmallScale_swap.png}
 				\end{center}
+				\note{
+					Comparisons :
+						3-pivot sort rocks.
+						Heap 6-pivot sort sucks.
+					Swaps :
+						3,4,5-pivot sort are really good.
+						Heap 3-pivot sort is bad.
+				}
 			\end{frame}
 
 			\begin{frame}
 				\frametitle{M Pivot Comparison Large Scale}
 				\begin{center}   
-					\includegraphics<1>[width=80mm]{M-PivotQuicksortsLargeScale_comp.png}
-					\includegraphics<2>[width=80mm]{M-PivotQuicksortsLargeScale_swap.png}
+					\includegraphics<1>[width=95mm]{M-PivotQuicksortsLargeScale_comp.png}
+					\includegraphics<2>[width=95mm]{M-PivotQuicksortsLargeScale_swap.png}
 				\end{center}
-
+				\note{
+					Comparisons :
+						3,4,5-pivot sort are really good.
+						All the heap-m-pivot sorts are not
+					Swaps :
+						6-pivot sort is the best.
+						Although 3,4,5-pivot sorts are good as well.
+						All the heap-m-pivot sorts are not good.
+				}
 			\end{frame}
 
 
@@ -404,6 +486,11 @@
 				}
 				\note{
 					Name of sort - Pivot Selection Method - Number of Pivots
+
+					Best Comparisons  : Optimal Dual Pivot - 2 - 2
+					Best Swaps        : M Pivot - 1 - 6
+					Worst Comparisons : Heap M Pivot - 1 - 5
+					Worst Swaps       : Classic - 2 - 1
 				}
 			\end{frame}
 
@@ -429,7 +516,7 @@
 	\begin{frame}
 		% Empty Frame
 		\note{
-			Will add slides to answer potential questions
+			Will add slides to answer potential questions.
 		}
 	\end{frame}
 
