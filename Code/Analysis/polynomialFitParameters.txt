@@ -5,42 +5,42 @@
 Note that this fit Function is better from observation
 ************************************************************************
 COMPARISON COEFFICIENTS
-                ClassicQuicksort - 1 - 1 |   0.02219 |   -0.0673 |  249.5453 
-                ClassicQuicksort - 2 - 1 |   0.02126 |   -0.0439 |   37.4415 
-                ClassicQuicksort - 3 - 1 |   0.01799 |   -0.0191 |    5.7242 
-              DualPivotQuicksort - 1 - 2 |   0.02109 |   -0.0599 |  212.9101 
-              DualPivotQuicksort - 2 - 2 |   0.01787 |   -0.0142 |  -24.9578 
-    HeapOptimizedMPivotQuicksort - 1 - 3 |   0.02755 |   -0.0448 |   55.1504 
-    HeapOptimizedMPivotQuicksort - 1 - 4 |   0.02782 |   -0.0504 |  145.6762 
-    HeapOptimizedMPivotQuicksort - 1 - 5 |   0.02903 |   -0.0617 |  173.2668 
-    HeapOptimizedMPivotQuicksort - 1 - 6 |   0.02801 |   -0.0221 |  -96.9906 
-                 MPivotQuicksort - 1 - 3 |   0.01955 |   -0.0159 |   44.9614 
-                 MPivotQuicksort - 1 - 4 |   0.02039 |   -0.0083 |    8.0596 
-                 MPivotQuicksort - 1 - 5 |   0.02136 |   -0.0016 |  -41.3364 
-                 MPivotQuicksort - 1 - 6 |   0.02369 |   -0.0279 |  104.5491 
-       OptimalDualPivotQuicksort - 1 - 2 |   0.02044 |   -0.0568 |  200.8164 
-       OptimalDualPivotQuicksort - 2 - 2 |   0.01754 |   -0.0154 |   -5.6252 
-             ThreePivotQuicksort - 1 - 3 |   0.02595 |   -0.0448 |   -3.1227 
-           YaroslavskiyQuicksort - 1 - 2 |   0.01811 |   -0.0200 |   15.8083 
+                ClassicQuicksort - 1 - 1 |   0.02219 +-  0.00045 |  -0.06733 +-  0.01137 |  249.54532 +- 242.31658 
+                ClassicQuicksort - 2 - 1 |   0.02126 +-  0.00015 |  -0.04391 +-  0.00382 |   37.44145 +-  81.34333 
+                ClassicQuicksort - 3 - 1 |   0.01799 +-  0.00008 |  -0.01913 +-  0.00195 |    5.72417 +-  41.62533 
+              DualPivotQuicksort - 1 - 2 |   0.02109 +-  0.00024 |  -0.05991 +-  0.00618 |  212.91009 +- 131.86339 
+              DualPivotQuicksort - 2 - 2 |   0.01787 +-  0.00008 |  -0.01424 +-  0.00194 |  -24.95784 +-  41.40114 
+    HeapOptimizedMPivotQuicksort - 1 - 3 |   0.02755 +-  0.00027 |  -0.04476 +-  0.00672 |   55.15044 +- 143.28120 
+    HeapOptimizedMPivotQuicksort - 1 - 4 |   0.02782 +-  0.00019 |  -0.05037 +-  0.00480 |  145.67625 +- 102.42020 
+    HeapOptimizedMPivotQuicksort - 1 - 5 |   0.02903 +-  0.00029 |  -0.06169 +-  0.00741 |  173.26676 +- 157.95242 
+    HeapOptimizedMPivotQuicksort - 1 - 6 |   0.02801 +-  0.00019 |  -0.02207 +-  0.00470 |  -96.99056 +- 100.14751 
+                 MPivotQuicksort - 1 - 3 |   0.01955 +-  0.00010 |  -0.01587 +-  0.00241 |   44.96143 +-  51.37619 
+                 MPivotQuicksort - 1 - 4 |   0.02039 +-  0.00013 |  -0.00828 +-  0.00333 |    8.05960 +-  70.95161 
+                 MPivotQuicksort - 1 - 5 |   0.02136 +-  0.00013 |  -0.00157 +-  0.00327 |  -41.33638 +-  69.78081 
+                 MPivotQuicksort - 1 - 6 |   0.02369 +-  0.00012 |  -0.02795 +-  0.00296 |  104.54914 +-  63.10871 
+       OptimalDualPivotQuicksort - 1 - 2 |   0.02044 +-  0.00023 |  -0.05680 +-  0.00589 |  200.81644 +- 125.58142 
+       OptimalDualPivotQuicksort - 2 - 2 |   0.01754 +-  0.00008 |  -0.01536 +-  0.00212 |   -5.62515 +-  45.13255 
+             ThreePivotQuicksort - 1 - 3 |   0.02595 +-  0.00008 |  -0.04484 +-  0.00196 |   -3.12267 +-  41.72249 
+           YaroslavskiyQuicksort - 1 - 2 |   0.01811 +-  0.00009 |  -0.01998 +-  0.00236 |   15.80827 +-  50.32376 
 
 SWAP COEFFICIENTS
-                ClassicQuicksort - 1 - 1 |   0.01060 |   -0.0099 |  249.5453 
-                ClassicQuicksort - 2 - 1 |   0.01110 |   -0.0173 |   37.4415 
-                ClassicQuicksort - 3 - 1 |   0.00828 |    0.0241 |    5.7242 
-              DualPivotQuicksort - 1 - 2 |   0.00636 |    0.0066 |  212.9101 
-              DualPivotQuicksort - 2 - 2 |   0.00603 |    0.0118 |  -24.9578 
-    HeapOptimizedMPivotQuicksort - 1 - 3 |   0.00999 |    0.0089 |   55.1504 
-    HeapOptimizedMPivotQuicksort - 1 - 4 |   0.00885 |    0.0141 |  145.6762 
-    HeapOptimizedMPivotQuicksort - 1 - 5 |   0.00809 |    0.0187 |  173.2668 
-    HeapOptimizedMPivotQuicksort - 1 - 6 |   0.00769 |    0.0213 |  -96.9906 
-                 MPivotQuicksort - 1 - 3 |   0.00640 |    0.0195 |   44.9614 
-                 MPivotQuicksort - 1 - 4 |   0.00594 |    0.0215 |    8.0596 
-                 MPivotQuicksort - 1 - 5 |   0.00532 |    0.0324 |  -41.3364 
-                 MPivotQuicksort - 1 - 6 |   0.00524 |    0.0332 |  104.5491 
-       OptimalDualPivotQuicksort - 1 - 2 |   0.00636 |    0.0066 |  200.8164 
-       OptimalDualPivotQuicksort - 2 - 2 |   0.00603 |    0.0118 |   -5.6252 
-             ThreePivotQuicksort - 1 - 3 |   0.00616 |    0.0149 |   -3.1227 
-           YaroslavskiyQuicksort - 1 - 2 |   0.00584 |    0.0161 |   15.8083 
+                ClassicQuicksort - 1 - 1 |   0.01060 +-  0.00029 |  -0.00988 +-  0.00728 |   18.65661 +- 155.26896 
+                ClassicQuicksort - 2 - 1 |   0.01110 +-  0.00022 |  -0.01734 +-  0.00552 |  105.27050 +- 117.70706 
+                ClassicQuicksort - 3 - 1 |   0.00828 +-  0.00020 |   0.02413 +-  0.00496 | -141.53414 +- 105.67454 
+              DualPivotQuicksort - 1 - 2 |   0.00636 +-  0.00016 |   0.00661 +-  0.00412 |  -35.76973 +-  87.76549 
+              DualPivotQuicksort - 2 - 2 |   0.00603 +-  0.00010 |   0.01175 +-  0.00251 |   32.79541 +-  53.55164 
+    HeapOptimizedMPivotQuicksort - 1 - 3 |   0.00999 +-  0.00014 |   0.00893 +-  0.00364 |  -78.92155 +-  77.56035 
+    HeapOptimizedMPivotQuicksort - 1 - 4 |   0.00885 +-  0.00004 |   0.01414 +-  0.00099 |  -16.98220 +-  21.20603 
+    HeapOptimizedMPivotQuicksort - 1 - 5 |   0.00809 +-  0.00006 |   0.01868 +-  0.00163 |  -12.21900 +-  34.74970 
+    HeapOptimizedMPivotQuicksort - 1 - 6 |   0.00769 +-  0.00008 |   0.02127 +-  0.00193 |  -11.41928 +-  41.05615 
+                 MPivotQuicksort - 1 - 3 |   0.00640 +-  0.00007 |   0.01946 +-  0.00166 |  -12.91440 +-  35.31595 
+                 MPivotQuicksort - 1 - 4 |   0.00594 +-  0.00007 |   0.02154 +-  0.00173 |    9.63570 +-  36.94081 
+                 MPivotQuicksort - 1 - 5 |   0.00532 +-  0.00003 |   0.03241 +-  0.00079 |  -19.44025 +-  16.74541 
+                 MPivotQuicksort - 1 - 6 |   0.00524 +-  0.00003 |   0.03319 +-  0.00070 |   18.13305 +-  14.95520 
+       OptimalDualPivotQuicksort - 1 - 2 |   0.00636 +-  0.00016 |   0.00661 +-  0.00412 |  -35.76973 +-  87.76549 
+       OptimalDualPivotQuicksort - 2 - 2 |   0.00603 +-  0.00010 |   0.01175 +-  0.00251 |   32.79541 +-  53.55164 
+             ThreePivotQuicksort - 1 - 3 |   0.00616 +-  0.00008 |   0.01487 +-  0.00204 |   -8.94031 +-  43.54268 
+           YaroslavskiyQuicksort - 1 - 2 |   0.00584 +-  0.00007 |   0.01614 +-  0.00189 |    6.43541 +-  40.21087
 
 ************************************************************************
     We want to fit the data to :
