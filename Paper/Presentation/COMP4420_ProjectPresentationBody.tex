@@ -131,6 +131,8 @@
 					Only the partition algorithm was specified.
 					Later on we see that this algorithm doesn't do well.
 					It may be due to some choices we made in our implementation.
+
+					Elements are chosen at each quartile.
 				}
 			\end{frame}
 		
@@ -226,6 +228,7 @@
 				\phantom{ }\cite{Aumuller:2013:OPD:2525857.2525862}\\
 				\phantom{ }\cite{Wild:2012:ACA:2404160.2404231}\\
 				\phantom{ }\cite{kushagra2013multi}
+				\phantom{ }\cite{edmondson2007multiple}
 				\note{
 					These are average case run times.
 					The M-Pivot quicksort is not studied very well.
@@ -333,12 +336,6 @@
 					\includegraphics<1>[width=97mm]{OnePivotsSmallScale_comp.png}
 					\includegraphics<2>[width=97mm]{OnePivotsSmallScale_swap.png}
 				\end{center}
-				\note{
-					Comparisons :
-
-					Swaps :
-
-				}
 			\end{frame}
 
 			\begin{frame}
@@ -348,12 +345,6 @@
 					\includegraphics<1>[width=97mm]{OnePivotsLargeScale_comp.png}
 					\includegraphics<2>[width=97mm]{OnePivotsLargeScale_swap.png}
 				\end{center}
-				\note{
-					Comparisons :
-
-					Swaps :
-
-				}
 			\end{frame}
 
 
@@ -504,14 +495,16 @@
 					Best Swaps        : M Pivot - 1 - 6            \\
 					Worst Comparisons : Heap M Pivot - 1 - 5       \\
 					Worst Swaps       : Classic - 2 - 1            \\
-					\\
+
 					Overall we see that the Heap-M-Pivot sort do terribly.
 					This may be a result of how often we call Heapify.
 					We may have not needed to call heapify at every recursive call.
 					This can be an error on our part.
+
+					We are currently using these as a qualitative comparison between
+					each sorting method.
 				}
 			\end{frame}
-
 
 	\section{The End}
 
