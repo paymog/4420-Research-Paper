@@ -309,6 +309,21 @@ def plotData(data,  plotTime = False,
             plt.xlim(xlim[0],xlim[1])
             plt.ylim(swapYLim[0],swapYLim[1])
 
+    if specialFlag and plotTime:
+        plt.figure(timeFigure.number)
+        plt.xlabel('log(Size)')
+        plt.ylabel('Time / (Size log(Size) )')
+
+    if specialFlag and plotComp:
+        plt.figure(compFigure.number)
+        plt.xlabel('log(Size)')
+        plt.ylabel('Comparisons / (Size log(Size) )')
+
+    if specialFlag and plotSwap:
+        plt.figure(swapFigure.number)
+        plt.xlabel('log(Size)')
+        plt.ylabel('Swaps / (Size log(Size) )')
+
     return tuple(returnList)
 
 def plotPolynomialFit(data,fitParameters,figureList,
@@ -681,7 +696,6 @@ def main():
 
     # The special plot
     plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs y_OVER_nlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
-
 
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = 'customPlot',xlim = smallScaleLimits,connectDataPoints = True,savePlot = True)
