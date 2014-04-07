@@ -134,9 +134,9 @@
 					\item<+-> $O(n \log n)$ Swaps
 					\item<+-> $M$ Pivots
 					\begin{itemize}
-						\item<+-> Sort $2M$ elements
+						\item<+-> Sort $2M$ elements then pick ever other element
 					\end{itemize}
-					\item<+-> Partition each segment on at a time 
+					\item<+-> Partition each segment one at a time 
 					\item<+-> $M+1$ Recursive Calls
 				\end{itemize}
 				\phantom{ }\cite{kushagra2013multi}
@@ -173,7 +173,7 @@
 			\begin{frame}
 				\frametitle{Example M-Pivot Heap Optimized Pivot Selection}
 				\begin{center}   
-					\includegraphics[width=100mm]{MPivotHeap.png}
+					\includegraphics[width=97mm]{MPivotHeap.png}
 				\end{center}
 				\phantom{ }\cite{kushagra2013multi}
 			\end{frame}
@@ -235,15 +235,14 @@
 			the following plots.
 			There are 17 distinct derivatives of quicksort that have been run.
 
-			Note that for the large scale plot. We overlay the function :
-				$A\cdot n\log(n) + B\cdot n + C \log(n)$
+			Note that for the large scale plot. We overlay the function :\\
+				$A\cdot n\log(n) + B\cdot n + C \log(n)$ \\
 			With the function parameters $A,B$ and $C$ where found using a
 			curve fitter on the data.
 			As you will see in the following plots. The function are 'good ' fits.
 			We have not done analysis to see if we have over fit our data.
 			Although from the analysis done in many of the papers, the functions
-			have that form.
-
+			have that form. \\
 			Also for the small scale plots. The curve fitted function may not be
 			seen, as a result, we just connect the data points and only show the
 			fitted curve in the large scale plots.
@@ -255,8 +254,8 @@
 			\begin{frame}
 				\frametitle{Mass Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{AllthePlotsSmallScale_comp.png}
-					\includegraphics<2>[width=95mm]{AllthePlotsSmallScale_swap.png}
+					\includegraphics<1>[width=97mm]{AllthePlotsSmallScale_comp.png}
+					\includegraphics<2>[width=97mm]{AllthePlotsSmallScale_swap.png}
 				\end{center}
 				
 				\note{
@@ -281,8 +280,8 @@
 				\frametitle{Mass Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{AllthePlotsLargeScale_comp.png}
-					\includegraphics<2>[width=95mm]{AllthePlotsLargeScale_swap.png}
+					\includegraphics<1>[width=97mm]{AllthePlotsLargeScale_comp.png}
+					\includegraphics<2>[width=97mm]{AllthePlotsLargeScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -298,8 +297,8 @@
 				\frametitle{Mass Comparison Semi Log x}
 
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{SemilogxAllPlotsLargeScale_comp.png}
-					\includegraphics<2>[width=95mm]{SemilogxAllPlotsLargeScale_swap.png}
+					\includegraphics<1>[width=97mm]{SemilogxAllPlotsLargeScale_comp.png}
+					\includegraphics<2>[width=97mm]{SemilogxAllPlotsLargeScale_swap.png}
 				\end{center}
 				\note{
 					The point of these two plots is to emphasize the trend we see.
@@ -319,8 +318,8 @@
 				\frametitle{One Pivot Comparison Small Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{OnePivotsSmallScale_comp.png}
-					\includegraphics<2>[width=95mm]{OnePivotsSmallScale_swap.png}
+					\includegraphics<1>[width=97mm]{OnePivotsSmallScale_comp.png}
+					\includegraphics<2>[width=97mm]{OnePivotsSmallScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -334,8 +333,8 @@
 				\frametitle{One Pivot Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{OnePivotsLargeScale_comp.png}
-					\includegraphics<2>[width=95mm]{OnePivotsLargeScale_swap.png}
+					\includegraphics<1>[width=97mm]{OnePivotsLargeScale_comp.png}
+					\includegraphics<2>[width=97mm]{OnePivotsLargeScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -351,8 +350,8 @@
 				\frametitle{Two Pivot Comparison Small Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{TwoPivotsSmallScale_comp.png}
-					\includegraphics<2>[width=95mm]{TwoPivotsSmallScale_swap.png}
+					\includegraphics<1>[width=97mm]{TwoPivotsSmallScale_comp.png}
+					\includegraphics<2>[width=97mm]{TwoPivotsSmallScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -367,8 +366,8 @@
 				\frametitle{Two Pivot Comparison Large Scale}
 
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{TwoPivotsLargeScale_comp.png}
-					\includegraphics<2>[width=95mm]{TwoPivotsLargeScale_swap.png}
+					\includegraphics<1>[width=97mm]{TwoPivotsLargeScale_comp.png}
+					\includegraphics<2>[width=97mm]{TwoPivotsLargeScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -385,8 +384,8 @@
 			\begin{frame}
 				\frametitle{Three Pivot Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{ThreePivotsSmallScale_comp.png}
-					\includegraphics<2>[width=95mm]{ThreePivotsSmallScale_swap.png}
+					\includegraphics<1>[width=97mm]{ThreePivotsSmallScale_comp.png}
+					\includegraphics<2>[width=97mm]{ThreePivotsSmallScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -402,8 +401,8 @@
 			\begin{frame}
 				\frametitle{Three Pivot Comparison Large Scale}
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{ThreePivotsLargeScale_comp.png}
-					\includegraphics<2>[width=95mm]{ThreePivotsLargeScale_swap.png}	
+					\includegraphics<1>[width=97mm]{ThreePivotsLargeScale_comp.png}
+					\includegraphics<2>[width=97mm]{ThreePivotsLargeScale_swap.png}	
 				\end{center}
 				\note{
 					Comparisons :
@@ -417,8 +416,8 @@
 			\begin{frame}
 				\frametitle{M Pivot Comparison Small Scale}
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{M-PivotQuicksortsSmallScale_comp.png}
-					\includegraphics<2>[width=95mm]{M-PivotQuicksortsSmallScale_swap.png}
+					\includegraphics<1>[width=97mm]{M-PivotQuicksortsSmallScale_comp.png}
+					\includegraphics<2>[width=97mm]{M-PivotQuicksortsSmallScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -433,8 +432,8 @@
 			\begin{frame}
 				\frametitle{M Pivot Comparison Large Scale}
 				\begin{center}   
-					\includegraphics<1>[width=95mm]{M-PivotQuicksortsLargeScale_comp.png}
-					\includegraphics<2>[width=95mm]{M-PivotQuicksortsLargeScale_swap.png}
+					\includegraphics<1>[width=97mm]{M-PivotQuicksortsLargeScale_comp.png}
+					\includegraphics<2>[width=97mm]{M-PivotQuicksortsLargeScale_swap.png}
 				\end{center}
 				\note{
 					Comparisons :
@@ -450,7 +449,7 @@
 
 		\subsection{Polynomial Fit}
 			\begin{frame}
-				\frametitle{Fit Coefficients of $A n \log(n) + B n + C \log(n)$ }
+				\frametitle{Fit Coefficients of $A\cdot n\log(n) + B\cdot n + C \log(n)$ }
 				\only<1>{
 					\begin{center}
 						\begin{tabular}{|r|c|c|}
