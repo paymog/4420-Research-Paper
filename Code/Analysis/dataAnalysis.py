@@ -186,7 +186,8 @@ def plotData(data,  plotTime = False,
                     fontsize = 12,
                     plotter = plt.plot,
                     connectDataPoints = False,
-                    xlim = None) :
+                    xlim = None,
+                    specialFlag = False) :
     '''
     Plot data will take the data dictionary and create plots according to the key word argunments.
 
@@ -228,6 +229,12 @@ def plotData(data,  plotTime = False,
 
         if goodFunction(label) and not badFunction(label) :
             sizeList,timeList,compList,swapList = data[label]
+
+            if specialFlag :
+                timeList = timeList/( sizeList*np.log2(sizeList) )
+                compList = compList/( sizeList*np.log2(sizeList) )
+                swapList = swapList/( sizeList*np.log2(sizeList) )
+                sizeList = np.log2(sizeList)
 
             if plotTime :
                 plt.figure(timeFigure.number)
@@ -314,7 +321,8 @@ def plotPolynomialFit(data,fitParameters,figureList,
                     plotter = plt.plot,
                     xlim = None,
                     linewidth = 1.5,
-                    numPoints = 10**3) :
+                    numPoints = 10**3,
+                    specialFlag = False) :
 
     keyList = list(data.keys())
     keyList.sort()
@@ -355,14 +363,29 @@ def plotPolynomialFit(data,fitParameters,figureList,
             if plotComp :
                 compFitFunc = lambda xx:fitFunction(xx,*tuple(compCoef))
 
+                if specialFlag :
+                    # Plot something special
+                    yVals = compFitFunc(xVals) / ( xVals * np.log2(xVals) )
+                    xVals = np.log2(xVals)
+                else:
+                    yVals = compFitFunc(xVals)
+
                 plt.figure(compFigure.number)
-                plotter(xVals,compFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
+                plotter(xVals,yVals,marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
 
             if plotSwap :
                 swapFitFunc = lambda xx:fitFunction(xx,*tuple(swapCoef))
 
+                if specialFlag :
+                    # Plot something special
+                    yVals = swapFitFunc(xVals) / ( xVals * np.log2(xVals) )
+                    xVals = np.log2(xVals)
+                    print yVals
+                else:
+                    yVals = swapFitFunc(xVals)
+
                 plt.figure(swapFigure.number)
-                plotter(xVals,swapFitFunc(xVals),marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
+                plotter(xVals,yVals,marker,label=convertLabelToStr(label)+" Fit",linewidth = linewidth)
 
     legendProp = {'size':legendSize}
 
@@ -543,7 +566,8 @@ def plotDataAndFit(data,fitParameters,
                     linewidth = 1.5,
                     numPoints = 10**3,
                     savePlot = False,
-                    dpi = 600) :
+                    dpi = 600,
+                    specialFlag = False) :
 
     figureList = plotData(data,
                     plotComp = plotComp, 
@@ -556,7 +580,8 @@ def plotDataAndFit(data,fitParameters,
                     xlim = xlim,
                     fontsize = fontsize,
                     plotter = plotter,
-                    connectDataPoints = connectDataPoints)
+                    connectDataPoints = connectDataPoints,
+                    specialFlag = specialFlag)
 
     if not connectDataPoints :
         plotPolynomialFit(data,fitParameters,figureList,
@@ -569,7 +594,8 @@ def plotDataAndFit(data,fitParameters,
                         plotter = plotter,
                         xlim = xlim,
                         linewidth = linewidth,
-                        numPoints = numPoints)
+                        numPoints = numPoints,
+                        specialFlag = specialFlag)
 
     if savePlot :
         fileName = "".join(plotTitle.split() )
@@ -651,6 +677,10 @@ def main():
     
     plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Large Scale",savePlot = True,legendSize=7)
     plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Small Scale",xlim = smallScaleLimits,connectDataPoints = True,savePlot = True,legendSize=7)
+
+
+    # The special plot
+    plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs yOVERnlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
 
 
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
