@@ -1,0 +1,182 @@
+\ProvidesPackage{COMP4420_FinalPaperStyle}
+
+%************************************************************
+% Package Imports
+%************************************************************
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\usepackage{epsfig}
+\usepackage{graphicx}       
+\usepackage{appendix}       
+\usepackage{makeidx}       
+\usepackage{lastpage}          % references the page before
+\usepackage{extramarks}       
+\usepackage{tikz}              % this is to make fancy images/graphs/trees
+\usepackage{xcolor}            % Text can be colored 
+\usepackage{amsthm}            % Introduces theorems
+\usepackage{amssymb}           % math symbols
+\usepackage{amsmath}           % for align function 
+\usepackage{mathrsfs}          % script math text
+\usepackage[makeroom]{cancel}
+\usepackage[ampersand]{easylist}
+
+
+%************************************************************
+% Linking parts of pdf i.e. with a "link"
+%************************************************************
+\usepackage[colorlinks=true,linkcolor=black,citecolor=cyan,urlcolor=blue,pagebackref=true]{hyperref}
+%\usepackage{sidecap} %for side captions
+
+%****************************************************************************
+%****************************************************************************
+% Global definitions
+%****************************************************************************
+%****************************************************************************
+
+%**********************************************************
+% In case you need to adjust margins:
+%**********************************************************
+\setlength{\textwidth}{6.0in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\headsep}{0.25in}
+
+%**********************************************************
+% Don't know what this is for
+%**********************************************************
+\renewcommand{\baselinestretch}{1} 
+
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\thepage}
+
+\renewcommand{\absnamepos}{flushleft}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries\Large}
+
+%****************************************************************************
+%********************** CHANGE THESE ON EVERY DOCUMENT **********************
+%****************************************************************************
+%          These are things that are class and assignment specific
+%****************************************************************************
+\newcommand{\texTitle}{Project Presentation}
+\newcommand{\dueDate}{April 9, 2014}
+\newcommand{\class}{COMP 4420}
+\newcommand{\classTitle}{Advanced Design and Analysis of Algorithms}
+\newcommand{\classInstructor}{Dr. S. Durocher}
+
+
+%****************************************************************************
+% Author "B" information
+%****************************************************************************
+\newcommand{\authorNameA}{Paymahn\ Moghadasian}
+\newcommand{\studentNumberA}{7XXXXXX}
+\newcommand{\emailA}{umpaymah@myumanitoba.ca}
+
+%****************************************************************************
+% Author "A" information
+%****************************************************************************
+\newcommand{\authorNameB}{Joshua\ Hernandez}
+\newcommand{\studentNumberB}{6852561}
+\newcommand{\emailB}{umhern23@myumanitoba.ca}
+
+
+%****************************************************************************
+% Adds paths to where you will find images.
+%****************************************************************************
+\graphicspath{ {../../Code/Analysis/}{./}{../Images/}}
+
+
+
+
+%****************************************************************************
+% Gives pdf a signature
+%****************************************************************************
+% Fill in for important documents
+%****************************************************************************
+\hypersetup{
+	pdfauthor={\authorNameA, \authorNameB},
+	pdftitle={\texTitle, \class, \classTitle},
+	pdfsubject={},
+	pdfkeywords={}
+}
+\makeindex
+
+
+%****************************************************************************
+%****************************************************************************
+% New definition of square root:
+% it renames \sqrt as \oldsqrt
+%****************************************************************************
+\let\oldsqrt\sqrt
+%****************************************************************************
+% it defines the new \sqrt in terms of the old one
+%****************************************************************************
+\def\sqrt{\mathpalette\DHLhksqrt}
+\def\DHLhksqrt#1#2{%
+	\setbox0=\hbox{$#1\oldsqrt{#2\,}$}\dimen0=\ht0
+	\advance\dimen0-0.2\ht0
+	\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+	{\box0\lower0.4pt\box2}
+}
+%****************************************************************************
+%****************************************************************************
+
+%****************************************************************************
+%Some new commands to ease Dirac Notation
+%****************************************************************************
+\newcommand{\bra}[1]{\left\langle #1\right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\braket}[2]{\left\langle #1\middle|#2\right\rangle}
+
+
+%****************************************************************************
+% This defines a running fraction.
+%****************************************************************************
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+
+%****************************************************************************
+% This defines a rounding functions
+%****************************************************************************
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ciel}[1]{\left\lceil #1\right\rceil}
+
+%****************************************************************************
+% This defines total derivative operation
+%****************************************************************************
+\newcommand{\diff}[2]{ \frac{\text{d}#1}{\text{d}#2} }
+\newcommand{\pdiff}[2]{ \frac{\partial #1}{\partial#2} }
+%****************************************************************************
+%****************************************************************************
+
+
+%****************************************************************************
+% Settings Based off Package Imports And User Defined Functions
+%****************************************************************************
+%\numberwithin{equation}{homeworkProblemCounter} % Equation Labeling
+\everymath{\displaystyle}                       % Forces 'fixed' font in math equations
+\allowdisplaybreaks[3]
+
+
+%****************************************************************************
+% Removes default section numbers
+%****************************************************************************
+%\setcounter{secnumdepth}{0}         
+
+
+
+%*********************************************
+% Setup the header and footer
+%*********************************************
+\pagestyle{fancy}  
+\lhead{\authorNameA,\ \authorNameB}
+%\chead{\texTitle} 
+\chead{} 
+\rhead{\class}     
+\lfoot{\lastxmark} 
+\cfoot{}           
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}}
+\renewcommand\headrulewidth{0.4pt}            
+\renewcommand\footrulewidth{0.4pt}  

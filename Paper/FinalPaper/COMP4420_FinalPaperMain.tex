@@ -1,0 +1,72 @@
+\documentclass[12pt]{report}
+%\documentclass[12pt]{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{COMP4420_FinalPaperStyle}
+
+%****************************************************************************
+% DUBUGIN TIPS
+%****************************************************************************
+% This is used to trace down (pin point) problems
+% in latexing a document:
+% \tracingall
+%****************************************************************************
+%****************************************************************************
+%****************************************************************************
+% The end of the definitions for the document
+% The start of the actual document
+%****************************************************************************
+%****************************************************************************
+\begin{document}
+	\pagenumbering{roman}
+	%****************************************************************************
+	% Title Stuff
+	%****************************************************************************
+	\begin{titlepage}
+		\begin{center}
+			~~ \\[0.4cm]
+
+			{\LARGE \bfseries \texTitle }\\[0.4cm]
+
+			~~ \\[1.5cm]
+
+			% Author and Instructor
+			\normalsize
+			Authors: \\
+			\authorNameA \ [\emailA] \\[.5cm]
+			\authorNameB \ [\emailB] \\[.5cm]
+			Instructor: \classInstructor \\[1.5cm]
+
+			\class \\[.125cm]
+			\classTitle \\[1.5cm]
+
+			\vfill
+
+			{Due : \dueDate}
+		\end{center}
+	\end{titlepage}
+	% Bottom of the page
+	%****************************************************************************
+	% Things Related to the beginning of the document
+	%****************************************************************************
+	%\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+	%****************************************************************************
+	% Begin actual document content here
+	%****************************************************************************
+	
+	\include{COMP4420_ProjectPresentationIntro}
+	\include{COMP4420_ProjectPresentationAnalysis}
+	
+	%****************************************************************************
+	% End of the contents of the document
+	% Items related to end of document
+	%****************************************************************************
+	\newpage
+	%\addcontentsline{toc}{section}{References}
+	\bibliographystyle{ieeetr}
+	\bibliography{../References/refer}
+	\newpage
+	%\printindex
+	%****************************************************************************
+\end{document}
