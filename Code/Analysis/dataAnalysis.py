@@ -680,7 +680,7 @@ def main():
 
 
     # The special plot
-    plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs yOVERnlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
+    plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs y_OVER_nlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
 
 
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
