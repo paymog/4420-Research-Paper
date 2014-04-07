@@ -364,7 +364,7 @@ def plotPolynomialFit(data,fitParameters,figureList,
 
         if goodFunction(label) and not badFunction(label) :
             sizeList,timeList,compList,swapList = data[label]
-            compCoef,swapCoef = fitParameters[label]
+            compCoef,compCov,swapCoef,swapCov = fitParameters[label]
 
             if xlim :
                 xMin = min( min(sizeList),xlim[0])
@@ -532,19 +532,36 @@ def calcLeastSquaresOnData(data):
         compCoef,compCov = curve_fit(fitFunction, sizeList, compList)
         swapCoef,swapCov = curve_fit(fitFunction, sizeList, swapList)
 
-        fitParameters[label] = compCoef,swapCoef
+        fitParameters[label] = compCoef,compCov,swapCoef,swapCov
+
+    printSpecifier = "%40s | %9.5f +-%9.5f | %9.5f +-%9.5f | %10.5f +- %9.5f "
+
+    # xxxCov = The estimated covariance of optimal values. 
+    #            The diagonals provide the variance of the parameter estimate.
+
+    # http://stats.stackexchange.com/questions/50830/can-i-convert-a-covariance-matrix-into-uncertainties-for-variables
 
     print ""
     print "COMPARISON COEFFICIENTS"
     for label in keyList :
-        compCoef,swapCoef = fitParameters[label]
-        print "%40s | %9.5f | %9.4f | %9.4f "%(convertLabelToStr(label),compCoef[0],compCoef[1],compCoef[2])
+        compCoef,compCov,swapCoef,swapCov = fitParameters[label]
+
+        compCov[compCov>=0] = np.sqrt(compCov[compCov>=0])
+
+        print printSpecifier%(convertLabelToStr(label),compCoef[0],compCov[0,0],compCoef[1],compCov[1,1],compCoef[2],compCov[2,2])
+
+        compCov[compCov>=0] *= compCov[compCov>=0]
 
     print ""
     print "SWAP COEFFICIENTS"
     for label in keyList :
-        compCoef,swapCoef = fitParameters[label]
-        print "%40s | %9.5f | %9.4f | %9.4f "%(convertLabelToStr(label),swapCoef[0],swapCoef[1],compCoef[2])
+        compCoef,compCov,swapCoef,swapCov = fitParameters[label]
+
+        swapCov[swapCov>=0] = np.sqrt(swapCov[swapCov>=0])
+
+        print printSpecifier%(convertLabelToStr(label),swapCoef[0],swapCov[0,0],swapCoef[1],swapCov[1,1],swapCoef[2],swapCov[2,2])
+
+        swapCov[swapCov>=0] *= swapCov[swapCov>=0]
 
     return fitParameters
 
@@ -692,8 +709,8 @@ def main():
     
     plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Large Scale",savePlot = True,legendSize=7)
     plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Small Scale",xlim = smallScaleLimits,connectDataPoints = True,savePlot = True,legendSize=7)
-
-
+    
+    
     # The special plot
     plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs y_OVER_nlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
 
