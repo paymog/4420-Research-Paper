@@ -19,13 +19,14 @@
 			\begin{itemize}
 				\item<+-> $O(n \log(n))$ Average Case Run Time
 				\item<+-> In place algorithm
-				\item<+-> Picking Pivots
+				\item<+-> Pick Pivots
 				\item<+-> Partitioning Data
 				\item<+-> Recurse to a smaller sub-array
 				\item<+-> Use Insertion Sort for a small sub-array
 			\end{itemize}
 			\note{
-				Data is partitioned By Comparing and Swapping elements
+				Data is partitioned By Comparing and Swapping elements.
+				These will be our metrics.
 			}
 		\end{frame}	
 
@@ -123,6 +124,8 @@
 				\note{
 					This algorithm had incomplete pseudo-code.
 					Only the partition algorithm was specified.
+					Later on we see that this algorithm doesn't do well.
+					It may be due to some choices we made in our implementation.
 				}
 			\end{frame}
 		
@@ -139,7 +142,7 @@
 					\item<+-> Partition each segment one at a time 
 					\item<+-> $M+1$ Recursive Calls
 				\end{itemize}
-				\phantom{ }\cite{kushagra2013multi}
+				\phantom{ }\cite{edmondson2007multiple}
 				\note{
 					The run times discussed thus far have been for specific pivots.
 					The analysis for each pivot and how one partition changes the analysis,
@@ -155,7 +158,7 @@
 					\includegraphics<3>[width=72mm]{MPivotPartiton.png}
 				\end{center}
 
-				\phantom{ }\cite{kushagra2013multi}
+				\phantom{ }\cite{edmondson2007multiple}
 			\end{frame}
 
 			\begin{frame}
@@ -167,7 +170,7 @@
 						\item<+-> Improves the sort to optimize pivot selection
 					\end{itemize}
 				\end{itemize}
-				\phantom{ }\cite{kushagra2013multi}
+				\phantom{ }\cite{edmondson2007multiple}
 			\end{frame}
 
 			\begin{frame}
@@ -175,7 +178,7 @@
 				\begin{center}   
 					\includegraphics[width=97mm]{MPivotHeap.png}
 				\end{center}
-				\phantom{ }\cite{kushagra2013multi}
+				\phantom{ }\cite{edmondson2007multiple}
 			\end{frame}
 
 		\subsection{Summary}
@@ -486,30 +489,37 @@
 				\note{
 					Name of sort - Pivot Selection Method - Number of Pivots
 
-					Best Comparisons  : Optimal Dual Pivot - 2 - 2
-					Best Swaps        : M Pivot - 1 - 6
-					Worst Comparisons : Heap M Pivot - 1 - 5
-					Worst Swaps       : Classic - 2 - 1
+					The values in the table are of the coefficient of the $n\log(n)$ term.
+					\\
+					Best Comparisons  : Optimal Dual Pivot - 2 - 2 \\
+					Best Swaps        : M Pivot - 1 - 6            \\
+					Worst Comparisons : Heap M Pivot - 1 - 5       \\
+					Worst Swaps       : Classic - 2 - 1            \\
+					\\
+					Overall we see that the Heap-M-Pivot sort do terribly.
+					This may be a result of how often we call Heapify.
+					We may have not needed to call heapify at every recursive call.
+					This can be an error on our part.
 				}
 			\end{frame}
 
 
 	\section{The End}
 
-	%****************************************************************************
-	% Reference frames/slides
-	%****************************************************************************
-	\begin{frame}[allowframebreaks]
-		\frametitle{References}    
-		\bibliographystyle{plainnat}
-		\bibliography{../References/refer}
-	\end{frame}
+		%****************************************************************************
+		% Reference frames/slides
+		%****************************************************************************
+		\begin{frame}[allowframebreaks]
+			\frametitle{References}    
+			\bibliographystyle{plainnat}
+			\bibliography{../References/refer}
+		\end{frame}
 
-	\begin{frame}
-		\begin{center}
-			\Huge Questions?
-		\end{center}
-	\end{frame}
+		\begin{frame}
+			\begin{center}
+				\Huge Questions?
+			\end{center}
+		\end{frame}
 
 \part{Answers}
 	\begin{frame}
@@ -519,6 +529,13 @@
 		}
 	\end{frame}
 
+
+	\begin{frame}
+		% Empty Frame
+		\note{
+			
+		}
+	\end{frame}
 
 %****************************************************************************
 % End of the contents of the document
