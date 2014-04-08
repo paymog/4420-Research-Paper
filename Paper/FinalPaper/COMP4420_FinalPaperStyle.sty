@@ -35,6 +35,7 @@
 %************************************************************
 \usepackage{listings}                   % Required for insertion of code [cannot be used with xcolor]
 \usepackage{courier}                    % Required for the courier font
+\usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{color} % Required for custom colors
 
 %************************************************************
@@ -73,13 +74,70 @@
 %	}
 %************************************************************
 \definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
 \lstloadlanguages{Python}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{9} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{9}  % for normal
+
+% Python style for highlighting
+\newcommand\pythonstyle{
+	\lstset{
+		language=Python,
+		basicstyle=\ttm,     % Controls font size and other things
+		otherkeywords={self},             % Add keywords here
+		keywordstyle=\ttb\color{deepblue},
+		emph={MyClass,__init__},          % Custom highlighting
+		emphstyle=\ttb\color{deepred},    % Custom highlighting style
+		stringstyle=\color{deepgreen},
+		frame=tb,                         % Any extra options here
+		showstringspaces=false,
+		breaklines=true, 
+	}
+}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+	\pythonstyle
+	\lstset{#1}
+}
+{
+	%Intentionally left empty
+}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{
+	{
+	\pythonstyle
+	\lstinputlisting[#1]{#2}
+	}
+}
+
+% Python for inline
+\newcommand\pythoninline[1]{
+	{
+		\pythonstyle\lstinline!#1!
+	}
+}
+
+
+
+
+
+
+
+
+
 %****************************************************************************
 %****************************************************************************
 % Global definitions
 %****************************************************************************
 %****************************************************************************
-
 %**********************************************************
 % In case you need to adjust margins:
 %**********************************************************
