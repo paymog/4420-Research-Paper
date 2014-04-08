@@ -1,3 +1,202 @@
 \section{Analysis}
+	\label{sec:Analysis}
 	Test
+
+	\subsection{Data Collection}
+		\label{subsec:Analysis}
+
+	\subsection{Data Processing}
+		\label{subsec:DataProcessing}
+
+	\subsection{Non-Linear Curve Fit}
+		\label{subsec:CurveFit}
+
+	\subsection{Summary}
+		%***************************************************************************************************
+		% FIT PARAMETERS FOR COMPARISONS
+		%***************************************************************************************************
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|c|c|c}
+					\hline
+									Sort Method              &   $A_{comparisons}$      \\ \hline \hline
+					                ClassicQuicksort - 1 - 1 &   $0.02219 \pm  0.00045$ \\ \hline
+					                ClassicQuicksort - 2 - 1 &   $0.02126 \pm  0.00015$ \\ \hline
+					                ClassicQuicksort - 3 - 1 &   $0.01799 \pm  0.00008$ \\ \hline
+					              DualPivotQuicksort - 1 - 2 &   $0.02109 \pm  0.00024$ \\ \hline
+					              DualPivotQuicksort - 2 - 2 &   $0.01787 \pm  0.00008$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $0.02755 \pm  0.00027$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $0.02782 \pm  0.00019$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $0.02903 \pm  0.00029$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $0.02801 \pm  0.00019$ \\ \hline
+					                 MPivotQuicksort - 1 - 3 &   $0.01955 \pm  0.00010$ \\ \hline
+					                 MPivotQuicksort - 1 - 4 &   $0.02039 \pm  0.00013$ \\ \hline
+					                 MPivotQuicksort - 1 - 5 &   $0.02136 \pm  0.00013$ \\ \hline
+					                 MPivotQuicksort - 1 - 6 &   $0.02369 \pm  0.00012$ \\ \hline
+					       OptimalDualPivotQuicksort - 1 - 2 &   $0.02044 \pm  0.00023$ \\ \hline
+					       OptimalDualPivotQuicksort - 2 - 2 &   $0.01754 \pm  0.00008$ \\ \hline
+					             ThreePivotQuicksort - 1 - 3 &   $0.02595 \pm  0.00008$ \\ \hline
+					           YaroslavskiyQuicksort - 1 - 2 &   $0.01811 \pm  0.00009$ \\ \hline
+				\end{tabular}
+				\caption{Summary table coefficients of the non-linear fit for the parameter $A$ on the comparison data.}
+				\label{tab:compFitCoeffA}
+			\end{center}
+		\end{table}
+
+
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|c|c|c}
+					\hline
+									Sort Method              &   $B_{comparisons}$      \\ \hline \hline
+					                ClassicQuicksort - 1 - 1 &   $-0.06733 \pm  0.01137$ \\ \hline
+					                ClassicQuicksort - 2 - 1 &   $-0.04391 \pm  0.00382$ \\ \hline
+					                ClassicQuicksort - 3 - 1 &   $-0.01913 \pm  0.00195$ \\ \hline
+					              DualPivotQuicksort - 1 - 2 &   $-0.05991 \pm  0.00618$ \\ \hline
+					              DualPivotQuicksort - 2 - 2 &   $-0.01424 \pm  0.00194$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $-0.04476 \pm  0.00672$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $-0.05037 \pm  0.00480$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $-0.06169 \pm  0.00741$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $-0.02207 \pm  0.00470$ \\ \hline
+					                 MPivotQuicksort - 1 - 3 &   $-0.01587 \pm  0.00241$ \\ \hline
+					                 MPivotQuicksort - 1 - 4 &   $-0.00828 \pm  0.00333$ \\ \hline
+					                 MPivotQuicksort - 1 - 5 &   $-0.00157 \pm  0.00327$ \\ \hline
+					                 MPivotQuicksort - 1 - 6 &   $-0.02795 \pm  0.00296$ \\ \hline
+					       OptimalDualPivotQuicksort - 1 - 2 &   $-0.05680 \pm  0.00589$ \\ \hline
+					       OptimalDualPivotQuicksort - 2 - 2 &   $-0.01536 \pm  0.00212$ \\ \hline
+					             ThreePivotQuicksort - 1 - 3 &   $-0.04484 \pm  0.00196$ \\ \hline
+					           YaroslavskiyQuicksort - 1 - 2 &   $-0.01998 \pm  0.00236$ \\ \hline
+				\end{tabular}
+				\caption{Summary table coefficients of the non-linear fit for the parameter $B$ on the comparison data.}
+				\label{tab:compFitCoeffB}
+			\end{center}
+		\end{table}
+
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|c|c|c}
+					\hline
+									Sort Method              &   $C_{comparisons}$      \\ \hline \hline
+		                ClassicQuicksort - 1 - 1 &  $ 249.54532 \pm 242.31658$ \\ \hline
+		                ClassicQuicksort - 2 - 1 &  $  37.44145 \pm  81.34333$ \\ \hline
+		                ClassicQuicksort - 3 - 1 &  $   5.72417 \pm  41.62533$ \\ \hline
+		              DualPivotQuicksort - 1 - 2 &  $ 212.91009 \pm 131.86339$ \\ \hline
+		              DualPivotQuicksort - 2 - 2 &  $ -24.95784 \pm  41.40114$ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 3 &  $  55.15044 \pm 143.28120$ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 4 &  $ 145.67625 \pm 102.42020$ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 5 &  $ 173.26676 \pm 157.95242$ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 6 &  $ -96.99056 \pm 100.14751$ \\ \hline
+		                 MPivotQuicksort - 1 - 3 &  $  44.96143 \pm  51.37619$ \\ \hline
+		                 MPivotQuicksort - 1 - 4 &  $   8.05960 \pm  70.95161$ \\ \hline
+		                 MPivotQuicksort - 1 - 5 &  $ -41.33638 \pm  69.78081$ \\ \hline
+		                 MPivotQuicksort - 1 - 6 &  $ 104.54914 \pm  63.10871$ \\ \hline
+		       OptimalDualPivotQuicksort - 1 - 2 &  $ 200.81644 \pm 125.58142$ \\ \hline
+		       OptimalDualPivotQuicksort - 2 - 2 &  $  -5.62515 \pm  45.13255$ \\ \hline
+		             ThreePivotQuicksort - 1 - 3 &  $  -3.12267 \pm  41.72249$ \\ \hline
+		           YaroslavskiyQuicksort - 1 - 2 &  $  15.80827 \pm  50.32376$ \\ \hline
+				\end{tabular}
+				\caption{Summary table coefficients of the non-linear fit for the parameter $C$ on the comparison data.}
+				\label{tab:compFitCoeffC}
+			\end{center}
+		\end{table}
+
+
+
+		%***************************************************************************************************
+		% FIT PARAMETERS FOR SWAPS
+		%***************************************************************************************************
+
+
+
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|c|c|c}
+					\hline
+									Sort Method              &   $A_{swap}$      \\ \hline \hline
+					                ClassicQuicksort - 1 - 1 &   $0.01060 \pm  0.00029$ \\ \hline
+					                ClassicQuicksort - 2 - 1 &   $0.01110 \pm  0.00022$ \\ \hline
+					                ClassicQuicksort - 3 - 1 &   $0.00828 \pm  0.00020$ \\ \hline
+					              DualPivotQuicksort - 1 - 2 &   $0.00636 \pm  0.00016$ \\ \hline
+					              DualPivotQuicksort - 2 - 2 &   $0.00603 \pm  0.00010$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $0.00999 \pm  0.00014$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $0.00885 \pm  0.00004$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $0.00809 \pm  0.00006$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $0.00769 \pm  0.00008$ \\ \hline
+					                 MPivotQuicksort - 1 - 3 &   $0.00640 \pm  0.00007$ \\ \hline
+					                 MPivotQuicksort - 1 - 4 &   $0.00594 \pm  0.00007$ \\ \hline
+					                 MPivotQuicksort - 1 - 5 &   $0.00532 \pm  0.00003$ \\ \hline
+					                 MPivotQuicksort - 1 - 6 &   $0.00524 \pm  0.00003$ \\ \hline
+					       OptimalDualPivotQuicksort - 1 - 2 &   $0.00636 \pm  0.00016$ \\ \hline
+					       OptimalDualPivotQuicksort - 2 - 2 &   $0.00603 \pm  0.00010$ \\ \hline
+					             ThreePivotQuicksort - 1 - 3 &   $0.00616 \pm  0.00008$ \\ \hline
+					           YaroslavskiyQuicksort - 1 - 2 &   $0.00584 \pm  0.00007$ \\ \hline
+				\end{tabular}
+				\caption{Summary table coefficients of the non-linear fit for the parameter $A$ on the swap data.}
+				\label{tab:swapFitCoeffA}
+			\end{center}
+		\end{table}
+
+
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|c|c|c}
+					\hline
+									Sort Method              &   $B_{swap}$      \\ \hline \hline
+					                ClassicQuicksort - 1 - 1 &   $ -0.00988 \pm  0.00728$ \\ \hline
+					                ClassicQuicksort - 2 - 1 &   $ -0.01734 \pm  0.00552$ \\ \hline
+					                ClassicQuicksort - 3 - 1 &   $  0.02413 \pm  0.00496$ \\ \hline
+					              DualPivotQuicksort - 1 - 2 &   $  0.00661 \pm  0.00412$ \\ \hline
+					              DualPivotQuicksort - 2 - 2 &   $  0.01175 \pm  0.00251$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $  0.00893 \pm  0.00364$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $  0.01414 \pm  0.00099$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $  0.01868 \pm  0.00163$ \\ \hline
+					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $  0.02127 \pm  0.00193$ \\ \hline
+					                 MPivotQuicksort - 1 - 3 &   $  0.01946 \pm  0.00166$ \\ \hline
+					                 MPivotQuicksort - 1 - 4 &   $  0.02154 \pm  0.00173$ \\ \hline
+					                 MPivotQuicksort - 1 - 5 &   $  0.03241 \pm  0.00079$ \\ \hline
+					                 MPivotQuicksort - 1 - 6 &   $  0.03319 \pm  0.00070$ \\ \hline
+					       OptimalDualPivotQuicksort - 1 - 2 &   $  0.00661 \pm  0.00412$ \\ \hline
+					       OptimalDualPivotQuicksort - 2 - 2 &   $  0.01175 \pm  0.00251$ \\ \hline
+					             ThreePivotQuicksort - 1 - 3 &   $  0.01487 \pm  0.00204$ \\ \hline
+					           YaroslavskiyQuicksort - 1 - 2 &   $  0.01614 \pm  0.00189$ \\ \hline
+				\end{tabular}
+				\caption{Summary table coefficients of the non-linear fit for the parameter $B$ on the swap data.}
+				\label{tab:swapFitCoeffB}
+			\end{center}
+		\end{table}
+
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|c|c|c}
+					\hline
+									Sort Method              &   $C_{swap}$      \\ \hline \hline
+		                ClassicQuicksort - 1 - 1 &  $  18.65661 \pm 155.26896 $ \\ \hline
+		                ClassicQuicksort - 2 - 1 &  $ 105.27050 \pm 117.70706 $ \\ \hline
+		                ClassicQuicksort - 3 - 1 &  $-141.53414 \pm 105.67454 $ \\ \hline
+		              DualPivotQuicksort - 1 - 2 &  $ -35.76973 \pm  87.76549 $ \\ \hline
+		              DualPivotQuicksort - 2 - 2 &  $  32.79541 \pm  53.55164 $ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 3 &  $ -78.92155 \pm  77.56035 $ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 4 &  $ -16.98220 \pm  21.20603 $ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 5 &  $ -12.21900 \pm  34.74970 $ \\ \hline
+		    HeapOptimizedMPivotQuicksort - 1 - 6 &  $ -11.41928 \pm  41.05615 $ \\ \hline
+		                 MPivotQuicksort - 1 - 3 &  $ -12.91440 \pm  35.31595 $ \\ \hline
+		                 MPivotQuicksort - 1 - 4 &  $   9.63570 \pm  36.94081 $ \\ \hline
+		                 MPivotQuicksort - 1 - 5 &  $ -19.44025 \pm  16.74541 $ \\ \hline
+		                 MPivotQuicksort - 1 - 6 &  $  18.13305 \pm  14.95520 $ \\ \hline
+		       OptimalDualPivotQuicksort - 1 - 2 &  $ -35.76973 \pm  87.76549 $ \\ \hline
+		       OptimalDualPivotQuicksort - 2 - 2 &  $  32.79541 \pm  53.55164 $ \\ \hline
+		             ThreePivotQuicksort - 1 - 3 &  $  -8.94031 \pm  43.54268 $ \\ \hline
+		           YaroslavskiyQuicksort - 1 - 2 &  $   6.43541 \pm  40.21087 $ \\ \hline
+				\end{tabular}
+				\caption{Summary table coefficients of the non-linear fit for the parameter $C$ on the swap data.}
+				\label{tab:swapFitCoeffC}
+			\end{center}
+		\end{table}
+
+
+
+
+
+
+
 

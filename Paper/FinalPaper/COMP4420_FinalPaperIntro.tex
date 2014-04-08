@@ -1,2 +1,78 @@
+% When making labels follow the Labels and Cross-referencing guide
+%
+% http://en.wikibooks.org/wiki/LaTeX/Labels_and_Cross-referencing#Introduction
+
 \section{Introduction}
 	Test
+
+\section{Quicksort}
+		
+	\subsection{Classic Quicksort}
+		\label{subsec:ClassicQSortIntro}
+	
+	\subsection{Dual Pivot Quicksort}
+		\label{subsec:DualPivotQSortIntro}
+	
+	\subsection{Optimal Dual Pivot Quicksort}	
+		\label{subsec:OptimalDualPivotQSortIntro}
+	
+	\subsection{Three Pivot Quicksort}	
+		\label{subsec:ThreePivotQSortIntro}
+	
+	\subsection{Yaroslavskiy Quicksort}	
+		\label{subsec:YaroslavskiyQSortIntro}
+	
+	\subsection{M Pivot Quicksort}	
+		\label{subsec:MPivotQSortIntro}
+	
+		%
+		% The following can be deleted
+		% This is just here to see what the compiled document looks like
+		RAWR
+		\subsubsection{Testing}
+			Just to test the subsection code.
+			Test text : Recall from section \ref{subsec:ClassicQSortIntro} on page \pageref{subsec:ClassicQSortIntro}
+
+	\subsection{Summary}
+		%***************************************************************************************************
+		% Tables will automatically move around when more text is added.
+		% LaTeX is trying to place the tables [an soon enough figures too when I add them]
+		% into "nice" places so that text is the least "messed" up.
+		% So don't worry that the tables are all over the place [which includes before the introduction]
+		% Even though the code for the tables are clearly after it.
+		%***************************************************************************************************
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|l|}
+					\hline
+					Sort Method        &   Comparisons                          \\ \hline \hline
+					Classic            &   $2n \log n - 1.51n  + O(\log(n))$   \\ \hline
+					Dual Pivot         &   $2.13n \log n - 2.57n + O(\log(n))$ \\ \hline
+					Optimal Dual Pivot &   $1.8n \log n + O(n)$               \\ \hline
+					Three Pivot        &   $1.846n \log n + O(n)$             \\ \hline
+					Yaroslavskiy       &   $1.9n \log n - 2.46n + O(\log(n))$  \\ \hline
+					M Pivot            &   $O(n \log n)$                        \\ 
+					\hline
+				\end{tabular}
+				\caption{Summary table of theoretical comparisons.}
+				\label{tab:CompSummary}
+			\end{center}
+		\end{table}
+
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{|r|l|}
+					\hline
+					Sort Method         &     Swaps \\ \hline \hline
+					Classic             &  $0.33n \log n - 0.58n + O(\log(n))$\\ \hline
+					Dual Pivot          &  $0.8n \log n -0.3n + O(\log(n))$   \\ \hline
+					Optimal Dual Pivot  &  $0.33n \log n + O(n)$              \\ \hline
+					Three Pivot         &  $0.615n \log n + O(n)$             \\ \hline
+					Yaroslavskiy        &  $0.6n \log n + 0.08n + O(\log(n))$  \\ \hline
+					M Pivot             &  $O(n \log n)$ \\ 
+					\hline
+				\end{tabular}
+				\caption{Summary table of theoretical swaps.}
+				\label{tab:SwapSummary}
+			\end{center}
+		\end{table}
