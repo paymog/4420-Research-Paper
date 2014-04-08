@@ -1,5 +1,5 @@
-\documentclass[12pt]{report}
-%\documentclass[12pt]{article}
+%\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 % Change "article" to "report" to get rid of page number on title page
 \usepackage{COMP4420_FinalPaperStyle}
 
@@ -26,6 +26,7 @@
 			~~ \\[0.4cm]
 
 			{\LARGE \bfseries \texTitle }\\[0.4cm]
+			{\Large \bfseries \texSubTitle }\\[0.4cm]
 
 			~~ \\[1.5cm]
 
@@ -48,25 +49,26 @@
 	%****************************************************************************
 	% Things Related to the beginning of the document
 	%****************************************************************************
-	%\tableofcontents
+	\tableofcontents
 	\newpage
 	\pagenumbering{arabic}
 	%****************************************************************************
 	% Begin actual document content here
 	%****************************************************************************
 	
-	\include{COMP4420_ProjectPresentationIntro}
-	\include{COMP4420_ProjectPresentationAnalysis}
+	\input{COMP4420_FinalPaperIntro}
+	\input{COMP4420_FinalPaperAnalysis}
 	
 	%****************************************************************************
 	% End of the contents of the document
 	% Items related to end of document
 	%****************************************************************************
 	\newpage
-	%\addcontentsline{toc}{section}{References}
+	\addcontentsline{toc}{section}{References}
 	\bibliographystyle{ieeetr}
 	\bibliography{../References/refer}
 	\newpage
+	\input{COMP4420_FinalPapeAppendix}
 	%\printindex
 	%****************************************************************************
 \end{document}

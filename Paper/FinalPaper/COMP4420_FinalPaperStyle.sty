@@ -11,22 +11,69 @@
 \usepackage{makeidx}       
 \usepackage{lastpage}          % references the page before
 \usepackage{extramarks}       
-\usepackage{tikz}              % this is to make fancy images/graphs/trees
-\usepackage{xcolor}            % Text can be colored 
+%\usepackage{xcolor}            % Text can be colored [cannot be used with color]
+
+
+%************************************************************
+% Math Related Package Imports
+%************************************************************
 \usepackage{amsthm}            % Introduces theorems
 \usepackage{amssymb}           % math symbols
 \usepackage{amsmath}           % for align function 
 \usepackage{mathrsfs}          % script math text
 \usepackage[makeroom]{cancel}
-\usepackage[ampersand]{easylist}
 
+%************************************************************
+% Programing Related Package Imports
+%************************************************************
+\usepackage{etoolbox}          % use conditionals
+\usepackage{xifthen}
+\usepackage{xstring}           % String computations 
+
+%************************************************************
+% Code Includtion Related Package Imports
+%************************************************************
+\usepackage{listings}                   % Required for insertion of code [cannot be used with xcolor]
+\usepackage{courier}                    % Required for the courier font
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+
+%************************************************************
+% Multi Purpose Related Package Imports
+%************************************************************
+\usepackage{tikz}              % make fancy images/graphs/trees and for each loops
 
 %************************************************************
 % Linking parts of pdf i.e. with a "link"
 %************************************************************
-\usepackage[colorlinks=true,linkcolor=black,citecolor=cyan,urlcolor=blue,pagebackref=true]{hyperref}
-%\usepackage{sidecap} %for side captions
+\usepackage[
+	colorlinks = true,
+	linkcolor  = black,
+	citecolor  = cyan,
+	urlcolor   = blue,
+	pagebackref= true
+	]{
+		hyperref
+	}
+%\usepackage{sidecap} for side captions
 
+%************************************************************
+% CODE INCLUSION CONFIGURATION
+%************************************************************
+% Use the following command to import code from a file
+%************************************************************
+% \lstinputlisting[
+%	language        = Python,
+%	frame           = single,
+%	numbers         = left,
+%	basicstyle      = \footnotesize\ttfamily,
+%	showstringspaces= false,
+%	tabsize         = 2
+%	]{
+%		FILENAME_HERE.py
+%	}
+%************************************************************
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
+\lstloadlanguages{Python}
 %****************************************************************************
 %****************************************************************************
 % Global definitions
@@ -44,7 +91,8 @@
 \setlength{\headsep}{0.25in}
 
 %**********************************************************
-% Don't know what this is for
+% Don't know what this is for. 
+% I'm guessing for the footer
 %**********************************************************
 \renewcommand{\baselinestretch}{1} 
 
@@ -60,7 +108,8 @@
 %****************************************************************************
 %          These are things that are class and assignment specific
 %****************************************************************************
-\newcommand{\texTitle}{Project Presentation}
+\newcommand{\texTitle}{Final Paper}
+\newcommand{\texSubTitle}{An Investigation into Multi-Pivot Quicksort Algorithms}
 \newcommand{\dueDate}{April 9, 2014}
 \newcommand{\class}{COMP 4420}
 \newcommand{\classTitle}{Advanced Design and Analysis of Algorithms}
@@ -151,6 +200,30 @@
 %****************************************************************************
 %****************************************************************************
 
+%****************************************************************************
+% This defines matrix operations
+%****************************************************************************
+\newcommand{\tr}{\text{tr}}
+
+
+%****************************************************************************
+% Defines environments for Claim
+%****************************************************************************
+% Fix latex
+\def\smallskip{\vskip\smallskipamount}
+\def\medskip{\vskip\medskipamount}
+\def\bigskip{\vskip\bigskipamount}
+ 
+% Hand made theorem
+\newcounter{thm}[section]
+\renewcommand{\thethm}{\arabic{homeworkProblemCounter}.\arabic{thm}}
+\def\claim#1{\par\medskip\noindent\refstepcounter{thm}\hbox{\bf Claim \arabic{homeworkProblemCounter}.\arabic{thm} #1}
+	\it\ %\ignorespaces
+}
+\def\endclaim{
+	\par\medskip}
+\newenvironment{thrm}{\claim}{\endclaim}
+
 
 %****************************************************************************
 % Settings Based off Package Imports And User Defined Functions
@@ -161,11 +234,20 @@
 
 
 %****************************************************************************
-% Removes default section numbers
+% Setting How Deep the Table of Contents Looks When Building
 %****************************************************************************
-%\setcounter{secnumdepth}{0}         
-
-
+% | Command           | Level |    Comment
+% |===================|=======|=======================
+% | \part{ }          |  -1   | not in letters
+% | \chapter{ }       |   0   | only books and reports
+% | \section{ }       |   1   | not in letters
+% | \subsection{ }    |   2   | not in letters
+% | \subsubsection{ } |   3   | not in letters
+% | \paragraph{ }     |   4   | not in letters
+% | \subparagraph{ }  |   5   | not in letters
+%****************************************************************************
+\setcounter{tocdepth}{3}     % how deep the table of contents goes to
+\setcounter{secnumdepth}{3}  % The death of which "Sections" are numbered
 
 %*********************************************
 % Setup the header and footer
