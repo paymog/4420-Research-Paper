@@ -106,6 +106,7 @@
 		In correspondence of this we will fit the data to the following equation:
 		\begin{equation}
 			A\cdot n\log(n) + B\cdot n + C\log(n)
+			\label{eq:FitFunction}
 		\end{equation}
 		With the function parameters $A,B$ and $C$ where found using a non-linear curve fitting tool in the SciPy module in python.
 		Qualitatively, the fit function that was picked seems to result in good fits visually.
@@ -121,21 +122,28 @@
 		% This plot shows that the data is tapering off to a constant
 		% But if you look at the axis, this is confirming the n log n
 		% Behavior of the data and the algorithms
-
-		% Talk about the plots and how each sort algorithm does relative to the others.
-		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons.
-		This is as expected since it was designed to minimize the number of comparisons.
+		
+		A basic question to ask is if we are even seeing the $n log(n)$ trend in all of the sort data we see.
+		From figure \ref{fig:AllSortsLog} we see plots of $\rfrac{y}{n \log(n)}$ 
+		(where $y$ is either the number of comparisons or swaps).
+		As $n$ gets larger you can see that each curve is tending to a constant.
+		Since the $\rfrac{y}{n \log(n)}$ approches a constant, this indicates that
+		$y$ is of $\BigOh{n}$. Which is consisten with the therory described in the intro section
+		%**********************************************************************
+		% Reference the intro section for the part above.
+		%**********************************************************************
+		
 
 	\subsection{Comparisons among Quicksorts}
 		%Large Scale mass data
 		%Comparisons :
-		%	Optimized dual pivot quicksort is the best
+		%   Optimized dual pivot quicksort is the best
 		%   yaro, M-pivot sorts do well
-		%	Heap Optimized m-pivot sorts do badly
+		%   Heap Optimized m-pivot sorts do badly
 		%Swaps :
-		%	Heap Optimized Sorts still do badly relative to the rest.
-		%	Classic quicksorts also doing badly.
-		%
+		%   Heap Optimized Sorts still do badly relative to the rest.
+		%   Classic quicksorts also doing badly.
+		%   
 		%   You can see two bands the bad ones as stated above
 		%   and the not bad ones, which is everything else
 		%
@@ -146,6 +154,22 @@
 		%   In fact when you look at the Three-Pivots-Plot you can see
 		%   That the three-pivot-quicksort has the best number of swaps
 		%   done of all the quicksorts that use three pivots.
+	
+		% Talk about the plots and how each sort algorithm does relative to the others.
+		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons.
+		This is as expected since it was designed to minimize the number of comparisons.
+		Also the Yaroslavskiy and M-Pivot sort (for $M=3,4,5,6$) have a minimal number of
+		comparirsons.
+		In contrast, the number of comparisons for all of the heap optimized $M$-pivot sorts are poor.
+		The three pivot quicksort lies within the neighborhood of the heap optimzed $M$-pivot sorts.
+		This is was an unexpected behavior.
+		When looking at the number of swaps three pivot quicksort does really well.
+		But like in the case with the number of comparisions, the heap optimized $M$-pivot sort
+		(for all values of $M$) has a consistently larger number of swaps.
+		The classic quicksort algorithm (regardless of pivot selection method)
+		were in the same neightborhood as the heap optimized $M$-pivot sorts.
+		
+		
 
 		% Two pivot plots
 		%Comparisons :
@@ -160,7 +184,12 @@
 		%	They all do very similarly.
 		%	Optimal Dual [1] and Dual Pivot [1] start to split away.[Do badly]
 		%
-
+		
+		An observation from the two pivot quicksorts with pivot selcetion that selects
+		the first and last element as the pivots don't do as well as the selection of 
+		the tertiles in the number of comparisons. This can be seen from figure \ref{fig:TwoPivot}. 
+		When looking at size vs. swaps in the two pivot there are no noteworthy differenceces. 
+		
 		% Three pivot plots
 		%Comparisons :
 		%	Interpretations Clear From plot.
@@ -169,9 +198,8 @@
 		%	Three-pivot-Quicksort is great then the 3-Pivot Sort
 		%
 		% In both cases heap 3-pivot sort is the worst.
-		%
-
-
+		
+		
 		% All the M-pivot plots even with heap optimization
 		%Comparisons :
 		%	3,4,5-pivot sort are really good.
@@ -183,6 +211,10 @@
 		%
 		% It seems odd that all the heap-optimized-m-pivot sorts do that badly.
 
+		In comparisons between all the $M$-pivot sort algorithms, the ones
+		without the heap optimization always did better. Although it is curious
+		as to why all the heap optimized $M$-pivot sort algorithms are worse.
+
 		%**********************************************************************
 		% Qualitatively compare them with there fit coefficients
 		%**********************************************************************
@@ -191,8 +223,26 @@
 		% Talk about the fit values, remember we are treating these values as qualitative
 		% Talk about best and worst algorithms in terms of swaps and comparisons
 		% Remember that the fit coefficients table has been updated.
-
 		% Talk about the other functions that we have tried to fit
+		
+		From tables \ref{tab:compFitCoeffA}, \ref{tab:compFitCoeffB},
+		\ref{tab:compFitCoeffC}, \ref{tab:swapFitCoeffA}, \ref{tab:swapFitCoeffB}
+		and \ref{tab:swapFitCoeffC} the fit coefficents for the data colelcted is
+		summerized based of equation \ref{eq:FitFunction}. 
+		For the sake of asymptotic comparison between the algorithms we only focus
+		on the fit parameter $A$. 
+		From the fit coefficents the optimal dual pivot quicksort by picking the
+		pivot as a median of three elements is shown to be the best quick sort
+		algorithm based off the number of comparirons.
+		While the heap-optimized $M$ pivot quicksort for $M=6$, is the worst
+		algorithm based off the number of comparisions.
+		The clasic quicksort algorithms by picking the median of three elements
+		based off the number of swaps is terible. 
+		The best algorithm for reducing the number of swaps is the basic
+		$M$-pivot sort algorithm with $M=6$.
+		But the only algorithm that competitive runtimes based off both metrics
+		(swaps and comparisions) is Yaroslavskiy dual pivot quicksort algorithm.
+		
 
 	\subsection{Future Work}
 		\label{subsec:FutureStuff}
@@ -200,11 +250,16 @@
 		% Talk about other distributions for random numbers
 		% Talk about applying on nearly sorted arrays.
 		% Talk about trying to measure time
+		% Test M=1 and M=2 for the M-Pivot quick sort
+		% Test with insertion sort off
+		% More data values on the same entires.
 		Read the comments in the .tex file
+		
 
 \section{Conclusion}
 	\label{sec:Conclusionn}
 	We did things and stuff!
+	
 
 
 
