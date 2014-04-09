@@ -313,16 +313,19 @@ def plotData(data,  plotTime = False,
         plt.figure(timeFigure.number)
         plt.xlabel('log(Size)')
         plt.ylabel('Time / (Size log(Size) )')
+        plt.title('All Plots (Time)')
 
     if specialFlag and plotComp:
         plt.figure(compFigure.number)
         plt.xlabel('log(Size)')
         plt.ylabel('Comparisons / (Size log(Size) )')
+        plt.title('All Plots (Comparisons)')
 
     if specialFlag and plotSwap:
         plt.figure(swapFigure.number)
         plt.xlabel('log(Size)')
         plt.ylabel('Swaps / (Size log(Size) )')
+        plt.title('All Plots (Swaps)')
 
     return tuple(returnList)
 
@@ -696,28 +699,37 @@ def main():
 
     smallScaleLimits = [100,1000]
 
-    plotDataAndFit(data,fitParameters, plotTitle = 'Legend Plot', connectDataPoints = True,legendSize=15,savePlot=True)
-    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
-    plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
-    plotDataAndFit(data,fitParameters, plotTitle = 'Semilogx All Plots Large Scale ', connectDataPoints = True,makeLegend=False,savePlot = True,plotter = plt.semilogx)
-    
-    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
-        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
-    
-    for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
-        plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
-    
-    plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Large Scale",savePlot = True,legendSize=7)
-    plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Small Scale",xlim = smallScaleLimits,connectDataPoints = True,savePlot = True,legendSize=7)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'Legend Plot', connectDataPoints = True,legendSize=15,savePlot=True)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Small Scale',xlim = smallScaleLimits, connectDataPoints = True,makeLegend=False,savePlot=True)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'All the Plots Large Scale', connectDataPoints = True,makeLegend=False,savePlot = True)
+    #
+    #for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+    #    plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Large Scale",savePlot = True)
+    #
+    #for maskFunc,plotTitle in zip(maskFunctionList,maskFunctionTitleList):
+    #    plotDataAndFit(data, fitParameters,goodFunction = maskFunc, plotTitle = plotTitle+" Small Scale", xlim =smallScaleLimits,connectDataPoints = True,savePlot = True)    
+    #
+    #plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Large Scale",savePlot = True,legendSize=7)
+    #plotDataAndFit(data,fitParameters, goodFunction = allMPivotQuicksortKinds, plotTitle = "M-Pivot Quicksorts Small Scale",xlim = smallScaleLimits,connectDataPoints = True,savePlot = True,legendSize=7)
     
     
     # The special plot
-    plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs y_OVER_nlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
+    #plotDataAndFit(data,fitParameters, plotTitle = 'All Plots Large Scale logn vs y_OVER_nlogn', connectDataPoints = True,makeLegend=False,savePlot = True,specialFlag = True)
 
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = plotTitle+" Large Scale",savePlot = True)
     #plotDataAndFit(data,fitParameters, goodFunction = customPlot, plotTitle = 'customPlot',xlim = smallScaleLimits,connectDataPoints = True,savePlot = True)
 
     #plt.show()
+
+    #***************************************************************
+    # Finding the max and min value of the sizeList
+    #keyList = list(data.keys())
+    #keyList.sort()
+    #
+    #for label in keyList :
+    #    sizeList,timeList,compList,swapList = data[label]
+    #    
+    #    print min(sizeList),max(sizeList)
 
 if __name__ == '__main__':
     main()
