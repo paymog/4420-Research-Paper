@@ -1,22 +1,124 @@
+\bibliography{../References/refer}
+
 \section{Analysis}
 	\label{sec:Analysis}
 	So we have established the details of the differences between the different variations of quicksorts.
-	To investigate and compare the algorithms we have implemented and ran expreinments. 
-	We used uniformly random numbers from [Insert Values Here].
+	To investigate and compare the algorithms we have implemented and ran experiments. 
+	We used uniformly random numbers from $0$ to $10^{12}$.
+	Then created arrays with randomly generated integers for sizes $4$ to $50$ million
+	Table \ref{tab:FullSortList} shows the variations of quicksort to the arrays generated.
+	\begin{table}
+		\begin{center}
+			\begin{tabular}{|r|c|c|}
+				\hline
+				Name of Sort Algorithm           & Pivot Selection Methods & Number of Pivots \\ \hline \hline
+				Classic Quicksort                &  3  &  1       \\ \hline
+				Dual Pivot Quicksort             &  2  &  2       \\ \hline
+				Heap Optimized M-Pivot Quicksort &  1  &  3,4,5,6 \\ \hline
+				M-Pivot Quicksort                &  1  &  3,4,5,6 \\ \hline
+				Optimal Dual Pivot Quicksort     &  2  &  2       \\ \hline
+				Three Pivot Quicksort            &  1  &  3       \\ \hline
+				Yaroslavskiy Quicksort           &  1  &  2       \\ \hline
+			\end{tabular}
+			\caption{List of all the variation of quicksorts executed.}
+			\label{tab:FullSortList}
+		\end{center}
+	\end{table}
 
-	\subsection{Data Collection}
-		\label{subsec:Analysis}
-		To collect our data we ran the various algorithms on random integers from [Insert Values Here].
-		
+	%The pivot selection methods differ by which quicksort algorithm we are referring too.
+	%For the classic quick sort algorithm, 
+	%the pivot selection method $1$ and $2$ would refer to picking the first or last element as the pivot respectively.
+	%Pivot selection method $3$ refers to picking the median of 3 elements.
+	%Which these would be the one of the first, middle, or last element.
+	%For dual pivot and optimal dual pivot, pivot selection $1$ refers
+
+	Figure \ref{fig:PlotLegend} is the legend of all the plots generated.
+	You can see the color and shape combination for each version of quick sort algorithm. 
+	These color and shape choices will be consistent throughout the following plots.
+	There are 17 distinct derivatives of quicksort that have been run.
+	Note that for the plots we overlay the function :
+	\begin{equation}
+		A\cdot n\log(n) + B\cdot n + C \log(n)
+		\label{eq:FitFunction}
+	\end{equation}
+	The nomenclature for the legend is as follows: 
+	\begin{center}
+		(Algorithm Name, Pivot Selection Method Index, Number of Pivots, is Insertion Sort used).
+	\end{center}
+
+%	\subsection{Data Collection}
+%		\label{subsec:Analysis}
+%		To collect our data we ran the various algorithms on random integers from [Insert Values Here].
+	\begin{figure}[ht!]
+		\begin{center}   
+			\includegraphics[width=85mm]{PlotLegend.png}
+			\label{fig:PlotLegend}
+			\caption{A visual reference for all the quicksort variations and plots.}
+		\end{center}
+	\end{figure}
 
 	\subsection{Data Processing}
 		\label{subsec:DataProcessing}
-		
+		In processing the data, we take averages of any common data entries. We plot them and have the following results.
+		Which is summarized in Figures \ref{fig:AllSorts}, \ref{fig:TwoPivot}, \ref{fig:ThreePivot}, and \ref{fig:MPivot}.
+
+		%**********************************************************************
+		% All Plots Large Scale
+		%**********************************************************************
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=150mm]{AllthePlotsLargeScale_comp}
+				\includegraphics[width=150mm]{AllthePlotsLargeScale_swap}
+				\caption{A plot of the data from all the sorting algorithm against the number of comparisons.}
+				\label{fig:AllSorts}
+			\end{center}
+		\end{figure}
+
+
+		%**********************************************************************
+		% All Plots Log Large Scale
+		%**********************************************************************
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=150mm]{AllPlotsLargeScalelognvsy_OVER_nlogn_comp.png}
+				\includegraphics[width=150mm]{AllPlotsLargeScalelognvsy_OVER_nlogn_swap.png}
+				\caption{A plot of the data from all the sorting algorithm}
+				\label{fig:AllSortsLog}
+			\end{center}
+		\end{figure}
 
 	\subsection{Non-Linear Curve Fit}
 		\label{subsec:CurveFit}
+		% Remember to talk about the other functions we have tried to fit.
+
+		With the function parameters $A,B$ and $C$ where found using a curve fitter in the SciPy module in python.
+		As you will see in the following plots. The function are good fits.
+		We have not done analysis to see if we have over fit our data.
+		Although from the analysis done in many of the papers, the functions
+		have that form.
+		Also for the small scale plots. The curve fitted function may not be
+		seen, as a result, we just connect the data points and only show the
+		fitted curve in the large scale plots.
+
+	\subsection{Discussion}
+
+		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons.
+		This is as expected since it was designed to minimize the number of comparisons.
+
 
 	\subsection{Summary}
+
+
+
+
+
+
+
+
+
+
+
+		% (name,medianSelection,numPivots,usedInsertionSort)
 		%***************************************************************************************************
 		% FIT PARAMETERS FOR COMPARISONS
 		%***************************************************************************************************
@@ -24,24 +126,24 @@
 			\begin{center}
 				\begin{tabular}{|r|c|c|c}
 					\hline
-									Sort Method              &   $A_{comparisons}$      \\ \hline \hline
-					                ClassicQuicksort - 1 - 1 &   $0.02219 \pm  0.00045$ \\ \hline
-					                ClassicQuicksort - 2 - 1 &   $0.02126 \pm  0.00015$ \\ \hline
-					                ClassicQuicksort - 3 - 1 &   $0.01799 \pm  0.00008$ \\ \hline
-					              DualPivotQuicksort - 1 - 2 &   $0.02109 \pm  0.00024$ \\ \hline
-					              DualPivotQuicksort - 2 - 2 &   $0.01787 \pm  0.00008$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $0.02755 \pm  0.00027$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $0.02782 \pm  0.00019$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $0.02903 \pm  0.00029$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $0.02801 \pm  0.00019$ \\ \hline
-					                 MPivotQuicksort - 1 - 3 &   $0.01955 \pm  0.00010$ \\ \hline
-					                 MPivotQuicksort - 1 - 4 &   $0.02039 \pm  0.00013$ \\ \hline
-					                 MPivotQuicksort - 1 - 5 &   $0.02136 \pm  0.00013$ \\ \hline
-					                 MPivotQuicksort - 1 - 6 &   $0.02369 \pm  0.00012$ \\ \hline
-					       OptimalDualPivotQuicksort - 1 - 2 &   $0.02044 \pm  0.00023$ \\ \hline
-					       OptimalDualPivotQuicksort - 2 - 2 &   $0.01754 \pm  0.00008$ \\ \hline
-					             ThreePivotQuicksort - 1 - 3 &   $0.02595 \pm  0.00008$ \\ \hline
-					           YaroslavskiyQuicksort - 1 - 2 &   $0.01811 \pm  0.00009$ \\ \hline
+									Sort Method              &   $A_{\text{comparisons}}$      \\ \hline \hline
+					                Classic Quicksort - 1 - 1 &   $0.02151 \pm  0.00019$ \\ \hline
+					                Classic Quicksort - 2 - 1 &   $0.02135 \pm  0.00017$ \\ \hline
+					                Classic Quicksort - 3 - 1 &   $0.01807 \pm  0.00006$ \\ \hline
+					              DualPivot Quicksort - 1 - 2 &   $0.02014 \pm  0.00018$ \\ \hline
+					              DualPivot Quicksort - 2 - 2 &   $0.01772 \pm  0.00007$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 3 &   $0.02778 \pm  0.00014$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 4 &   $0.02788 \pm  0.00015$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 5 &   $0.02842 \pm  0.00025$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 6 &   $0.02869 \pm  0.00011$ \\ \hline
+					                M-Pivot Quicksort - 1 - 3 &   $0.01970 \pm  0.00009$ \\ \hline
+					                M-Pivot Quicksort - 1 - 4 &   $0.02076 \pm  0.00015$ \\ \hline
+					                M-Pivot Quicksort - 1 - 5 &   $0.02165 \pm  0.00010$ \\ \hline
+					                M-Pivot Quicksort - 1 - 6 &   $0.02386 \pm  0.00014$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 1 - 2 &   $0.01959 \pm  0.00019$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 2 - 2 &   $0.01744 \pm  0.00007$ \\ \hline
+					            Three Pivot Quicksort - 1 - 3 &   $0.02587 \pm  0.00009$ \\ \hline
+					           Yaroslavskiy Quicksort - 1 - 2 &   $0.01796 \pm  0.00010$ \\ \hline
 				\end{tabular}
 				\caption{Summary table coefficients of the non-linear fit for the parameter $A$ on the comparison data.}
 				\label{tab:compFitCoeffA}
@@ -53,24 +155,24 @@
 			\begin{center}
 				\begin{tabular}{|r|c|c|c}
 					\hline
-									Sort Method              &   $B_{comparisons}$      \\ \hline \hline
-					                ClassicQuicksort - 1 - 1 &   $-0.06733 \pm  0.01137$ \\ \hline
-					                ClassicQuicksort - 2 - 1 &   $-0.04391 \pm  0.00382$ \\ \hline
-					                ClassicQuicksort - 3 - 1 &   $-0.01913 \pm  0.00195$ \\ \hline
-					              DualPivotQuicksort - 1 - 2 &   $-0.05991 \pm  0.00618$ \\ \hline
-					              DualPivotQuicksort - 2 - 2 &   $-0.01424 \pm  0.00194$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $-0.04476 \pm  0.00672$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $-0.05037 \pm  0.00480$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $-0.06169 \pm  0.00741$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $-0.02207 \pm  0.00470$ \\ \hline
-					                 MPivotQuicksort - 1 - 3 &   $-0.01587 \pm  0.00241$ \\ \hline
-					                 MPivotQuicksort - 1 - 4 &   $-0.00828 \pm  0.00333$ \\ \hline
-					                 MPivotQuicksort - 1 - 5 &   $-0.00157 \pm  0.00327$ \\ \hline
-					                 MPivotQuicksort - 1 - 6 &   $-0.02795 \pm  0.00296$ \\ \hline
-					       OptimalDualPivotQuicksort - 1 - 2 &   $-0.05680 \pm  0.00589$ \\ \hline
-					       OptimalDualPivotQuicksort - 2 - 2 &   $-0.01536 \pm  0.00212$ \\ \hline
-					             ThreePivotQuicksort - 1 - 3 &   $-0.04484 \pm  0.00196$ \\ \hline
-					           YaroslavskiyQuicksort - 1 - 2 &   $-0.01998 \pm  0.00236$ \\ \hline
+									Sort Method              &   $B_{\text{comparisons}}$      \\ \hline \hline
+					                Classic Quicksort - 1 - 1 &   $-0.05025 \pm  0.00469$ \\ \hline
+					                Classic Quicksort - 2 - 1 &   $-0.04634 \pm  0.00428$ \\ \hline
+					                Classic Quicksort - 3 - 1 &   $-0.02126 \pm  0.00163$ \\ \hline
+					              DualPivot Quicksort - 1 - 2 &   $-0.03650 \pm  0.00465$ \\ \hline
+					              DualPivot Quicksort - 2 - 2 &   $-0.01045 \pm  0.00183$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 3 &   $-0.05055 \pm  0.00355$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 4 &   $-0.05152 \pm  0.00368$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 5 &   $-0.04639 \pm  0.00626$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 6 &   $-0.03889 \pm  0.00280$ \\ \hline
+					                M-Pivot Quicksort - 1 - 3 &   $-0.01917 \pm  0.00220$ \\ \hline
+					                M-Pivot Quicksort - 1 - 4 &   $-0.01716 \pm  0.00391$ \\ \hline
+					                M-Pivot Quicksort - 1 - 5 &   $-0.00902 \pm  0.00244$ \\ \hline
+					                M-Pivot Quicksort - 1 - 6 &   $-0.03206 \pm  0.00366$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 1 - 2 &   $-0.03580 \pm  0.00490$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 2 - 2 &   $-0.01266 \pm  0.00165$ \\ \hline
+					            Three Pivot Quicksort - 1 - 3 &   $-0.04282 \pm  0.00232$ \\ \hline
+					           Yaroslavskiy Quicksort - 1 - 2 &   $-0.01636 \pm  0.00251$ \\ \hline
 				\end{tabular}
 				\caption{Summary table coefficients of the non-linear fit for the parameter $B$ on the comparison data.}
 				\label{tab:compFitCoeffB}
@@ -81,24 +183,24 @@
 			\begin{center}
 				\begin{tabular}{|r|c|c|c}
 					\hline
-									Sort Method              &   $C_{comparisons}$      \\ \hline \hline
-		                ClassicQuicksort - 1 - 1 &  $ 249.54532 \pm 242.31658$ \\ \hline
-		                ClassicQuicksort - 2 - 1 &  $  37.44145 \pm  81.34333$ \\ \hline
-		                ClassicQuicksort - 3 - 1 &  $   5.72417 \pm  41.62533$ \\ \hline
-		              DualPivotQuicksort - 1 - 2 &  $ 212.91009 \pm 131.86339$ \\ \hline
-		              DualPivotQuicksort - 2 - 2 &  $ -24.95784 \pm  41.40114$ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 3 &  $  55.15044 \pm 143.28120$ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 4 &  $ 145.67625 \pm 102.42020$ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 5 &  $ 173.26676 \pm 157.95242$ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 6 &  $ -96.99056 \pm 100.14751$ \\ \hline
-		                 MPivotQuicksort - 1 - 3 &  $  44.96143 \pm  51.37619$ \\ \hline
-		                 MPivotQuicksort - 1 - 4 &  $   8.05960 \pm  70.95161$ \\ \hline
-		                 MPivotQuicksort - 1 - 5 &  $ -41.33638 \pm  69.78081$ \\ \hline
-		                 MPivotQuicksort - 1 - 6 &  $ 104.54914 \pm  63.10871$ \\ \hline
-		       OptimalDualPivotQuicksort - 1 - 2 &  $ 200.81644 \pm 125.58142$ \\ \hline
-		       OptimalDualPivotQuicksort - 2 - 2 &  $  -5.62515 \pm  45.13255$ \\ \hline
-		             ThreePivotQuicksort - 1 - 3 &  $  -3.12267 \pm  41.72249$ \\ \hline
-		           YaroslavskiyQuicksort - 1 - 2 &  $  15.80827 \pm  50.32376$ \\ \hline
+									Sort Method              &   $C_{\text{comparisons}}$      \\ \hline \hline
+					                Classic Quicksort - 1 - 1 &  $ 121.34341 \pm  99.97322$ \\ \hline
+					                Classic Quicksort - 2 - 1 &  $  78.33233 \pm  91.31275$ \\ \hline
+					                Classic Quicksort - 3 - 1 &  $  22.52742 \pm  34.75034$ \\ \hline
+					              DualPivot Quicksort - 1 - 2 &  $  52.22569 \pm  99.17037$ \\ \hline
+					              DualPivot Quicksort - 2 - 2 &  $ -53.25104 \pm  39.07336$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 3 &  $  94.09226 \pm  75.71998$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 4 &  $ 124.92512 \pm  78.46872$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 5 &  $  56.97527 \pm 133.52044$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 6 &  $  29.84293 \pm  59.67899$ \\ \hline
+					                M-Pivot Quicksort - 1 - 3 &  $  51.60730 \pm  46.87649$ \\ \hline
+					                M-Pivot Quicksort - 1 - 4 &  $  49.35746 \pm  83.31083$ \\ \hline
+					                M-Pivot Quicksort - 1 - 5 &  $   4.76647 \pm  52.03322$ \\ \hline
+					                M-Pivot Quicksort - 1 - 6 &  $ 136.38815 \pm  77.96382$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 1 - 2 &  $  56.95127 \pm 104.39452$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 2 - 2 &  $ -26.20004 \pm  35.22097$ \\ \hline
+					            Three Pivot Quicksort - 1 - 3 &  $ -17.79746 \pm  49.38183$ \\ \hline
+					           Yaroslavskiy Quicksort - 1 - 2 &  $   0.73204 \pm  53.59187$ \\ \hline
 				\end{tabular}
 				\caption{Summary table coefficients of the non-linear fit for the parameter $C$ on the comparison data.}
 				\label{tab:compFitCoeffC}
@@ -117,24 +219,24 @@
 			\begin{center}
 				\begin{tabular}{|r|c|c|c}
 					\hline
-									Sort Method              &   $A_{swap}$      \\ \hline \hline
-					                ClassicQuicksort - 1 - 1 &   $0.01060 \pm  0.00029$ \\ \hline
-					                ClassicQuicksort - 2 - 1 &   $0.01110 \pm  0.00022$ \\ \hline
-					                ClassicQuicksort - 3 - 1 &   $0.00828 \pm  0.00020$ \\ \hline
-					              DualPivotQuicksort - 1 - 2 &   $0.00636 \pm  0.00016$ \\ \hline
-					              DualPivotQuicksort - 2 - 2 &   $0.00603 \pm  0.00010$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $0.00999 \pm  0.00014$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $0.00885 \pm  0.00004$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $0.00809 \pm  0.00006$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $0.00769 \pm  0.00008$ \\ \hline
-					                 MPivotQuicksort - 1 - 3 &   $0.00640 \pm  0.00007$ \\ \hline
-					                 MPivotQuicksort - 1 - 4 &   $0.00594 \pm  0.00007$ \\ \hline
-					                 MPivotQuicksort - 1 - 5 &   $0.00532 \pm  0.00003$ \\ \hline
-					                 MPivotQuicksort - 1 - 6 &   $0.00524 \pm  0.00003$ \\ \hline
-					       OptimalDualPivotQuicksort - 1 - 2 &   $0.00636 \pm  0.00016$ \\ \hline
-					       OptimalDualPivotQuicksort - 2 - 2 &   $0.00603 \pm  0.00010$ \\ \hline
-					             ThreePivotQuicksort - 1 - 3 &   $0.00616 \pm  0.00008$ \\ \hline
-					           YaroslavskiyQuicksort - 1 - 2 &   $0.00584 \pm  0.00007$ \\ \hline
+									Sort Method              &   $A_{\text{swap}}$      \\ \hline \hline
+					                Classic Quicksort - 1 - 1 &   $0.01026 \pm  0.00017$ \\ \hline
+					                Classic Quicksort - 2 - 1 &   $0.01095 \pm  0.00016$ \\ \hline
+					                Classic Quicksort - 3 - 1 &   $0.00848 \pm  0.00012$ \\ \hline
+					              DualPivot Quicksort - 1 - 2 &   $0.00629 \pm  0.00010$ \\ \hline
+					              DualPivot Quicksort - 2 - 2 &   $0.00606 \pm  0.00006$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 3 &   $0.01004 \pm  0.00009$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 4 &   $0.00898 \pm  0.00004$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 5 &   $0.00809 \pm  0.00004$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 6 &   $0.00759 \pm  0.00005$ \\ \hline
+					                M-Pivot Quicksort - 1 - 3 &   $0.00672 \pm  0.00006$ \\ \hline
+					                M-Pivot Quicksort - 1 - 4 &   $0.00605 \pm  0.00003$ \\ \hline
+					                M-Pivot Quicksort - 1 - 5 &   $0.00535 \pm  0.00003$ \\ \hline
+					                M-Pivot Quicksort - 1 - 6 &   $0.00513 \pm  0.00003$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 1 - 2 &   $0.00629 \pm  0.00010$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 2 - 2 &   $0.00606 \pm  0.00006$ \\ \hline
+					            Three Pivot Quicksort - 1 - 3 &   $0.00635 \pm  0.00006$ \\ \hline
+					           Yaroslavskiy Quicksort - 1 - 2 &   $0.00586 \pm  0.00005$ \\ \hline
 				\end{tabular}
 				\caption{Summary table coefficients of the non-linear fit for the parameter $A$ on the swap data.}
 				\label{tab:swapFitCoeffA}
@@ -146,24 +248,24 @@
 			\begin{center}
 				\begin{tabular}{|r|c|c|c}
 					\hline
-									Sort Method              &   $B_{swap}$      \\ \hline \hline
-					                ClassicQuicksort - 1 - 1 &   $ -0.00988 \pm  0.00728$ \\ \hline
-					                ClassicQuicksort - 2 - 1 &   $ -0.01734 \pm  0.00552$ \\ \hline
-					                ClassicQuicksort - 3 - 1 &   $  0.02413 \pm  0.00496$ \\ \hline
-					              DualPivotQuicksort - 1 - 2 &   $  0.00661 \pm  0.00412$ \\ \hline
-					              DualPivotQuicksort - 2 - 2 &   $  0.01175 \pm  0.00251$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 3 &   $  0.00893 \pm  0.00364$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 4 &   $  0.01414 \pm  0.00099$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 5 &   $  0.01868 \pm  0.00163$ \\ \hline
-					    HeapOptimizedMPivotQuicksort - 1 - 6 &   $  0.02127 \pm  0.00193$ \\ \hline
-					                 MPivotQuicksort - 1 - 3 &   $  0.01946 \pm  0.00166$ \\ \hline
-					                 MPivotQuicksort - 1 - 4 &   $  0.02154 \pm  0.00173$ \\ \hline
-					                 MPivotQuicksort - 1 - 5 &   $  0.03241 \pm  0.00079$ \\ \hline
-					                 MPivotQuicksort - 1 - 6 &   $  0.03319 \pm  0.00070$ \\ \hline
-					       OptimalDualPivotQuicksort - 1 - 2 &   $  0.00661 \pm  0.00412$ \\ \hline
-					       OptimalDualPivotQuicksort - 2 - 2 &   $  0.01175 \pm  0.00251$ \\ \hline
-					             ThreePivotQuicksort - 1 - 3 &   $  0.01487 \pm  0.00204$ \\ \hline
-					           YaroslavskiyQuicksort - 1 - 2 &   $  0.01614 \pm  0.00189$ \\ \hline
+									Sort Method              &   $B_{\text{swap}}$      \\ \hline \hline
+					                Classic Quicksort - 1 - 1 &   $ -0.00132 \pm  0.00442$ \\ \hline
+					                Classic Quicksort - 2 - 1 &   $ -0.01411 \pm  0.00417$ \\ \hline
+					                Classic Quicksort - 3 - 1 &   $  0.01903 \pm  0.00298$ \\ \hline
+					              DualPivot Quicksort - 1 - 2 &   $  0.00824 \pm  0.00264$ \\ \hline
+					              DualPivot Quicksort - 2 - 2 &   $  0.01080 \pm  0.00153$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 3 &   $  0.00774 \pm  0.00233$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 4 &   $  0.01111 \pm  0.00097$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 5 &   $  0.01881 \pm  0.00113$ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 6 &   $  0.02363 \pm  0.00129$ \\ \hline
+					                M-Pivot Quicksort - 1 - 3 &   $  0.01160 \pm  0.00156$ \\ \hline
+					                M-Pivot Quicksort - 1 - 4 &   $  0.01890 \pm  0.00069$ \\ \hline
+					                M-Pivot Quicksort - 1 - 5 &   $  0.03171 \pm  0.00065$ \\ \hline
+					                M-Pivot Quicksort - 1 - 6 &   $  0.03601 \pm  0.00077$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 1 - 2 &   $  0.00824 \pm  0.00264$ \\ \hline
+					     Optimal Dual Pivot Quicksort - 2 - 2 &   $  0.01080 \pm  0.00153$ \\ \hline
+					            Three Pivot Quicksort - 1 - 3 &   $  0.01030 \pm  0.00153$ \\ \hline
+					           Yaroslavskiy Quicksort - 1 - 2 &   $  0.01592 \pm  0.00127$ \\ \hline
 				\end{tabular}
 				\caption{Summary table coefficients of the non-linear fit for the parameter $B$ on the swap data.}
 				\label{tab:swapFitCoeffB}
@@ -174,24 +276,24 @@
 			\begin{center}
 				\begin{tabular}{|r|c|c|c}
 					\hline
-									Sort Method              &   $C_{swap}$      \\ \hline \hline
-		                ClassicQuicksort - 1 - 1 &  $  18.65661 \pm 155.26896 $ \\ \hline
-		                ClassicQuicksort - 2 - 1 &  $ 105.27050 \pm 117.70706 $ \\ \hline
-		                ClassicQuicksort - 3 - 1 &  $-141.53414 \pm 105.67454 $ \\ \hline
-		              DualPivotQuicksort - 1 - 2 &  $ -35.76973 \pm  87.76549 $ \\ \hline
-		              DualPivotQuicksort - 2 - 2 &  $  32.79541 \pm  53.55164 $ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 3 &  $ -78.92155 \pm  77.56035 $ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 4 &  $ -16.98220 \pm  21.20603 $ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 5 &  $ -12.21900 \pm  34.74970 $ \\ \hline
-		    HeapOptimizedMPivotQuicksort - 1 - 6 &  $ -11.41928 \pm  41.05615 $ \\ \hline
-		                 MPivotQuicksort - 1 - 3 &  $ -12.91440 \pm  35.31595 $ \\ \hline
-		                 MPivotQuicksort - 1 - 4 &  $   9.63570 \pm  36.94081 $ \\ \hline
-		                 MPivotQuicksort - 1 - 5 &  $ -19.44025 \pm  16.74541 $ \\ \hline
-		                 MPivotQuicksort - 1 - 6 &  $  18.13305 \pm  14.95520 $ \\ \hline
-		       OptimalDualPivotQuicksort - 1 - 2 &  $ -35.76973 \pm  87.76549 $ \\ \hline
-		       OptimalDualPivotQuicksort - 2 - 2 &  $  32.79541 \pm  53.55164 $ \\ \hline
-		             ThreePivotQuicksort - 1 - 3 &  $  -8.94031 \pm  43.54268 $ \\ \hline
-		           YaroslavskiyQuicksort - 1 - 2 &  $   6.43541 \pm  40.21087 $ \\ \hline
+									Sort Method              &   $C_{\text{swap}}$      \\ \hline \hline
+					                Classic Quicksort - 1 - 1 &  $  -36.52075 \pm 94.28550 $ \\ \hline
+					                Classic Quicksort - 2 - 1 &  $  102.34036 \pm 88.94077 $ \\ \hline
+					                Classic Quicksort - 3 - 1 &  $ -103.21696 \pm 63.57056 $ \\ \hline
+					              DualPivot Quicksort - 1 - 2 &  $  -38.02577 \pm 56.38166 $ \\ \hline
+					              DualPivot Quicksort - 2 - 2 &  $   42.34411 \pm 32.52471 $ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 3 &  $  -53.81114 \pm 49.78070 $ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 4 &  $   -3.24127 \pm 20.75454 $ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 5 &  $  -16.07787 \pm 24.00667 $ \\ \hline
+					 Heap Optimized M-Pivot Quicksort - 1 - 6 &  $  -20.99394 \pm 27.47669 $ \\ \hline
+					                M-Pivot Quicksort - 1 - 3 &  $   41.76450 \pm 33.26955 $ \\ \hline
+					                M-Pivot Quicksort - 1 - 4 &  $   16.90493 \pm 14.70501 $ \\ \hline
+					                M-Pivot Quicksort - 1 - 5 &  $  -17.36329 \pm 13.95680 $ \\ \hline
+					                M-Pivot Quicksort - 1 - 6 &  $   -5.54593 \pm 16.46902 $ \\ \hline
+					     Optimal Dual Pivot Quicksort - 1 - 2 &  $  -38.02577 \pm 56.38166 $ \\ \hline
+					     Optimal Dual Pivot Quicksort - 2 - 2 &  $   42.34411 \pm 32.52471 $ \\ \hline
+					            Three Pivot Quicksort - 1 - 3 &  $   14.68107 \pm 32.72260 $ \\ \hline
+					           Yaroslavskiy Quicksort - 1 - 2 &  $    6.27071 \pm 27.13874 $ \\ \hline
 				\end{tabular}
 				\caption{Summary table coefficients of the non-linear fit for the parameter $C$ on the swap data.}
 				\label{tab:swapFitCoeffC}
@@ -201,7 +303,38 @@
 
 
 
+		%**********************************************************************
+		% Dual Pivots Large Scale
+		%**********************************************************************
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=150mm]{TwoPivotsLargeScale_comp.png}
+				\includegraphics[width=150mm]{TwoPivotsLargeScale_swap.png}
+				\caption{A plot of the data from all the sorting algorithm with two pivots}
+			\label{fig:TwoPivot}
+			\end{center}
+		\end{figure}
 
+		%**********************************************************************
+		% Three Pivots Large Scale
+		%**********************************************************************
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=150mm]{ThreePivotsLargeScale_comp.png}
+				\includegraphics[width=150mm]{ThreePivotsLargeScale_swap.png}
+				\caption{A plot of the data from all the sorting algorithm with three pivots}
+				\label{fig:ThreePivot}
+			\end{center}
+		\end{figure}
 
-
-
+		%**********************************************************************
+		% M-Pivot Pivot Sorts Large Scale
+		%**********************************************************************
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=150mm]{M-PivotQuicksortsSmallScale_comp.png}
+				\includegraphics[width=150mm]{M-PivotQuicksortsSmallScale_swap.png}
+				\caption{Data from all the version of M-Pivot Sort.}
+				\label{fig:MPivot}
+			\end{center}
+		\end{figure}
