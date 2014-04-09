@@ -26,26 +26,36 @@
         \end{center}
     \end{table}
 
-    The quicksort was first introduced by Tony Hoare in \cite{Hoare01011962} and was quickly adopted by the field as a standard sorting algorithm alongside the mergesort \cite{Knuth:1998:ACP:280635} and several other sorting algorithms. Quicksorts simplicity, high average case performance and poor worst case performance has made it one of the most highly studied ``efficient'' sorting algorithms. van Emden \cite{van1970increasing} proposed an optimization to the quicksort in 1970 which resulted in a 15\% improvement on the efficiency of the quicksort. In 1971 Hoare and Foley \cite{foley1971proof} provided a formal proof of other correctness of the quicksort. In 1977, Sedgewick did a thorough analysis of quicksort \cite{sedgewick1977analysis} and then in 1978 Sedgewick again published a paper on the quicksort exploring various implementations and proposing several optimizations \cite{sedgewick1978implementing}. The academic interest in the quicksort has not slowed since the late 1970s; papers regarding the quicksort continue to be published for adapting the quicksort to GPUs \cite{cederman2009gpu}, providing optimal pivot selection \cite{martinez2001optimal} and using more than one pivot \cite{edmondson2005m}. 
+    The quicksort was first introduced by Tony Hoare in \cite{Hoare01011962} and was quickly adopted by the field as a standard sorting algorithm alongside the mergesort \cite{Knuth:1998:ACP:280635} and several other sorting algorithms. Quicksorts simplicity, high average case performance, poor worst case performance and low use of additional memory has made it one of the most highly studied ``efficient'' sorting algorithms. van Emden \cite{van1970increasing} proposed an optimization to the quicksort in 1970 which resulted in a 15\% improvement on the efficiency of the quicksort. In 1971 Hoare and Foley \cite{foley1971proof} provided a formal proof of other correctness of the quicksort. In 1977, Sedgewick did a thorough analysis of quicksort \cite{sedgewick1977analysis} and then in 1978 Sedgewick again published a paper on the quicksort exploring various implementations and proposing several optimizations \cite{sedgewick1978implementing}. The academic interest in the quicksort has not slowed since the late 1970s; papers regarding the quicksort continue to be published for adapting the quicksort to GPUs \cite{cederman2009gpu}, providing optimal pivot selection \cite{martinez2001optimal} and using more than one pivot \cite{edmondson2005m}. 
 
     In this paper we explore, compare and contrast the classic implementation of the quicksort against various multipivot quicksort implementations and their respective optimizations. We are particularly interested in comparing the classic quicksort against the standard dual pivot quicksort, Yaroslavskiy's dual pivot quicksort\cite{yaroslavskiy2009dual}, Aum\"{u}ller and Dietzfelbinger's optimized dual-pivot quicksort \cite{Aumuller:2013:OPD:2525857.2525862}, Edmonson's M-Pivot quicksort \cite{edmondson2005m} and the three pivot quicksort introduced by Kushagra et al \cite{kushagra2013multi}. We will first introduce the various quicksorts by providing a brief overview of their behaviour, implementation and potential optimizations. Next we will discuss the experiments and provide their results. Following this we provide an analysis, discuss future work and conclude the paper. 
 
 \section{Quicksort}
-		
+	The following descriptions will assume that the algorithms are being used to sort a list $A$ in non-decreasing order where $n$ denotes the number of elements in $A$. Additionally, all algorithms are assumed to perform the sort in place. 
+
 	\subsection{Classic Quicksort}
 		\label{subsec:ClassicQSortIntro}
-	
+        The classic quicksort, first introduced by Hoare \cite{Hoare01011962} in 1962 is a recursive sorting algorithm which falls into the category of divide and conquer algorithms. All of following variations of the quicksort have these qualities as well. Quicksort can be summarized as follows:
+        \begin{enumerate}
+        \item Select a pivot in the current range of elements to be sorted.
+        \item Partition the list such that all elements less than the pivot appear to the left of the pivot while all elements greater than or equal to the pivot appear to the right of the pivot.
+        \item Recursively call quicksort on the left and right halves of the currently partitioned range.
+        \end{enumerate}
+
+        This na\"{i}ve implementation does not handle it's worst case gracefully. The classic quicksort degrades to a time complexity of $\BigOh{n^2}$ when the data being processed is in nearly sorted or already sorted order. Due to the simplicity of this implementation there are some minor changes which can be made to speed up the average case and aid the worst case runtimes. Two simple improvements which can be done are: perform an insertion sort when the range to be sorted meets some threshold and select the pivot more intelligently. It was shown by Cook and Kim \cite{cook1980best} that insertion sorts are the fastest sort for small lists and nearly sorted lists. Cook and Kim also showed that a hybrid of insertion sort and quicksort outperforms either of the sorts used individually. A perfectly selected pivot (the median of the range) would ensure that the worst case space complexity is bound by $\BigOh{n\log(n)}$. Perfect pivot selection is not possible; however, selecting pivot to be the median of any three elements in the range greatly reduces the probability of a worst-case scenario arising.
+
+
 	\subsection{Dual Pivot Quicksort}
 		\label{subsec:DualPivotQSortIntro}
 	
-	\subsection{Optimal Dual Pivot Quicksort}	
+	\subsection{Yaroslavskiy Quicksort}    
+        \label{subsec:YaroslavskiyQSortIntro}
+
+    \subsection{Optimal Dual Pivot Quicksort}	
 		\label{subsec:OptimalDualPivotQSortIntro}
 	
 	\subsection{Three Pivot Quicksort}	
-		\label{subsec:ThreePivotQSortIntro}
-	
-	\subsection{Yaroslavskiy Quicksort}	
-		\label{subsec:YaroslavskiyQSortIntro}
+		\label{subsec:ThreePivotQSortIntro}	
 	
 	\subsection{M Pivot Quicksort}	
 		\label{subsec:MPivotQSortIntro}
