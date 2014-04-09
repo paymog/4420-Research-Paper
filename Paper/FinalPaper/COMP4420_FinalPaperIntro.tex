@@ -42,11 +42,13 @@
         \item Recursively call quicksort on the left and right halves of the currently partitioned range.
         \end{enumerate}
 
-        This na\"{i}ve implementation does not handle it's worst case gracefully. The classic quicksort degrades to a time complexity of $\BigOh{n^2}$ when the data being processed is in nearly sorted or already sorted order. Due to the simplicity of this implementation there are some minor changes which can be made to speed up the average case and aid the worst case runtimes. Two simple improvements which can be done are: perform an insertion sort when the range to be sorted meets some threshold and select the pivot more intelligently. It was shown by Cook and Kim \cite{cook1980best} that insertion sorts are the fastest sort for small lists and nearly sorted lists. Cook and Kim also showed that a hybrid of insertion sort and quicksort outperforms either of the sorts used individually. A perfectly selected pivot (the median of the range) would ensure that the worst case space complexity is bound by $\BigOh{n\log(n)}$. Perfect pivot selection is not possible; however, selecting pivot to be the median of any three elements in the range greatly reduces the probability of a worst-case scenario arising.
+        This na\"{i}ve implementation does not handle it's worst case gracefully. The classic quicksort degrades to a time complexity of $\BigOh{n^2}$ when the data being processed is in nearly sorted or already sorted order. Due to the simplicity of this implementation there are some minor changes which can be made to speed up the average case and aid the worst case runtimes. It was shown by Cook and Kim \cite{cook1980best} that insertion sorts are the fastest sort for small lists and nearly sorted lists. This optimization does not make the quicksort asymptotically faster than it's na\"{i} variation in either the average or worst case but does provide a meaningful speedup. Cook and Kim also showed that a hybrid of insertion sort and quicksort outperforms either of the sorts used individually. A perfectly selected pivot (the median of the range) would ensure that the worst case space complexity is bound by $\BigOh{n\log(n)}$. Perfect pivot selection cannot be achieved with an increase in time complexity; however, selecting pivot to be the median of first, middle and last elements is a good enough estimation of the true median of the range \cite{sedgewick1978implementing}.
 
 
 	\subsection{Dual Pivot Quicksort}
 		\label{subsec:DualPivotQSortIntro}
+
+        The dual pivot quicksort is a variation of the classic quicksort which uses two pivots as opposed to one. 
 	
 	\subsection{Yaroslavskiy Quicksort}    
         \label{subsec:YaroslavskiyQSortIntro}
