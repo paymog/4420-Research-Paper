@@ -19,8 +19,7 @@
                     Merge       &   $O(n)$      &   $O(n\log(n))$       &   $O(n\log(n))$       \\ \hline
                     Quicksort   &   $O(1)$      &   $O(n\log(n))$       &   $O(n^2)$            \\ \hline
                     Radix       &   $O(n)$      &   $O(n*k)$            &   $O(n*k)$            \\ \hline
-                    Counting    &   $O(m)$      &   $O(n+m)$            &   $O(n+m)$            \\
-                    \hline
+                    Counting    &   $O(m)$      &   $O(n+m)$            &   $O(n+m)$            \\ \hline
                 \end{tabular}
                 \caption{Summary of space and time complexities of various sorts where $n$ represents the number of elements, $k$ represents the number of digits in the largest value and $m$ represents the max value to be sorted. }
                 \label{tab:spaceAndTime}
@@ -68,13 +67,12 @@
 				\begin{tabular}{|r|l|}
 					\hline
 					Sort Method        &   Comparisons                          \\ \hline \hline
-					Classic            &   $2n \log n - 1.51n  + O(\log(n))$   \\ \hline
-					Dual Pivot         &   $2.13n \log n - 2.57n + O(\log(n))$ \\ \hline
-					Optimal Dual Pivot &   $1.8n \log n + O(n)$               \\ \hline
-					Three Pivot        &   $1.846n \log n + O(n)$             \\ \hline
-					Yaroslavskiy       &   $1.9n \log n - 2.46n + O(\log(n))$  \\ \hline
-					M Pivot            &   $O(n \log n)$                        \\ 
-					\hline
+					Classic            &   $2n \log n - 1.51n  + O(\log(n))$    \\ \hline
+					Dual Pivot         &   $2.13n \log n - 2.57n + O(\log(n))$  \\ \hline
+					Optimal Dual Pivot &   $1.8n \log n + O(n)$                 \\ \hline
+					Three Pivot        &   $1.846n \log n + O(n)$               \\ \hline
+					Yaroslavskiy       &   $1.9n \log n - 2.46n + O(\log(n))$   \\ \hline
+					M Pivot            &   $O(n \log n)$                        \\ \hline
 				\end{tabular}
 				\caption{Summary table of theoretical comparisons.}
 				\label{tab:CompSummary}
@@ -86,13 +84,12 @@
 				\begin{tabular}{|r|l|}
 					\hline
 					Sort Method         &     Swaps \\ \hline \hline
-					Classic             &  $0.33n \log n - 0.58n + O(\log(n))$\\ \hline
-					Dual Pivot          &  $0.8n \log n -0.3n + O(\log(n))$   \\ \hline
-					Optimal Dual Pivot  &  $0.33n \log n + O(n)$              \\ \hline
-					Three Pivot         &  $0.615n \log n + O(n)$             \\ \hline
+					Classic             &  $0.33n \log n - 0.58n + O(\log(n))$ \\ \hline
+					Dual Pivot          &  $0.8n \log n -0.3n + O(\log(n))$    \\ \hline
+					Optimal Dual Pivot  &  $0.33n \log n + O(n)$               \\ \hline
+					Three Pivot         &  $0.615n \log n + O(n)$              \\ \hline
 					Yaroslavskiy        &  $0.6n \log n + 0.08n + O(\log(n))$  \\ \hline
-					M Pivot             &  $O(n \log n)$ \\ 
-					\hline
+					M Pivot             &  $O(n \log n)$                       \\ \hline
 				\end{tabular}
 				\caption{Summary table of theoretical swaps.}
 				\label{tab:SwapSummary}
