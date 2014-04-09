@@ -1,6 +1,7 @@
-from matplotlib import pyplot as plt
 import numpy as np
+from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
+from scipy.stats import chi2
 
 fileName = 'alldata.csv'
 
@@ -537,7 +538,7 @@ def calcLeastSquaresOnData(data):
 
         fitParameters[label] = compCoef,compCov,swapCoef,swapCov
 
-    printSpecifier = "%40s | %9.5f +-%9.5f | %9.5f +-%9.5f | %10.5f +- %9.5f "
+    printSpecifier = "%40s | %9.5f +-%9.5f | %9.5f +-%9.5f | %10.5f +- %9.5f | %5.3f"
 
     # xxxCov = The estimated covariance of optimal values. 
     #            The diagonals provide the variance of the parameter estimate.
@@ -547,26 +548,41 @@ def calcLeastSquaresOnData(data):
     print ""
     print "COMPARISON COEFFICIENTS"
     for label in keyList :
+        sizeList,timeList,compList,swapList = data[label]
         compCoef,compCov,swapCoef,swapCov = fitParameters[label]
 
         compCov[compCov>=0] = np.sqrt(compCov[compCov>=0])
 
-        print printSpecifier%(convertLabelToStr(label),compCoef[0],compCov[0,0],compCoef[1],compCov[1,1],compCoef[2],compCov[2,2])
+        reducedChiSqr = calcReducedChiSquared(sizeList,compList,compCoef,fitFunction)
+
+        print printSpecifier%(convertLabelToStr(label),compCoef[0],compCov[0,0],compCoef[1],compCov[1,1],compCoef[2],compCov[2,2],reducedChiSqr)
 
         compCov[compCov>=0] *= compCov[compCov>=0]
 
     print ""
     print "SWAP COEFFICIENTS"
     for label in keyList :
+        sizeList,timeList,compList,swapList = data[label]
         compCoef,compCov,swapCoef,swapCov = fitParameters[label]
 
         swapCov[swapCov>=0] = np.sqrt(swapCov[swapCov>=0])
 
-        print printSpecifier%(convertLabelToStr(label),swapCoef[0],swapCov[0,0],swapCoef[1],swapCov[1,1],swapCoef[2],swapCov[2,2])
+        reducedChiSqr = calcReducedChiSquared(sizeList,swapList,swapCoef,fitFunction)
+
+        print printSpecifier%(convertLabelToStr(label),swapCoef[0],swapCov[0,0],swapCoef[1],swapCov[1,1],swapCoef[2],swapCov[2,2],reducedChiSqr)
 
         swapCov[swapCov>=0] *= swapCov[swapCov>=0]
 
     return fitParameters
+
+def calcReducedChiSquared(xx,yy,fitCoef,fitFunction):
+    chiSqr = sum((yy-fitFunction(xx,*tuple(fitCoef)  ))**2) # Note we are assuming that the data entires have no error that
+    dof = len(yy) - len(fitCoef) # Degrees of Freedom
+    reducedChiSqr = chiSqr/dof
+
+    #GOF = 1. - chi2.cdf(chiSqr,dof)
+
+    return reducedChiSqr
 
 def fitFunction(xx,AA,BB,CC):
     return AA*xx*np.log2(xx)+BB*xx+CC*np.log2(xx)
