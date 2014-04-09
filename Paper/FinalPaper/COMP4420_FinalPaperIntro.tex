@@ -7,7 +7,7 @@
     The quicksort is a thoroughly studied sorting algorithm and is commonly among the first efficient sorts learned by students of computer science. Many variants of the quicksort have been proposed, from the classic quicksort introduced by Tony Hoare in 1961 \cite{Hoare01011962} to Yaroslavskiy’s dual pivot quicksort introduced in 2009 and used by the Java 7 Standard Library \cite{kushagra2013multi}. Since Hoare’s first proposal, much research has gone into attempting to minimize the total number of swaps done by the sort, the total number of comparisons done by the sort and minimizing the worst case runtime. We aim to experimentally validate the swap and comparison count of several variants of the quicksort and compare the runtimes and various optimizations. Our results SUMMARIZE THE RESULTS
 
 \section{Introduction}
-    Sorting is a fundamental concept of computer science wherein a totally ordered multiset is modified such that the elements of the multiset are rearranged (permuted) in either non-decreasing or non-increasing order. A broad range of applications benefit from sorting from organizing an MP3 library by song title to quickly identifying duplicates in a list to more advanced applications such as load balancing, data compression and computer graphics \cite{sortingSlides}. It is well known that all comparison based sorting algorithms are lower bound by $\Omega(n log n)$ comparisons \cite{Cormen:2001:IA:580470} and quicksort is no exception to this rule. Interestingly, there are non-comparison based sorts such as the counting sort and the radix sort which take advantage of certain properties of the data set and get around the lower bound of comparison base sorts.
+    Sorting is a fundamental concept of computer science wherein a totally ordered multiset is modified such that the elements of the multiset are rearranged (permuted) in either non-decreasing or non-increasing order. A broad range of applications benefit from sorting from organizing an MP3 library by song title to quickly identifying duplicates in a list to more advanced applications such as load balancing, data compression and computer graphics \cite{sortingSlides}. It is well known that all comparison based sorting algorithms are lower bound by $\Omega(n log n)$ comparisons \cite{Cormen:2001:IA:580470} and quicksort is no exception to this rule. Interestingly, there are non-comparison based sorts such as the counting sort and the radix sort which take advantage of certain properties of the data set and get around the lower bound of comparison base sorts. A summary of space and time complexities can be found in Table \ref{tab:spaceAndTime}.
     
     \begin{table}
         \begin{center}
@@ -18,10 +18,11 @@
                     Insertion   &   $O(1)$      &   $O(n^2)$            &   $O(n^2)$            \\ \hline
                     Merge       &   $O(n)$      &   $O(n\log(n))$       &   $O(n\log(n))$       \\ \hline
                     Quicksort   &   $O(1)$      &   $O(n\log(n))$       &   $O(n^2)$            \\ \hline
-                    Radix       &   $O(k + n)$  &   $O(n*k)$            &   $O(n*k)$            \\
+                    Radix       &   $O(n)$      &   $O(n*k)$            &   $O(n*k)$            \\ \hline
+                    Counting    &   $O(m)$      &   $O(n+m)$            &   $O(n+m)$            \\
                     \hline
                 \end{tabular}
-                \caption{Summary of space and time complexities of various sorts}
+                \caption{Summary of space and time complexities of various sorts where $n$ represents the number of elements, $k$ represents the number of digits in the largest value and $m$ represents the max value to be sorted. }
                 \label{tab:spaceAndTime}
         \end{center}
     \end{table}
