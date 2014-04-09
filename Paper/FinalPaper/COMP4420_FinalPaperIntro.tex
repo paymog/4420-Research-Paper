@@ -1,9 +1,28 @@
 % When making labels follow the Labels and Cross-referencing guide
 %
 % http://en.wikibooks.org/wiki/LaTeX/Labels_and_Cross-referencing#Introduction
+\section{Abstract}
+    The quicksort is a thoroughly studied sorting algorithm and is commonly among the first efficient sorts learned by students of computer science. Many variants of the quicksort have been proposed, from the classic quicksort introduced by Tony Hoare in 1961 \cite{} to Yaroslavskiy’s dual pivot quicksort introduced in 2009 and used by the Java 7 Standard Library \cite{}. Since Hoare’s first proposal, much research has gone into attempting to minimize the total number of swaps done by the sort, the total number of comparisons done by the sort and minimizing the worst case runtime. We aim to experimentally validate the swap and comparison count of several variants of the quicksort and compare the runtimes and various optimizations. Our results SUMMARIZE THE RESULTS
 
 \section{Introduction}
-	Test
+    Sorting is a fundamental concept of computer science wherein a totally ordered multiset is modified such that the elements of the multiset are rearranged (permuted) in either non-decreasing or non-increasing order. A broad range of applications benefit from sorting from organizing an MP3 library by song title to quickly identifying duplicates in a list to more advanced applications such as load balancing, data compression and computer graphics \cite{}. It is well known that all comparison based sorting algorithms are lower bound by $\Omega(n log n)$ comparisons \cite{} and quicksort is no exception to this rule. Interestingly, there are non-comparison based sorts such as the counting sort and the radix sort which take advantage of certain properties of the data set and get around the lower bound of comparison base sorts.
+    
+    \begin{table}
+        \begin{center}
+            \begin{tabular}{|l|l|l|l|}
+                    \hline
+                    Sort Method &   Space       &   Average Case Time   &   Worst Case Time     \\ \hline \hline
+                    Selection   &   $O(1)$      &   $O(n^2)$            &   $O(n^2)$            \\ \hline
+                    Insertion   &   $O(1)$      &   $O(n^2)$            &   $O(n^2)$            \\ \hline
+                    Merge       &   $O(n)$      &   $O(n\log(n))$       &   $O(n\log(n))$       \\ \hline
+                    Quicksort   &   $O(1)$      &   $O(n\log(n))$       &   $O(n^2)$            \\ \hline
+                    Radix       &   $O(k + n)$  &   $O(n*k)$            &   $O(n*k)$            \\
+                    \hline
+                \end{tabular}
+                \caption{Summary of space and time complexities of various sorts}
+                \label{tab:spaceAndTime}
+        \end{center}
+    \end{table}
 
 \section{Quicksort}
 		
