@@ -129,21 +129,38 @@
 	\subsection{Comparisons among Quicksorts}
 		%Large Scale mass data
 		%Comparisons :
-		%	Optimized dual pivot quicksort, yaro, M-pivot sorts do well
+		%	Optimized dual pivot quicksort is the best
+		%   yaro, M-pivot sorts do well
 		%	Heap Optimized m-pivot sorts do badly
 		%Swaps :
 		%	Heap Optimized Sorts still do badly relative to the rest.
 		%	Classic quicksorts also doing badly.
+		%
+		%   You can see two bands the bad ones as stated above
+		%   and the not bad ones, which is everything else
+		%
+		%   When looking at the Three-Pivot-Quicksort it does surprisingly bad
+		%   for the number of comparisons. Right up there with the classic and
+		%   Heap-m-pivot sorts. Although it has a competitive number of swaps
+		%   being operated.
+		%   In fact when you look at the Three-Pivots-Plot you can see
+		%   That the three-pivot-quicksort has the best number of swaps
+		%   done of all the quicksorts that use three pivots.
 
 		% Two pivot plots
 		%Comparisons :
 		%	We can start to see them split.
 		%	Optimal Dual Pivot Quicksort [second option] still rocks.
 		%	Dual Picot [1] and Optimal Dual Pivot [1] don't do well.
+		%   It is small but you can see the trend lines starting to split at
+		%   then end.
+		%   you can see from the plot is that the second method
+		%   of partition consistently produces a lower number of comparisons.
 		%Swaps :
 		%	They all do very similarly.
-		%	Optimal Dual [1] and Dual Pivot [1] start to split away.
-		
+		%	Optimal Dual [1] and Dual Pivot [1] start to split away.[Do badly]
+		%
+
 		% Three pivot plots
 		%Comparisons :
 		%	Interpretations Clear From plot.
@@ -151,7 +168,8 @@
 		%Swaps :
 		%	Three-pivot-Quicksort is great then the 3-Pivot Sort
 		%
-		%In both cases heap 3-pivot sort is the worst.
+		% In both cases heap 3-pivot sort is the worst.
+		%
 
 
 		% All the M-pivot plots even with heap optimization
@@ -162,6 +180,8 @@
 		%	6-pivot sort is the best.
 		%	Although 3,4,5-pivot sorts are good as well.
 		%	All the heap-m-pivot sorts are not good.
+		%
+		% It seems odd that all the heap-optimized-m-pivot sorts do that badly.
 
 		%**********************************************************************
 		% Qualitatively compare them with there fit coefficients
