@@ -103,22 +103,23 @@
 		\end{equation}
 		With the function parameters $A,B$ and $C$ were found using a non-linear curve fitting tool in the SciPy module in Python. Quantitatively, the fit function that was picked seems to result in good fits visually. Though the fit has less meaning do to the fact we don't have error bars on the data. A closer look at the reduced chi squared values of the fits leads us to believe that the fits are not good \cite{bevington1969data}. Thus we will treat the results from the best fit as qualitative.
 
+
 	\subsection{Effect of Pivot Selection}
 	\begin{figure}
 		\centering
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=.9\linewidth]{ClassicQuickSortsLargeScale_comp.png}
+		 	\includegraphics[width=\linewidth]{ClassicQuickSortsLargeScale_comp.png}
 		\end{minipage}%
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=.9\linewidth]{ClassicQuickSortsLargeScale_swap.png}
+		 	\includegraphics[width=\linewidth]{ClassicQuickSortsLargeScale_swap.png}
 		\end{minipage}
 		\caption{Swap and comparison counts for the classic quicksort.}
 		\label{fig:classicSwapAndComp}
 	\end{figure}
 
-	In Figure \ref{fig:classicSwapAndComp} we can see that picking the pivot as the median of the fist, middle and last elements (green line) provides a significant decrease in comparisons and swaps compared to picking the first element (red line) or last element (blue line). Interestingly, we expect that picking any single element should provide no difference but we see that selecting the last element as the pivot is beneficial to picking the first element. We have no explanation for this.
+	In Figure \ref{fig:classicSwapAndComp} we can see that picking the pivot as the median of the fist, middle and last elements (green line) provides a significant decrease in comparisons and swaps compared to picking the first element (red line) or last element (blue line). We expect that picking any single element should provide no difference but we see that selecting the last element as the pivot is beneficial over picking the first element. We believe that this may be an artifact of the random number generator in Python's random module which documents that it should not be used for cryptographically secure applications suggesting the generator is in some way subpar. 
 
 	%-----------------------------------------------------------------
 	%Dual pivot graphs
@@ -127,11 +128,11 @@
 		\centering
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=.9\linewidth]{DualPivotQuicksortsLargeScale_comp}
+		 	\includegraphics[width=.8\linewidth]{DualPivotQuicksortsLargeScale_comp}
 		\end{minipage}%
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=.9\linewidth]{DualPivotQuicksortsLargeScale_swap}
+		 	\includegraphics[width=.8\linewidth]{DualPivotQuicksortsLargeScale_swap}
 		\end{minipage}
 		\caption{Swap and comparison counts for the dual pivot quicksort.}
 		\label{fig:dualSwapAndComp}
@@ -144,17 +145,17 @@
 		\centering
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=\linewidth]{OptimalDualPivotQuicksortsLargeScale_comp.png}
+		 	\includegraphics[width=.8\linewidth]{OptimalDualPivotQuicksortsLargeScale_comp.png}
 		\end{minipage}%
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=\linewidth]{OptimalDualPivotQuicksortsLargeScale_comp.png}
+		 	\includegraphics[width=.8\linewidth]{OptimalDualPivotQuicksortsLargeScale_swap.png}
 		\end{minipage}
 		\caption{Swap and comparison counts for the optimal dual pivot quicksort.}
 		\label{fig:optimalDualSwapAndCount}
 	\end{figure}
 
-
+	Similar to the classic quicksort, we see in Figures \ref{fig:dualSwapAndComp} and \ref{fig:optimalDualSwapAndCount} that selecting pivots intelligently provides a benefit for the dual pivot quicksort and it's optimal counterpart. Interestingly, smart pivot selection has a large effect on the number of comparisons for both of the dual pivot quicksorts while having a less pronounced effect on the number of swaps. We believe that due to the larger number of pivots and the nature of the data we sorted there is a higher probability that each element will already be in it's correct partition and thus the effect of ``good'' pivots is less pronounced. Had the data been almost-sorted we believe that the effect of smart pivot selection would be more conspicuous.
 
 		
 
@@ -166,7 +167,7 @@
 		% But if you look at the axis, this is confirming the n log n
 		% Behavior of the data and the algorithms
 		
-		A basic question to ask is if we are seeing the $n log(n)$ trend in all of the sort data we see. From figure \ref{fig:AllSortsLog} we see plots of $\rfrac{y}{n \log(n)}$ (where $y$ is either the number of comparisons or swaps). As $n$ gets larger you can see that each curve is tending to a constant. Since the $\rfrac{y}{n \log(n)}$ approches a constant, this indicates that $y$ is of $\BigOh{n}$. Which is consisten with the therory described in the intro section
+		A basic question to ask is if we are seeing the $n log(n)$ trend in all of the sort data we see. From Figure \ref{fig:AllSortsLog} we see plots of $\rfrac{y}{n \log(n)}$ (where $y$ is either the number of comparisons or swaps). As $n$ gets larger you can see that each curve is tending to a constant. Since the $\rfrac{y}{n \log(n)}$ approaches a constant, this indicates that $y$ is of $\BigOh{n}$. Which is consistent with the theory described in the introduction.
 		%**********************************************************************
 		% Reference the intro section for the part above.
 		%**********************************************************************
@@ -194,7 +195,7 @@
 		%   done of all the quicksorts that use three pivots.
 	
 		% Talk about the plots and how each sort algorithm does relative to the others.
-		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons. This is as expected since it was designed to minimize the number of comparisons. Also the Yaroslavskiy and M-Pivot sort (for $M=3,4,5,6$) have a minimal number of comparirsons. In contrast, the number of comparisons for all of the heap optimized $M$-pivot sorts are poor. The three pivot quicksort lies within the neighborhood of the heap optimzed $M$-pivot sorts. This is was an unexpected behavior. When looking at the number of swaps three pivot quicksort does really well. But like in the case with the number of comparisions, the heap optimized $M$-pivot sort (for all values of $M$) has a consistently larger number of swaps. The classic quicksort algorithm (regardless of pivot selection method) were in the same neightborhood as the heap optimized $M$-pivot sorts.
+		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons. This is as expected since it was designed to minimize the number of comparisons. Also the Yaroslavskiy and M-Pivot sort (for $M=3,4,5,6$) have a minimal number of comparisons. In contrast, the number of comparisons for all of the heap optimized $M$-pivot sorts are poor. Unexpectedly, the three pivot quicksort and classic quicksort both have performance comparable to that of the heap optimized $M$-pivot sorts. The thee pivot quicksort performs surprisingly few swap operations in comparison to the $M$-pivot quicksorts. 
 		
 		
 

@@ -47,8 +47,7 @@
 
 	\subsection{Dual Pivot Quicksort}
 		\label{subsec:DualPivotQSortIntro}
-
-        The dual pivot quicksort is a variation of the classic quicksort which uses two pivots as opposed to one. 
+        The dual pivot quicksort is a simplified version of Yarslavskiy's quicksort and can be though of as the classic quicksort with an extra pivot. Due to the extra pivot, this quicksort uses Yaroslavskiy's partitioning algorithm. The dual pivot quicksort suffers from the same worst-case space complexity as the classic quicksort and can be similarly optimized. Performing an insertion sort for small subarrays and selection the pivot intelligently can both provide meaningful and measurable improvements. Similar to the classic quicksort, the best pivots to select are the first and third quartiles. These can be estimated by selecting the first and third quartiles of a selection of five evenly spaced values.
 	
 	\subsection{Yaroslavskiy Quicksort}    
         \label{subsec:YaroslavskiyQSortIntro}
@@ -56,16 +55,17 @@
 		
     \subsection{Optimal Dual Pivot Quicksort}
 		\label{subsec:OptimalDualPivotQSortIntro}
+
 		To further build on on the dual pivot quicksort and the Yaroslavskiy quicksort\cite{Aumuller:2013:OPD:2525857.2525862}. The pivots are selected as one sees fit, but when partitioning we keep track of how many elements that have been placed into the small list and the big list, denote these $N_s$ and $N_l$ respectively. This idea is very similar to Yaroslavskiy's quicksort algorithm. Note that there are three category of elements in the dual pivot quicksort. When $N_s > N_l$ during the partition process, you first compare the the small pivot, otherwise compare to the large pivot. Although this is a simple optimization, the paper expends most of it's effort in proving that is the case\cite{Aumuller:2013:OPD:2525857.2525862}. With this small optimization the number of comparisons is drastically decreases relative to most quicksort implementations.
 		
 	\subsection{Three Pivot Quicksort}	
 		\label{subsec:ThreePivotQSortIntro}	
-		With the optimizations introduced from the Yaroslavskiy's quicksort algorithm and the optimal dual pivot quicksort algorithm, work has been done to see if similar benefits can achieved from three pivots. The three pivot quicksort algorithm as described by Kushagra-Ortiz-Qiau-Munro. They present an algorithm that intelligently partitions the list into four segments \cite{kushagra2013multi}. When selecting pivots we have decided that we select pivots five points in the list that are evenly spaced, use insertion sort on these elements, then pick the second and fourth element.
+		With the optimizations introduced from the Yaroslavskiy's quicksort algorithm and the optimal dual pivot quicksort algorithm, work has been done to see if similar benefits can achieved with three pivots. The three pivot quicksort algorithm as described by Kushagra-Ortiz-Qiau-Munro. They present an algorithm that intelligently partitions the list into four segments \ref{kushagra2013multi}. To select the pivots we select the first, third and fifth sextiles of a selection of seven evenly spaced values, similar to that of the dual pivot quicksort. 
 		
 	\subsection{M Pivot Sort}	
 		\label{subsec:MPivotQSortIntro}
 		
-		In 2007 a patent was published for the $M$-pivot quicksort \cite{edmondson2007multiple}. The algorithm uses ideas from probability and is considered to be a natural extension to the dual pivot quicksort and the three pivot quicksort. The concept hopes to take the best parts of quicksort and also deal with problems that quicksort faces. $M$-pivot sort select $M$ pairs of elements positioned linearly through the list (or sub-list).  Thus $2M$ elements have been selected as potential pivots. The entries are moved to the end of the list then sorted with an algorithm that works well on small list sizes (like insertion sort). This is shown in Figure \ref{fig:MPivotSelecton}.
+		In 2007 a patent was published for the $M$-pivot quicksort \ref{edmondson2007multiple}. The algorithm uses ideas from probability and is considered to be a natural extension to the dual pivot quicksort and the three pivot quicksort. The concept hopes to take the best parts of quicksort and also deal with problems that the quicksort faces. $M$-pivot sort select $M$ pairs of elements positioned linearly throughout the list (or sub-list).  Thus $2M$ elements have been selected as potential pivots. The entries are moved to the end of the list then sorted with an algorithm that works well on small list sizes (like insertion sort). This is shown in Figure \ref{fig:MPivotSelecton}.
 		\begin{figure}[ht!]
 			\begin{center}
 				\includegraphics[width=70mm]{MPivotSelectCanadates.png}
@@ -77,7 +77,7 @@
 		%******************************************************
 		% Talk about M-Pivot Partitioning
 		%******************************************************
-		After the $M$ pivots are selected then we partition as demonstrated in Figure \ref{fig:MPivotPartition}. For each pivot we cycle through the array and group element together less than the current pivot. Then we recurse in the into that sublist.
+		After the $M$ pivots are selected partitioning occurs as demonstrated in Figure \ref{fig:MPivotPartition}. For each pivot we cycle through the array and group elements together less than the current pivot. Following this, each of the sublists are recursed into.
 		\begin{figure}[ht!]
 			\begin{center}
 				\includegraphics[width=70mm]{MPivotPartiton.png}
@@ -87,7 +87,7 @@
 		\end{figure}
 		There are a few optimizations that can be made before starting any part of the algorithm (within the stack frame)\cite{edmondson2007multiple}. Before the call to the $M$-pivot sort, we can enforce that the min-heap property is applied. One call to the min-heapify function would only add $\BigOh{n}$ time and would not change the asymptotic runtime of the algorithm.
 		
-		There are two more optimizations that could be applied. If one or more pivots end up having the same value then a different pivot is selected\cite{edmondson2007multiple}. The other optimization that could be made is that if all the pivots are found to be close to one side of the list, then the number of pivots is changed\ref{edmondson2007multiple}. The previously two stated optimizations not further studied in this paper.
+		There are two more optimizations that could be applied. If one or more pivots end up having the same value then a different pivot is selected\ref{edmondson2007multiple}. The final proposed optimization that could be made is that if all the pivots are found to be close to one side of the list, then the number of pivots is changed\ref{edmondson2007multiple}. The previously two stated optimizations are not further studied in this paper.
 
 	\subsection{Summary}
 		%***************************************************************************************************
