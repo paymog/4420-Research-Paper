@@ -86,7 +86,7 @@
 	\subsection{Non-Linear Curve Fit}
 		\label{subsec:CurveFit}
 
-		With the data that has collected we wish to be able to look at a whole data set and quantitatively compare to other data sets. From our introduction of the different quicksort algorithms, the asymptotic runtime of all of the had one of the following forms:
+		With the data that has been collected we wish to be able to look at a whole data set and then quantitatively compare to other data sets. From our introduction of the different quicksort algorithms in section 	\label{sec:quicksortInto}, the asymptotic runtime of any of the described algorithms of the had one of the following forms:
 		\begin{equation}
 			A\cdot n\log(n) + B\cdot n + \BigOh{\log(n)}
 		\end{equation}
@@ -101,7 +101,7 @@
 			A\cdot n\log(n) + B\cdot n + C\log(n)
 			\label{eq:FitFunction}
 		\end{equation}
-		With the function parameters $A,B$ and $C$ where found using a non-linear curve fitting tool in the SciPy module in python. Qualitatively, the fit function that was picked seems to result in good fits visually. Though the fit has less meaning do to the fact we don't have error bars on the data. A closer look at the reduced chi squared values of the fits leads us to believe that the fits are not good \cite{bevington1969data}. Thus we will treat the results from the best fit as qualitative.
+		With the function parameters $A,B$ and $C$ were found using a non-linear curve fitting tool in the SciPy module in Python. Quantitatively, the fit function that was picked seems to result in good fits visually. Though the fit has less meaning do to the fact we don't have error bars on the data. A closer look at the reduced chi squared values of the fits leads us to believe that the fits are not good \cite{bevington1969data}. Thus we will treat the results from the best fit as qualitative.
 
 	\subsection{Effect of Pivot Selection}
 	\begin{figure}
