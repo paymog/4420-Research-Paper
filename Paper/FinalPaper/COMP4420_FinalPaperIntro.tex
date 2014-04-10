@@ -37,9 +37,9 @@
 		\label{subsec:ClassicQSortIntro}
         The classic quicksort, first introduced by Hoare \cite{Hoare01011962} in 1962 is a recursive sorting algorithm which falls into the category of divide and conquer algorithms. All of following variations of the quicksort have these qualities as well. Quicksort can be summarized as follows:
         \begin{enumerate}
-        \item Select a pivot in the current range of elements to be sorted.
-        \item Partition the list such that all elements less than the pivot appear to the left of the pivot while all elements greater than or equal to the pivot appear to the right of the pivot.
-        \item Recursively call quicksort on the left and right halves of the currently partitioned range.
+			\item Select a pivot in the current range of elements to be sorted.
+			\item Partition the list such that all elements less than the pivot appear to the left of the pivot while all elements greater than or equal to the pivot appear to the right of the pivot.
+			\item Recursively call quicksort on the left and right halves of the currently partitioned range.
         \end{enumerate}
 
         This na\"{i}ve implementation does not handle it's worst case gracefully. The classic quicksort degrades to a time complexity of $\BigOh{n^2}$ when the data being processed is in nearly sorted or already sorted order. Due to the simplicity of this implementation there are some minor changes which can be made to speed up the average case and aid the worst case runtimes. It was shown by Cook and Kim \cite{cook1980best} that insertion sorts are the fastest sort for small lists and nearly sorted lists. This optimization does not make the quicksort asymptotically faster than it's na\"{i} variation in either the average or worst case but does provide a meaningful speedup. Cook and Kim also showed that a hybrid of insertion sort and quicksort outperforms either of the sorts used individually. A perfectly selected pivot (the median of the range) would ensure that the worst case space complexity is bound by $\BigOh{n\log(n)}$. Perfect pivot selection cannot be achieved with an increase in time complexity; however, selecting pivot to be the median of first, middle and last elements is a good enough estimation of the true median of the range \cite{sedgewick1978implementing}.
@@ -52,23 +52,42 @@
 	
 	\subsection{Yaroslavskiy Quicksort}    
         \label{subsec:YaroslavskiyQSortIntro}
-
+		
+		
     \subsection{Optimal Dual Pivot Quicksort}	
 		\label{subsec:OptimalDualPivotQSortIntro}
-	
+		To further build on on the dual pivot quicksort and to a lesser extent the Yaroslavskiy quicksort\ref{Aumuller:2013:OPD:2525857.2525862}. The pivots are selected as one sees fit, but when partitioning we keep track of how many elements that have been placed into the small list and the big list, denote these $N_s$ and $N_l$ respectivly. Note that there are three category of elements in the dual pivot quicksort. When $N_s > N_l$ during the partition process, you first compare the the small pivot, otherwise compare to the large pivot. Although this is a simple optimization, the paper expends most of it's effort in proving that is the case\ref{Aumuller:2013:OPD:2525857.2525862}. With this small optimization the number of comparisions is drasically decreases relative to most quicksort implementations.
+		
 	\subsection{Three Pivot Quicksort}	
 		\label{subsec:ThreePivotQSortIntro}	
-	
-	\subsection{M Pivot Quicksort}	
+		With the optimizations introduced from the Yaroslavskiy's quicksort algorithm and the optimal dual pivot quicksort algorithm, work has been done to see if similar benifites can achived from three pivots. The three pivot quicksort algorithm as described by Kushagra-Ortiz-Qiau-Munro. They present an algorithm that intelegently partitions the list into four segments \ref{kushagra2013multi}. When selecting pivots we have decided that we select pivots five points in the list that are evenly spaced, use insertion sort on these elemets, then pick the second and fourth element.
+		
+	\subsection{M Pivot Sort}	
 		\label{subsec:MPivotQSortIntro}
-	
-		%
-		% The following can be deleted
-		% This is just here to see what the compiled document looks like
-		RAWR
-		\subsubsection{Testing}
-			Just to test the subsection code.
-			Test text : Recall from section \ref{subsec:ClassicQSortIntro} on page \pageref{subsec:ClassicQSortIntro}
+		
+		In 2007 a patent was published for the $M$-pivot quicksort \ref{edmondson2007multiple}. The algorithm uses ideas from probability and is concidered to be a natural extention to the dual pivot quicksort and the three pivot quicksort. The concept hopes to take the best parts of quicksort and also deal with problems that quicksort faces. $M$-pivot sort select $M$ pairs of elements positioned linearly throught the list (or sub-list).  Thus $2M$ elements have been selected as potential pivots. The entries are moved to the end of the list then sorted with an algorithm that works well on small list sizes (like insertion sort). This is shown in Figure \ref{fig:MPivotSelecton}.
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=70mm]{MPivotSelectCanadates.png}
+				\includegraphics[width=70mm]{MPivotSelection.png}
+				\caption{Diagram of how pivot selection is done in the $M$-pivot sort algorithm.}
+				\label{fig:MPivotSelecton}
+			\end{center}
+		\end{figure}
+		%******************************************************
+		% Talk about M-Pivot Partitioning
+		%******************************************************
+		After the $M$ pivots are selected then we partition as demonstrated in Figure \ref{fig:MPivotPartition}. For each pivot we cycle through the array and group element together less than the current pivot. Then we recurse in the into that sublist.
+		\begin{figure}[ht!]
+			\begin{center}
+				\includegraphics[width=70mm]{MPivotPartiton.png}
+				\caption{How partitioning is done in the $M$-pivot sort algorithm.}
+				\label{fig:MPivotPartition}
+			\end{center}
+		\end{figure}
+		There are a few optimizations that can be made before starting any part of the algorithm (within the stack frame)\ref{edmondson2007multiple}. Before the call to the $M$-pivot sort, we can enforce that the min-heap property is applied. One call to the min-heapify function would only add $\BigOh{n}$ time and would not change the asympotic runtime of the algorithm.
+		
+		There are two more optimizations that could be applied. If one or more pivots end up having the same value then a different pivot is selected\ref{edmondson2007multiple}. The other optimization that could be made is that if all the pivots are found to be close to one side of the list, then the number of pivots is changed\ref{edmondson2007multiple}. The previously two stated optimizations not further studied in this paper.
 
 	\subsection{Summary}
 		%***************************************************************************************************
@@ -90,7 +109,7 @@
 					Yaroslavskiy       &   $1.9n \log n - 2.46n + O(\log(n))$   \\ \hline
 					M Pivot            &   $O(n \log n)$                        \\ \hline
 				\end{tabular}
-				\caption{Summary table of theoretical comparisons.}
+				\caption{Summary table of theoretical comparisons.\ref{edmondson2007multiple}\cite{kushagra2013multi}\cite{Aumuller:2013:OPD:2525857.2525862}\cite{Wild:2012:ACA:2404160.2404231}}
 				\label{tab:CompSummary}
 			\end{center}
 		\end{table}
@@ -107,7 +126,7 @@
 					Yaroslavskiy        &  $0.6n \log n + 0.08n + O(\log(n))$  \\ \hline
 					M Pivot             &  $O(n \log n)$                       \\ \hline
 				\end{tabular}
-				\caption{Summary table of theoretical swaps.}
+				\caption{Summary table of theoretical swaps.\ref{edmondson2007multiple}\cite{kushagra2013multi}\cite{Aumuller:2013:OPD:2525857.2525862}\cite{Wild:2012:ACA:2404160.2404231}}
 				\label{tab:SwapSummary}
 			\end{center}
 		\end{table}
