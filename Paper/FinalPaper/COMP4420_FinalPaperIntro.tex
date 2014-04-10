@@ -51,12 +51,12 @@
 	
 	\subsection{Yaroslavskiy Quicksort}    
         \label{subsec:YaroslavskiyQSortIntro}
-		Yaroslavskiy wished to make further optimizations to the dual pivot quicksort. Yaroslavskiy partition algorithm, even though based of the same abstract algorithmic idea produces different results\cite{Wild:2012:ACA:2404160.2404231}. The algorithm uses a five element sorting network to pick the two best elements. Then partitions intelegently by picking the "beter" comparison first\cite{Wild:2012:ACA:2404160.2404231}.
+		Yaroslavskiy wished to make further optimizations to the dual pivot quicksort. Yaroslavskiy partition algorithm, even though based of the same abstract algorithmic idea produces different results \cite{Wild:2012:ACA:2404160.2404231}. The algorithm uses a five element sorting network to pick the two best elements then partitions intelligently by picking the ``better'' comparison first \cite{Wild:2012:ACA:2404160.2404231}.
 		
     \subsection{Optimal Dual Pivot Quicksort}
 		\label{subsec:OptimalDualPivotQSortIntro}
 
-		To further build on on the dual pivot quicksort and the Yaroslavskiy quicksort\cite{Aumuller:2013:OPD:2525857.2525862}. The pivots are selected as one sees fit, but when partitioning we keep track of how many elements that have been placed into the small list and the big list, denote these $N_s$ and $N_l$ respectively. This idea is very similar to Yaroslavskiy's quicksort algorithm. Note that there are three category of elements in the dual pivot quicksort. When $N_s > N_l$ during the partition process, you first compare the the small pivot, otherwise compare to the large pivot. Although this is a simple optimization, the paper expends most of it's effort in proving that is the case\cite{Aumuller:2013:OPD:2525857.2525862}. With this small optimization the number of comparisons is drastically decreases relative to most quicksort implementations.
+		To further build on on the dual pivot quicksort and the Yaroslavskiy quicksort \cite{Aumuller:2013:OPD:2525857.2525862}. The pivots are selected as one sees fit, but when partitioning we keep track of how many elements that have been placed into the small list and the big list, denote these $N_s$ and $N_l$ respectively. This idea is very similar to Yaroslavskiy's quicksort algorithm. Note that there are three category of elements in the dual pivot quicksort. When $N_s > N_l$ during the partition process, you first compare the the small pivot, otherwise compare to the large pivot. Although this is a simple optimization, the paper expends most of it's effort in proving that is the case\cite{Aumuller:2013:OPD:2525857.2525862}. With this small optimization the number of comparisons is drastically decreases relative to most quicksort implementations.
 		
 	\subsection{Three Pivot Quicksort}	
 		\label{subsec:ThreePivotQSortIntro}	
