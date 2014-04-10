@@ -1,31 +1,33 @@
 \bibliography{../References/refer}
 
-\section{Analysis}
-	\label{sec:Analysis}
-	So we have established the details of the differences between the different variations of quicksorts.
-	To investigate and compare the algorithms we have implemented and ran experiments. 
-	We used uniformly random numbers from $0$ to $10^{12}$.
-	Then created arrays with randomly generated integers for sizes $4$ to $50$ million
-	Table \ref{tab:FullSortList} shows the variations of quicksort to the arrays generated.
+\section{Experiment}
+	\label{sec:Experiment}
+	\subsection{Overview}
+	The experiments consisted of generating lists of integers ranging in size from four to fifty million. The integers were chosen uniformly at random between zero and $10^{12}$. Consecutive lists were $9/7$ the size of the previous rounded down to the nearest integer. Each quicksort and each of it's variations sorted the same list. The number of comparisons, swaps and time taken by each quicksort were recorded. A summary of the conditions can be found in Table \ref{tab:experimentConditions} for a total of 17 conditions. A total of 69 iterations were run resulting in 109296 data points. During each iteration, the data gathering for each list size was done in parallel using four threads.
+
 	\begin{table}
 		\begin{center}
-			\begin{tabular}{|r|c|c|}
+			\begin{tabular}{|r|c|c|c}
 				\hline
-				Name of Sort Algorithm           & Pivot Selection Methods & Number of Pivots \\ \hline \hline
-				Classic Quicksort                &  3  &  1       \\ \hline
-				Dual Pivot Quicksort             &  2  &  2       \\ \hline
-				Heap Optimized M-Pivot Quicksort &  1  &  3,4,5,6 \\ \hline
-				M-Pivot Quicksort                &  1  &  3,4,5,6 \\ \hline
-				Optimal Dual Pivot Quicksort     &  2  &  2       \\ \hline
-				Three Pivot Quicksort            &  1  &  3       \\ \hline
-				Yaroslavskiy Quicksort           &  1  &  2       \\ \hline
+				Sort           			&  Pivot Selection methods 	& Number of Pivots 	\\ \hline \hline
+				Classic                 &  3 						& 1       			\\ \hline
+				Dual Pivot              &  2  						& 2       			\\ \hline
+				Optimal Dual Pivot      &  2  						& 2       			\\ \hline
+				Yaroslavskiy            &  1  						& 2       			\\ \hline
+				Three Pivot             &  1  						& 3       			\\ \hline
+				M-Pivot                 &  1  						& 3,4,5,6 			\\ \hline
+				Heap Optimized M-Pivot  &  1  						& 3,4,5,6 			\\ \hline
 			\end{tabular}
 			\caption{List of all the variation of quicksorts executed.}
-			\label{tab:FullSortList}
+			\label{tab:experimentConditions}
 		\end{center}
 	\end{table}
 
 
+	\subsection{Platform}
+	The experiments were run on a virtual machine with OSX 10.9 as the guest operating system and Windows 8.1 as the host operating system. The host operating system has 16 GB of ram and an i5-2500k CPU overclocked to 4.3 GHz. The guest OS had access to 8 GB of RAM and access to all 4 cores of the host CPU.
+
+	\subsection{Results}
 	%**********************************************************************
 	% Determine if we need to talk about pivot selection here
 	%**********************************************************************
@@ -35,12 +37,40 @@
 	%Pivot selection method $3$ refers to picking the median of 3 elements.
 	%Which these would be the one of the first, middle, or last element.
 	%For dual pivot and optimal dual pivot, pivot selection $1$ refers
+	\begin{figure}[ht!]
+		\begin{center}   
+			\includegraphics[width=85mm]{PlotLegend.png}
+			\caption{Plot legend}
+			\label{fig:PlotLegend}
+		\end{center}
+	\end{figure}
 
-	Figure \ref{fig:PlotLegend} is the legend of all the plots generated.
-	You can see the color and shape combination for each version of quick sort algorithm. 
-	These color and shape choices will be consistent throughout the following plots.
-	There are 17 distinct derivatives of quicksort that have been run.
-	Note that for the plots we overlay the function :
+	%**********************************************************************
+	% All Plots Large Scale
+	%**********************************************************************
+	\begin{figure}[ht!]
+		\begin{center}
+			\includegraphics[width=120mm]{AllthePlotsLargeScale_swap}
+			\includegraphics[width=120mm]{AllthePlotsLargeScale_swap}
+			\caption{A plot of the data from all the sorting algorithm against the number of comparisons.}
+			\label{fig:AllSorts}
+		\end{center}
+	\end{figure}
+
+
+	%**********************************************************************
+	% All Plots Log Large Scale
+	%**********************************************************************
+	\begin{figure}[ht!]
+		\begin{center}
+			\includegraphics[width=120mm]{AllPlotsLargeScalelognvsy_OVER_nlogn_comp.png}
+			\includegraphics[width=120mm]{AllPlotsLargeScalelognvsy_OVER_nlogn_swap.png}
+			\caption{A plot of the data from all the sorting algorithm}
+			\label{fig:AllSortsLog}
+		\end{center}
+	\end{figure}
+
+	Figure \ref{fig:PlotLegend} provides the legend for all of the plots. Note that for the plots we overlay the function:
 	\begin{equation}
 		A\cdot n\log(n) + B\cdot n + C \log(n)
 		\label{eq:FitFunction}
@@ -49,51 +79,14 @@
 	\begin{center}
 		(Algorithm Name, Pivot Selection Method Index, Number of Pivots, is Insertion Sort used).
 	\end{center}
+	
 
-	\begin{figure}[ht!]
-		\begin{center}   
-			\includegraphics[width=85mm]{PlotLegend.png}
-			\label{fig:PlotLegend}
-			\caption{A visual reference for all the quicksort variations and plots.}
-		\end{center}
-	\end{figure}
-
-	\subsection{Data Processing}
-		\label{subsec:DataProcessing}
-		In processing the data, we take averages of any common data entries. We plot them and have the following results.
-		Which is summarized in Figures \ref{fig:AllSorts}, \ref{fig:TwoPivot}, \ref{fig:ThreePivot}, and \ref{fig:MPivot}.
-
-		%**********************************************************************
-		% All Plots Large Scale
-		%**********************************************************************
-		\begin{figure}[ht!]
-			\begin{center}
-				\includegraphics[width=150mm]{AllthePlotsLargeScale_comp}
-				\includegraphics[width=150mm]{AllthePlotsLargeScale_swap}
-				\caption{A plot of the data from all the sorting algorithm against the number of comparisons.}
-				\label{fig:AllSorts}
-			\end{center}
-		\end{figure}
-
-
-		%**********************************************************************
-		% All Plots Log Large Scale
-		%**********************************************************************
-		\begin{figure}[ht!]
-			\begin{center}
-				\includegraphics[width=150mm]{AllPlotsLargeScalelognvsy_OVER_nlogn_comp.png}
-				\includegraphics[width=150mm]{AllPlotsLargeScalelognvsy_OVER_nlogn_swap.png}
-				\caption{A plot of the data from all the sorting algorithm}
-				\label{fig:AllSortsLog}
-			\end{center}
-		\end{figure}
-
+\section{Analysis}
+	\label{sec:Analysis}
 	\subsection{Non-Linear Curve Fit}
 		\label{subsec:CurveFit}
 
-		With the data that has collected we wish to be able to look at a whole data set and quantitatively compare
-		to other data sets. From our introduction of the different quicksort algorithms,
-		the asymptotic runtime of all of the had one of the following forms:
+		With the data that has collected we wish to be able to look at a whole data set and quantitatively compare to other data sets. From our introduction of the different quicksort algorithms, the asymptotic runtime of all of the had one of the following forms:
 		\begin{equation}
 			A\cdot n\log(n) + B\cdot n + \BigOh{\log(n)}
 		\end{equation}
@@ -108,11 +101,25 @@
 			A\cdot n\log(n) + B\cdot n + C\log(n)
 			\label{eq:FitFunction}
 		\end{equation}
-		With the function parameters $A,B$ and $C$ where found using a non-linear curve fitting tool in the SciPy module in python.
-		Qualitatively, the fit function that was picked seems to result in good fits visually.
-		Though the fit has less meaning do to the fact we don't have error bars on the data.
-		A closer look at the reduced chi squared values of the fits leads us to believe that the fits are not good.\cite{bevington1969data}
-		Thus we will treat the results from the best fit as qualitative.
+		With the function parameters $A,B$ and $C$ where found using a non-linear curve fitting tool in the SciPy module in python. Qualitatively, the fit function that was picked seems to result in good fits visually. Though the fit has less meaning do to the fact we don't have error bars on the data. A closer look at the reduced chi squared values of the fits leads us to believe that the fits are not good \cite{bevington1969data}. Thus we will treat the results from the best fit as qualitative.
+
+	\subsection{Effect of Pivot Selection}
+	\begin{figure}
+		\centering
+		\begin{minipage}{.5\textwidth}
+		 	\centering
+		 	\includegraphics[width=.4\linewidth]{ClassicQuickSortsLargeScale_comp.png}
+		 	\captionof{figure}{A figure}
+		 	\label{fig:test1}
+		\end{minipage}%
+		\begin{minipage}{.5\textwidth}
+		 	\centering
+		 	\includegraphics[width=.4\linewidth]{ClassicQuickSortsLargeScale_swap.png}
+		 	\captionof{figure}{Another figure}
+		 	\label{fig:test2}
+		\end{minipage}
+	\end{figure}
+
 		
 
 \section{Discussion}
@@ -123,12 +130,7 @@
 		% But if you look at the axis, this is confirming the n log n
 		% Behavior of the data and the algorithms
 		
-		A basic question to ask is if we are even seeing the $n log(n)$ trend in all of the sort data we see.
-		From figure \ref{fig:AllSortsLog} we see plots of $\rfrac{y}{n \log(n)}$ 
-		(where $y$ is either the number of comparisons or swaps).
-		As $n$ gets larger you can see that each curve is tending to a constant.
-		Since the $\rfrac{y}{n \log(n)}$ approches a constant, this indicates that
-		$y$ is of $\BigOh{n}$. Which is consisten with the therory described in the intro section
+		A basic question to ask is if we are seeing the $n log(n)$ trend in all of the sort data we see. From figure \ref{fig:AllSortsLog} we see plots of $\rfrac{y}{n \log(n)}$ (where $y$ is either the number of comparisons or swaps). As $n$ gets larger you can see that each curve is tending to a constant. Since the $\rfrac{y}{n \log(n)}$ approches a constant, this indicates that $y$ is of $\BigOh{n}$. Which is consisten with the therory described in the intro section
 		%**********************************************************************
 		% Reference the intro section for the part above.
 		%**********************************************************************
@@ -156,18 +158,7 @@
 		%   done of all the quicksorts that use three pivots.
 	
 		% Talk about the plots and how each sort algorithm does relative to the others.
-		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons.
-		This is as expected since it was designed to minimize the number of comparisons.
-		Also the Yaroslavskiy and M-Pivot sort (for $M=3,4,5,6$) have a minimal number of
-		comparirsons.
-		In contrast, the number of comparisons for all of the heap optimized $M$-pivot sorts are poor.
-		The three pivot quicksort lies within the neighborhood of the heap optimzed $M$-pivot sorts.
-		This is was an unexpected behavior.
-		When looking at the number of swaps three pivot quicksort does really well.
-		But like in the case with the number of comparisions, the heap optimized $M$-pivot sort
-		(for all values of $M$) has a consistently larger number of swaps.
-		The classic quicksort algorithm (regardless of pivot selection method)
-		were in the same neightborhood as the heap optimized $M$-pivot sorts.
+		Preliminary observations on Figure \ref{fig:AllSorts} show that the optimal dual pivot quicksort had the lowest number of comparisons. This is as expected since it was designed to minimize the number of comparisons. Also the Yaroslavskiy and M-Pivot sort (for $M=3,4,5,6$) have a minimal number of comparirsons. In contrast, the number of comparisons for all of the heap optimized $M$-pivot sorts are poor. The three pivot quicksort lies within the neighborhood of the heap optimzed $M$-pivot sorts. This is was an unexpected behavior. When looking at the number of swaps three pivot quicksort does really well. But like in the case with the number of comparisions, the heap optimized $M$-pivot sort (for all values of $M$) has a consistently larger number of swaps. The classic quicksort algorithm (regardless of pivot selection method) were in the same neightborhood as the heap optimized $M$-pivot sorts.
 		
 		
 
@@ -185,10 +176,7 @@
 		%	Optimal Dual [1] and Dual Pivot [1] start to split away.[Do badly]
 		%
 		
-		An observation from the two pivot quicksorts with pivot selcetion that selects
-		the first and last element as the pivots don't do as well as the selection of 
-		the tertiles in the number of comparisons. This can be seen from figure \ref{fig:TwoPivot}. 
-		When looking at size vs. swaps in the two pivot there are no noteworthy differenceces. 
+		An observation from the two pivot quicksorts with pivot selcetion that selects the first and last element as the pivots don't do as well as the selection of the tertiles in the number of comparisons. This can be seen from figure \ref{fig:TwoPivot}. When looking at size vs. swaps in the two pivot there are no noteworthy differenceces. 
 		
 		% Three pivot plots
 		%Comparisons :
@@ -211,9 +199,7 @@
 		%
 		% It seems odd that all the heap-optimized-m-pivot sorts do that badly.
 
-		In comparisons between all the $M$-pivot sort algorithms, the ones
-		without the heap optimization always did better. Although it is curious
-		as to why all the heap optimized $M$-pivot sort algorithms are worse.
+		In comparisons between all the $M$-pivot sort algorithms, the ones without the heap optimization always did better. This is due to an implementation error. In the original description of the algorithm the heapfication of the array only happens on the very first call whereas in our implementation it occurs for every recursive call.
 
 		%**********************************************************************
 		% Qualitatively compare them with there fit coefficients
@@ -225,23 +211,7 @@
 		% Remember that the fit coefficients table has been updated.
 		% Talk about the other functions that we have tried to fit
 		
-		From tables \ref{tab:compFitCoeffA}, \ref{tab:compFitCoeffB},
-		\ref{tab:compFitCoeffC}, \ref{tab:swapFitCoeffA}, \ref{tab:swapFitCoeffB}
-		and \ref{tab:swapFitCoeffC} the fit coefficents for the data colelcted is
-		summerized based of equation \ref{eq:FitFunction}. 
-		For the sake of asymptotic comparison between the algorithms we only focus
-		on the fit parameter $A$. 
-		From the fit coefficents the optimal dual pivot quicksort by picking the
-		pivot as a median of three elements is shown to be the best quick sort
-		algorithm based off the number of comparirons.
-		While the heap-optimized $M$ pivot quicksort for $M=6$, is the worst
-		algorithm based off the number of comparisions.
-		The clasic quicksort algorithms by picking the median of three elements
-		based off the number of swaps is terible. 
-		The best algorithm for reducing the number of swaps is the basic
-		$M$-pivot sort algorithm with $M=6$.
-		But the only algorithm that competitive runtimes based off both metrics
-		(swaps and comparisions) is Yaroslavskiy dual pivot quicksort algorithm.
+		From tables \ref{tab:compFitCoeffA}, \ref{tab:compFitCoeffB}, \ref{tab:compFitCoeffC}, \ref{tab:swapFitCoeffA}, \ref{tab:swapFitCoeffB} and \ref{tab:swapFitCoeffC} the fit coefficents for the data colelcted is summerized based of equation \ref{eq:FitFunction}. For the sake of asymptotic comparison between the algorithms we only focus on the fit parameter $A$. From the fit coefficents the optimal dual pivot quicksort by picking the pivot as a median of three elements is shown to be the best quick sort algorithm based off the number of comparirons. While the heap-optimized $M$ pivot quicksort for $M=6$, is the worst algorithm based off the number of comparisions. The clasic quicksort algorithms by picking the median of three elements based off the number of swaps is terible. The best algorithm for reducing the number of swaps is the basic $M$-pivot sort algorithm with $M=6$. But the only algorithm that competitive runtimes based off both metrics (swaps and comparisions) is Yaroslavskiy dual pivot quicksort algorithm.
 		
 
 	\subsection{Future Work}
@@ -253,12 +223,19 @@
 		% Test M=1 and M=2 for the M-Pivot quick sort
 		% Test with insertion sort off
 		% More data values on the same entires.
-		Read the comments in the .tex file
+		While our tests only examined the performance of these quicksorts on lists of nearly unique numbers, we believe that examining their comparison and swap counts on different ``kinds'' of lists provides just as much, if not more, insight. This is especially true for concerns of their worst-case performance. Lists of numbers which can be modelled by a Gaussian or Poisson distribution may provide some insight into the behaviour of these quicksorts on real world data. Additionally, sorting lists in pseudo-sorted or sorted order will provide data for the worst-case performance of these sorts. Another potentially interesting may be one where elements of the list are chosen uniformly at random but where the range of the selected elements is less than the length of the list, thus guaranteeing value repetition. 
+
+		Comparing these sorts against other sorts may also be of use. Other popular ``efficient'' sorts such as the merge sort or timsort can provide good points of reference for the performance of the quicksort. This can be especially useful if more ``kinds'' of lists are used as mentioned previously. We also believe that comparing the M-Pivot quicksort with $M=1$ and $M=2$ with the other one and two pivot sorts can result in potentially interesting graphs and analysis. We also believe that implementing the optimizations presented by Edmonson \cite{edmondson2005m} on the quicksorts other than the M-Pivot Quicksort can prove useful in determining their true effectiveness.
+
+
 		
 
 \section{Conclusion}
 	\label{sec:Conclusionn}
-	We did things and stuff!
+	We have implemented several variations of the quicksort and explored their efficiencies in regards to total number of swaps and comparisons. Our results show that Yaroslavskiy's quicksort is the highest overall performer while the heap optimized $M$-pivot quicksorts performed the worse. Our results also validate the idea that intelligent pivot selection provides a measurable and significant effect on the overall performance of quicksorts. We find that for lists of nearly unique numbers, selecting a median of three and first and third quartiles of five provide good performance to developer time ratios. Our results also show that the optimal dual pivot quicksort performs better than Yaroslavskiy's quicksort in regards to total number of comparisons as claimed by \cite{Aumuller:2013:OPD:2525857.2525862} while the two sorts are nearly identical in swap count.
+
+	Overall, the $M$-Pivot quicksorts performed well. The $M$-Pivot quicksort with $M=3$ performed better than the three pivot quicksort of Kushagra et al. \cite{kushagra2013multi}. We also find that at small scales, the choice of quicksort makes little difference. 
+	Yaro better than we thought. M pivot surprisingly good. Partitioning is subtlely difficult. Yaroslavs partition alg is amazing \cite{Aumuller:2013:OPD:2525857.2525862} \cite{Wild:2012:ACA:2404160.2404231}. 
 	
 
 
@@ -461,8 +438,8 @@
 	%**********************************************************************
 	\begin{figure}[ht!]
 		\begin{center}
-			\includegraphics[width=150mm]{TwoPivotsLargeScale_comp.png}
-			\includegraphics[width=150mm]{TwoPivotsLargeScale_swap.png}
+			\includegraphics[width=120mm]{TwoPivotsLargeScale_comp.png}
+			\includegraphics[width=120mm]{TwoPivotsLargeScale_swap.png}
 			\caption{A plot of the data from all the sorting algorithm with two pivots}
 		\label{fig:TwoPivot}
 		\end{center}
@@ -473,8 +450,8 @@
 	%**********************************************************************
 	\begin{figure}[ht!]
 		\begin{center}
-			\includegraphics[width=150mm]{ThreePivotsLargeScale_comp.png}
-			\includegraphics[width=150mm]{ThreePivotsLargeScale_swap.png}
+			\includegraphics[width=120mm]{ThreePivotsLargeScale_comp.png}
+			\includegraphics[width=120mm]{ThreePivotsLargeScale_swap.png}
 			\caption{A plot of the data from all the sorting algorithm with three pivots}
 			\label{fig:ThreePivot}
 		\end{center}
@@ -485,8 +462,8 @@
 	%**********************************************************************
 	\begin{figure}[ht!]
 		\begin{center}
-			\includegraphics[width=150mm]{M-PivotQuicksortsSmallScale_comp.png}
-			\includegraphics[width=150mm]{M-PivotQuicksortsSmallScale_swap.png}
+			\includegraphics[width=120mm]{M-PivotQuicksortsSmallScale_comp.png}
+			\includegraphics[width=120mm]{M-PivotQuicksortsSmallScale_swap.png}
 			\caption{Data from all the version of M-Pivot Sort.}
 			\label{fig:MPivot}
 		\end{center}

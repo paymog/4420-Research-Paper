@@ -44,16 +44,22 @@
 
         This na\"{i}ve implementation does not handle it's worst case gracefully. The classic quicksort degrades to a time complexity of $\BigOh{n^2}$ when the data being processed is in nearly sorted or already sorted order. Due to the simplicity of this implementation there are some minor changes which can be made to speed up the average case and aid the worst case runtimes. It was shown by Cook and Kim \cite{cook1980best} that insertion sorts are the fastest sort for small lists and nearly sorted lists. This optimization does not make the quicksort asymptotically faster than it's na\"{i} variation in either the average or worst case but does provide a meaningful speedup. Cook and Kim also showed that a hybrid of insertion sort and quicksort outperforms either of the sorts used individually. A perfectly selected pivot (the median of the range) would ensure that the worst case space complexity is bound by $\BigOh{n\log(n)}$. Perfect pivot selection cannot be achieved with an increase in time complexity; however, selecting pivot to be the median of first, middle and last elements is a good enough estimation of the true median of the range \cite{sedgewick1978implementing}.
 
+    \subsection{Yaroslavskiy Quicksort}    
+        \label{subsec:YaroslavskiyQSortIntro}
+
+
 
 	\subsection{Dual Pivot Quicksort}
 		\label{subsec:DualPivotQSortIntro}
 
-        The dual pivot quicksort is a variation of the classic quicksort which uses two pivots as opposed to one. 
+        The dual pivot quicksort is a simplified version of Yarslavskiy's quicksort and can be though of as the classic quicksort with an extra pivot. Due to the extra pivot, this quicksort uses Yaroslavskiy's partitioning algorithm. The dual pivot quicksort suffers from the same worst-case space complexity as the classic quicksort and can be similarly optimized. Performing an insertion sort for small subarrays and selection the pivot intelligently can both provide meaningful and measurable improvements. Similar to the classic quicksort, the best pivots to select are the first and third quartiles. These can be estimated by selecting the first and third quartiles of first, halfway between first and middle, middle, halfway between middle and last and last elements. 
+	
 	
 	\subsection{Yaroslavskiy Quicksort}    
         \label{subsec:YaroslavskiyQSortIntro}
 		
 		
+
     \subsection{Optimal Dual Pivot Quicksort}	
 		\label{subsec:OptimalDualPivotQSortIntro}
 		To further build on on the dual pivot quicksort and to a lesser extent the Yaroslavskiy quicksort\ref{Aumuller:2013:OPD:2525857.2525862}. The pivots are selected as one sees fit, but when partitioning we keep track of how many elements that have been placed into the small list and the big list, denote these $N_s$ and $N_l$ respectivly. Note that there are three category of elements in the dual pivot quicksort. When $N_s > N_l$ during the partition process, you first compare the the small pivot, otherwise compare to the large pivot. Although this is a simple optimization, the paper expends most of it's effort in proving that is the case\ref{Aumuller:2013:OPD:2525857.2525862}. With this small optimization the number of comparisions is drasically decreases relative to most quicksort implementations.
