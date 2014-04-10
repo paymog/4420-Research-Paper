@@ -108,17 +108,53 @@
 		\centering
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=.4\linewidth]{ClassicQuickSortsLargeScale_comp.png}
-		 	\captionof{figure}{A figure}
-		 	\label{fig:test1}
+		 	\includegraphics[width=.9\linewidth]{ClassicQuickSortsLargeScale_comp.png}
 		\end{minipage}%
 		\begin{minipage}{.5\textwidth}
 		 	\centering
-		 	\includegraphics[width=.4\linewidth]{ClassicQuickSortsLargeScale_swap.png}
-		 	\captionof{figure}{Another figure}
-		 	\label{fig:test2}
+		 	\includegraphics[width=.9\linewidth]{ClassicQuickSortsLargeScale_swap.png}
 		\end{minipage}
+		\caption{Swap and comparison counts for the classic quicksort.}
+		\label{fig:classicSwapAndComp}
 	\end{figure}
+
+	In Figure \ref{fig:classicSwapAndComp} we can see that picking the pivot as the median of the fist, middle and last elements (green line) provides a significant decrease in comparisons and swaps compared to picking the first element (red line) or last element (blue line). Interestingly, we expect that picking any single element should provide no difference but we see that selecting the last element as the pivot is beneficial to picking the first element. We have no explanation for this.
+
+	%-----------------------------------------------------------------
+	%Dual pivot graphs
+	%-----------------------------------------------------------------
+	\begin{figure}
+		\centering
+		\begin{minipage}{.5\textwidth}
+		 	\centering
+		 	\includegraphics[width=.9\linewidth]{DualPivotQuicksortsLargeScale_comp}
+		\end{minipage}%
+		\begin{minipage}{.5\textwidth}
+		 	\centering
+		 	\includegraphics[width=.9\linewidth]{DualPivotQuicksortsLargeScale_swap}
+		\end{minipage}
+		\caption{Swap and comparison counts for the dual pivot quicksort.}
+		\label{fig:dualSwapAndComp}
+	\end{figure}
+
+	%-----------------------------------------------------------------
+	%Optimal Dual pivot graphs
+	%-----------------------------------------------------------------
+	\begin{figure}
+		\centering
+		\begin{minipage}{.5\textwidth}
+		 	\centering
+		 	\includegraphics[width=\linewidth]{OptimalDualPivotQuicksortsLargeScale_comp.png}
+		\end{minipage}%
+		\begin{minipage}{.5\textwidth}
+		 	\centering
+		 	\includegraphics[width=\linewidth]{OptimalDualPivotQuicksortsLargeScale_comp.png}
+		\end{minipage}
+		\caption{Swap and comparison counts for the optimal dual pivot quicksort.}
+		\label{fig:optimalDualSwapAndCount}
+	\end{figure}
+
+
 
 		
 
